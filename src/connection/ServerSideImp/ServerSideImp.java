@@ -1,5 +1,6 @@
 package connection.ServerSideImp;
 
+import connection.ClientSideIF;
 import connection.ServerSideIF;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
@@ -9,30 +10,52 @@ import dao.daoExc.GetUserex;
 import dao.daoExc.Passex;
 import dao.daoExc.UsernameEx;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class ServerSideImp implements ServerSideIF {
+public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
+    public ServerSideImp() throws RemoteException {
+    }
+
     private UserDao userDao = new UserDaoImp();
     private MessageQuery messageQuery = new MessageQueryImp();
-    private HashMap<String,String> clients = new HashMap<>(); //this is wrong bcs HashMap value must be consist of clientif not String but we are in dev
+    private HashMap<String, ClientSideIF> clients = new HashMap<>();
+
     @Override
-    public void sendMsg(String username, String msg) {
-        try {
-            clients.get(username);   // first we need to Implement clients interface then we send msg :))))
-            /*
+    public void sendMsg(String FromUsername,String ToUsername, String msg) throws Exception {
+        if(!messageQuery.isChatExist(FromUsername,ToUsername)) messageQuery.addChat(FromUsername,ToUsername);
+        try {//need some security
+            if(clients.get(ToUsername)==null){
+                try {
+                    userDao.getUser(ToUsername);
+                    messageQuery.addMessage(msg,FromUsername,ToUsername);
+                }catch (GetUserex ex){
+                    System.out.println(ex.getMessage());
+                    return;
+                }
+            }
+            else {
+                try {
+                    userDao.getUser(ToUsername);
+                    clients.get(ToUsername).getMessage(msg);
+                    messageQuery.addMessage(msg,FromUsername,ToUsername);
+                }catch (GetUserex ex){
+                    System.out.println(ex.getMessage());
+                    return;
+                }
+            }
 
-
-
-            this block for send msg to database*/
+            /*this block for send msg to database*/
         }catch (NullPointerException ex){
             /*
 
-
            this block is for check if username does exist then send msg
              */
+            ex.printStackTrace();
         }
     }
 
@@ -42,10 +65,10 @@ public class ServerSideImp implements ServerSideIF {
     }
 
     @Override
-    public String login(String username, String password) {
+    public String login(String username, String password,ClientSideIF clientSideIF) {
         try {
             userDao.login(username,password);
-            clients.put(username,password);
+            clients.put(username,clientSideIF);
             return "wait for server";
         }catch (UsernameEx ex){
             return ex.getMessage();
@@ -75,7 +98,10 @@ public class ServerSideImp implements ServerSideIF {
     }
 
     @Override
-    public HashMap<Integer, ArrayList> getMessageBetween2Person(String username1, String username2) {
-        return messageQuery.getChatBetweenTwoPerson(username1,username2);
+    public HashMap<Integer, ArrayList> getMessageBetween2Person(String username1, String username2) throws Exception {
+        if(messageQuery.isChatExist(username1,username2))
+            return messageQuery.getChatBetweenTwoPerson(username1,username2);
+        else
+            throw new IllegalArgumentException("chat dose not exist between this 2 username");
     }
 }

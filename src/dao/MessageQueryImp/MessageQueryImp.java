@@ -77,11 +77,18 @@ public class MessageQueryImp implements MessageQuery {
         try {
             Connection connection = DriverManager.getConnection
                     ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
-
+            PreparedStatement statement = connection.prepareStatement("SELECT USER1,USER2 FROM CONVERSATION" +
+                    "  WHERE (USER2 = ? AND USER1 = ?) OR" +
+                    "    (USER1 = ? AND USER2 = ?)");
+            statement.setString(1,username1);
+            statement.setString(2,username2);
+            statement.setString(3,username1);
+            statement.setString(4,username2);
+            ResultSet rs = statement.executeQuery();
+            return rs.next();
         } catch (SQLException e) {
             throw new Exception("some error in database");
         }
-        return false;
     }
 
     @Override

@@ -1,4 +1,6 @@
 import JpaConfig.JPAUtil;
+import connection.ServerSideIF;
+import connection.ServerSideImp.ServerSideImp;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
 import dao.UserDaoImp.UserDaoImp;
@@ -15,6 +17,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.metamodel.EntityType;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,8 +36,8 @@ public class Main {
                 "ddddddd3","sdfsf",new Date(),new Date());
         userDaoImp.addUser(user);
         userDaoImp.addUser(user1);
-        userDaoImp.addUser(user2);*/
-        MessageQuery msg = new MessageQueryImp();
+        userDaoImp.addUser(user2);
+        MessageQuery msg = new MessageQueryImp();*/
         //msg.createTable();
         /*msg.addChat("sdfskjf","slam");
         msg.addChat("sdfsksdfsjf","slamsf");
@@ -42,9 +47,22 @@ public class Main {
         msg.addMessage("salamati","slam","sdfskjf");*/
         //msg.addMessage("salamati","sdfsksdfsjf","slamsf");
         //msg.getCharBetweenTwoPerson("sfsfsa","slam");
-        HashMap<Integer, ArrayList> mes = msg.getAllChat("sdfsksdfsjf");
+        /*HashMap<Integer, ArrayList> mes = msg.getAllChat("sdfsksdfsjf");
         for (int i = 0; i < mes.size(); i++) {
             System.out.println(mes.get(i).get(0) +" : "+mes.get(i).get(1) +" to "+mes.get(i).get(2));
+        }*/
+        /*try {
+            msg.isChatExist("slam","sdfsksdfsjf");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        try {
+            ServerSideIF chatServer = new ServerSideImp();
+            Naming.rebind("Test",chatServer);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 }
