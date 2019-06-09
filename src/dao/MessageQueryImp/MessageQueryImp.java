@@ -3,7 +3,9 @@ package dao.MessageQueryImp;
 import dao.MessageQuery;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MessageQueryImp implements MessageQuery {
     @Override
@@ -63,8 +65,67 @@ public class MessageQueryImp implements MessageQuery {
     }
 
     @Override
-    public void getChat(String username1, String username2) {
+    public void getAllChat(String username1) {
 
+    }
+
+    @Override
+    public HashMap<Integer, ArrayList> getCharBetweenTwoPerson(String username1, String username2) {
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection connection = DriverManager.getConnection
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
+            PreparedStatement statement = connection.prepareStatement("(SELECT MESSAGE.M_ID,MESSAGE.USER1 As" +
+                    "    FromUser,MESSAGE.MESSAGE,? AS" +
+                    "    toUser FROM MESSAGE WHERE MESSAGE.C_ID IN (" +
+                    "    SELECT C_ID FROM CONVERSATION" +
+                    "    WHERE ((USER1 = ? AND USER2 = ?)Or" +
+                    "           (USER2 = ? AND CONVERSATION.USER1= ?))" +
+                    ") AND NOT MESSAGE.USER1=?" +
+                    " UNION ALL" +
+                    " SELECT MESSAGE.M_ID,MESSAGE.USER1 AS User1,MESSAGE.MESSAGE,CASE" +
+                    "        WHEN (CONVERSATION.USER1=?" +
+                    "          )THEN CONVERSATION.USER2" +
+                    "        WHEN (CONVERSATION.USER2=?" +
+                    "          )THEN CONVERSATION.USER1" +
+                    "     END AS ToUser FROM MESSAGE" +
+                    "        INNER JOIN CONVERSATION ON Message.C_ID=CONVERSATION.C_ID" +
+                    " WHERE MESSAGE.USER1=? AND MESSAGE.C_ID IN (" +
+                    "     SELECT C_ID FROM CONVERSATION" +
+                    "     WHERE ((USER1 = ? AND USER2 = ?)Or" +
+                    "            (USER2 = ? AND CONVERSATION.USER1= ?))" +
+                    "     )) ORDER BY M_ID");
+            statement.setString(1,username1);
+            statement.setString(2,username1);
+            statement.setString(3,username2);
+            statement.setString(4,username1);
+            statement.setString(5,username2);
+            statement.setString(6,username1);
+            statement.setString(7,username1);
+            statement.setString(8,username1);
+            statement.setString(9,username1);
+            statement.setString(10,username1);
+            statement.setString(11,username2);
+            statement.setString(12,username1);
+            statement.setString(13,username2);
+            ResultSet rs = statement.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            HashMap<Integer,ArrayList> messages= new HashMap<>();
+            int i=0;
+            while (rs.next()){
+                messages.get(i).add(new ArrayList<>());
+                messages.get(i).add(rs.getString(0));
+                messages.get(i++).add(rs.getString(2));
+            }
+            return messages;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -116,3 +177,15 @@ public class MessageQueryImp implements MessageQuery {
         INTO :new.M_ID
         FROM dual;
         END;*/
+
+
+    /*System.out.println("querying SELECT * FROM XXX");
+            int columnsNumber = rsmd.getColumnCount();
+            while (rs.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = rs.getString(i);
+                    System.out.print(columnValue + " ");
+                }
+                System.out.println("");
+            }*/

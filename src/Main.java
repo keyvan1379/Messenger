@@ -16,6 +16,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.metamodel.EntityType;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
@@ -38,6 +39,11 @@ public class Main {
         msg.addMessage("man khobam to khobi?","slam","sdfskjf");
         msg.addMessage("are che khabar?","sdfskjf","slam");
         msg.addMessage("salamati","slam","sdfskjf");*/
-        msg.addMessage("salamati","sdfsksdfsjf","slamsf");
+        //msg.addMessage("salamati","sdfsksdfsjf","slamsf");
+        //msg.getCharBetweenTwoPerson("sfsfsa","slam");
+        HashMap mes = msg.getCharBetweenTwoPerson("sdfskjf","slam");
+        for (int i = 0; i < mes.size(); i++) {
+            System.out.println(mes.get(i));
+        }
     }
 }
