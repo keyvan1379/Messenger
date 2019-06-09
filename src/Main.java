@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.metamodel.EntityType;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,9 +42,9 @@ public class Main {
         msg.addMessage("salamati","slam","sdfskjf");*/
         //msg.addMessage("salamati","sdfsksdfsjf","slamsf");
         //msg.getCharBetweenTwoPerson("sfsfsa","slam");
-        HashMap mes = msg.getCharBetweenTwoPerson("sdfskjf","slam");
+        HashMap<Integer, ArrayList> mes = msg.getAllChat("sdfsksdfsjf");
         for (int i = 0; i < mes.size(); i++) {
-            System.out.println(mes.get(i));
+            System.out.println(mes.get(i).get(0) +" : "+mes.get(i).get(1) +" to "+mes.get(i).get(2));
         }
     }
 }

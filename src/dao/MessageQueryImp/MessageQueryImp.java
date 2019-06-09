@@ -65,8 +65,49 @@ public class MessageQueryImp implements MessageQuery {
     }
 
     @Override
-    public void getAllChat(String username1) {
-
+    public HashMap<Integer, ArrayList> getAllChat(String username1) {
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection connection = DriverManager.getConnection
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
+            PreparedStatement statement = connection.prepareStatement("(SELECT MESSAGE.M_ID,MESSAGE.USER1 As" +
+                    "    FromUser,MESSAGE.MESSAGE,? AS" +
+                    "    toUser FROM MESSAGE WHERE MESSAGE.C_ID IN (" +
+                    "    SELECT C_ID FROM CONVERSATION" +
+                    "    WHERE (USER1 = ? Or USER2=?)" +
+                    ") AND NOT MESSAGE.USER1=?" +
+                    " UNION ALL" +
+                    " SELECT MESSAGE.M_ID,MESSAGE.USER1 AS User1,MESSAGE.MESSAGE,CASE" +
+                    "        WHEN CONVERSATION.USER1=? THEN CONVERSATION.USER2" +
+                    "        WHEN CONVERSATION.USER2=? THEN CONVERSATION.USER1" +
+                    "     END AS ToUser FROM MESSAGE" +
+                    "        INNER JOIN CONVERSATION ON Message.C_ID=CONVERSATION.C_ID" +
+                    " WHERE MESSAGE.USER1=?) ORDER BY M_ID");
+            statement.setString(1,username1);
+            statement.setString(2,username1);
+            statement.setString(3,username1);
+            statement.setString(4,username1);
+            statement.setString(5,username1);
+            statement.setString(6,username1);
+            statement.setString(7,username1);
+            ResultSet rs = statement.executeQuery();
+            HashMap<Integer,ArrayList> allMessages= new HashMap<>();
+            int i=0;
+            while (rs.next()){
+                allMessages.put(i,new ArrayList<>());
+                allMessages.get(i).add(rs.getString(2));
+                allMessages.get(i).add(rs.getString(3));
+                allMessages.get(i++).add(rs.getString(4));
+            }
+            return allMessages;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -113,13 +154,12 @@ public class MessageQueryImp implements MessageQuery {
             statement.setString(12,username1);
             statement.setString(13,username2);
             ResultSet rs = statement.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
             HashMap<Integer,ArrayList> messages= new HashMap<>();
             int i=0;
             while (rs.next()){
-                messages.get(i).add(new ArrayList<>());
-                messages.get(i).add(rs.getString(0));
-                messages.get(i++).add(rs.getString(2));
+                messages.put(i,new ArrayList<>());
+                messages.get(i).add(rs.getString(2));
+                messages.get(i++).add(rs.getString(3));
             }
             return messages;
         } catch (SQLException e) {
