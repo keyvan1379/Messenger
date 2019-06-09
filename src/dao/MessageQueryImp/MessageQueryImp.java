@@ -2,6 +2,9 @@ package dao.MessageQueryImp;
 
 import dao.MessageQuery;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,7 +114,7 @@ public class MessageQueryImp implements MessageQuery {
     }
 
     @Override
-    public HashMap<Integer, ArrayList> getCharBetweenTwoPerson(String username1, String username2) {
+    public HashMap<Integer, ArrayList> getChatBetweenTwoPerson(String username1, String username2) {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException e) {
