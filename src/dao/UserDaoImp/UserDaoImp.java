@@ -76,6 +76,7 @@ public class UserDaoImp implements UserDao {
             et.begin();
             User oldUser = (User) em.find(User.class,user.getUserName());
             oldUser = user;
+            em.merge(oldUser);
             et.commit();
         }catch (Exception ex){
             et.rollback();

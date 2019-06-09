@@ -1,5 +1,6 @@
 package dao.MessageQueryImp;
 
+import com.google.gson.Gson;
 import dao.MessageQuery;
 
 import javax.persistence.Entity;
@@ -92,7 +93,7 @@ public class MessageQueryImp implements MessageQuery {
     }
 
     @Override
-    public HashMap<Integer, ArrayList> getAllChat(String username1) {
+    public String getAllChat(String username1) {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException e) {
@@ -130,7 +131,9 @@ public class MessageQueryImp implements MessageQuery {
                 allMessages.get(i).add(rs.getString(3));
                 allMessages.get(i++).add(rs.getString(4));
             }
-            return allMessages;
+            Gson gson = new Gson();
+            String json = gson.toJson(allMessages);
+            return json;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -138,7 +141,7 @@ public class MessageQueryImp implements MessageQuery {
     }
 
     @Override
-    public HashMap<Integer, ArrayList> getChatBetweenTwoPerson(String username1, String username2) {
+    public String getChatBetweenTwoPerson(String username1, String username2) {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException e) {
@@ -188,7 +191,9 @@ public class MessageQueryImp implements MessageQuery {
                 messages.get(i).add(rs.getString(2));
                 messages.get(i++).add(rs.getString(3));
             }
-            return messages;
+            Gson gson = new Gson();
+            String json = gson.toJson(messages);
+            return json;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -217,7 +222,6 @@ public class MessageQueryImp implements MessageQuery {
             statement.setString(6,fromUsername);
             Date date = new Date();
             statement.setDate(7,new java.sql.Date(date.getTime()));
-            System.out.println(statement.execute());
         } catch (SQLException e) {
             e.printStackTrace();
         }

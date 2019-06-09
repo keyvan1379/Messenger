@@ -15,6 +15,6 @@ public interface ServerSideIF extends Remote {
     boolean getUser(String username) throws GetUserex,RemoteException;
     boolean isActive(String username) throws GetUserex,RemoteException;
     Date lastSeen(String username) throws GetUserex,RemoteException;
-    HashMap<Integer, ArrayList> getAllMessages(String username1) throws RemoteException;
-    HashMap<Integer, ArrayList> getMessageBetween2Person(String username1,String username2) throws Exception,RemoteException;
+    String getAllMessages(String username1) throws RemoteException;
+    String getMessageBetween2Person(String username1,String username2) throws Exception,RemoteException;
 }

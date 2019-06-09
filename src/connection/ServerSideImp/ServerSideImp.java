@@ -27,7 +27,12 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
 
     @Override
     public void sendMsg(String FromUsername,String ToUsername, String msg) throws Exception {
-        if(!messageQuery.isChatExist(FromUsername,ToUsername)) messageQuery.addChat(FromUsername,ToUsername);
+        try {
+            if (!messageQuery.isChatExist(FromUsername, ToUsername) & userDao.getUser(ToUsername)!=null)
+                messageQuery.addChat(FromUsername, ToUsername);
+        }catch (GetUserex ex){
+            System.out.println("message to unknown user");
+        }
         try {//need some security
             if(clients.get(ToUsername)==null){
                 try {
@@ -93,12 +98,12 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
-    public HashMap<Integer, ArrayList> getAllMessages(String username1) {
+    public String getAllMessages(String username1) {
         return messageQuery.getAllChat(username1);
     }
 
     @Override
-    public HashMap<Integer, ArrayList> getMessageBetween2Person(String username1, String username2) throws Exception {
+    public String getMessageBetween2Person(String username1, String username2) throws Exception {
         if(messageQuery.isChatExist(username1,username2))
             return messageQuery.getChatBetweenTwoPerson(username1,username2);
         else

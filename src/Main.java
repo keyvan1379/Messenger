@@ -1,4 +1,6 @@
 import JpaConfig.JPAUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import connection.ServerSideIF;
 import connection.ServerSideImp.ServerSideImp;
 import dao.MessageQuery;
@@ -27,7 +29,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(final String[] args){
-        /*UserDaoImp userDaoImp = new UserDaoImp();
+        UserDaoImp userDaoImp = new UserDaoImp();
         User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
                 "ddddddd1","sdfsf",new Date(),new Date());
         User user1 = new User("ahmad2","mohmadi2","sdkjf@djdsfk.com",
@@ -37,7 +39,7 @@ public class Main {
         userDaoImp.addUser(user);
         userDaoImp.addUser(user1);
         userDaoImp.addUser(user2);
-        MessageQuery msg = new MessageQueryImp();*/
+        MessageQuery msg = new MessageQueryImp();
         //msg.createTable();
         /*msg.addChat("sdfskjf","slam");
         msg.addChat("sdfsksdfsjf","slamsf");
@@ -46,7 +48,12 @@ public class Main {
         msg.addMessage("are che khabar?","sdfskjf","slam");
         msg.addMessage("salamati","slam","sdfskjf");*/
         //msg.addMessage("salamati","sdfsksdfsjf","slamsf");
-        //msg.getCharBetweenTwoPerson("sfsfsa","slam");
+        /*HashMap<Integer, ArrayList> mess = new Gson().fromJson(msg.getAllChat("slam"),
+                new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
+        System.out.println(new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
+        for (int i = 0; i < mess.size(); i++) {
+            System.out.println(mess.get(i).get(0)+" : "+mess.get(i).get(1)+" : " + mess.get(i).get(2));
+        }*/
         /*HashMap<Integer, ArrayList> mes = msg.getAllChat("sdfsksdfsjf");
         for (int i = 0; i < mes.size(); i++) {
             System.out.println(mes.get(i).get(0) +" : "+mes.get(i).get(1) +" to "+mes.get(i).get(2));
