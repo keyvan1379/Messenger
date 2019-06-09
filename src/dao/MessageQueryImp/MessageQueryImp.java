@@ -68,6 +68,23 @@ public class MessageQueryImp implements MessageQuery {
     }
 
     @Override
+    public boolean isChatExist(String username1, String username2) throws Exception {
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection connection = DriverManager.getConnection
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
+
+        } catch (SQLException e) {
+            throw new Exception("some error in database");
+        }
+        return false;
+    }
+
+    @Override
     public HashMap<Integer, ArrayList> getAllChat(String username1) {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");

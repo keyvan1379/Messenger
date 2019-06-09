@@ -1,6 +1,8 @@
 package connection.ServerSideImp;
 
 import connection.ServerSideIF;
+import dao.MessageQuery;
+import dao.MessageQueryImp.MessageQueryImp;
 import dao.UserDao;
 import dao.UserDaoImp.UserDaoImp;
 import dao.daoExc.GetUserex;
@@ -14,6 +16,7 @@ import java.util.List;
 
 public class ServerSideImp implements ServerSideIF {
     private UserDao userDao = new UserDaoImp();
+    private MessageQuery messageQuery = new MessageQueryImp();
     private HashMap<String,String> clients = new HashMap<>(); //this is wrong bcs HashMap value must be consist of clientif not String but we are in dev
     @Override
     public void sendMsg(String username, String msg) {
@@ -64,5 +67,15 @@ public class ServerSideImp implements ServerSideIF {
     @Override
     public Date lastSeen(String username) throws GetUserex {
         return userDao.lastSeen(username);
+    }
+
+    @Override
+    public HashMap<Integer, ArrayList> getAllMessages(String username1) {
+        return messageQuery.getAllChat(username1);
+    }
+
+    @Override
+    public HashMap<Integer, ArrayList> getMessageBetween2Person(String username1, String username2) {
+        return messageQuery.getChatBetweenTwoPerson(username1,username2);
     }
 }
