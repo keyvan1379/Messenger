@@ -7,8 +7,13 @@
 
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import javafx.scene.control.Label?>
-<AnchorPane styleClass="pane" stylesheets="@loginStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.login.loginController">
-        <HBox alignment="CENTER_RIGHT" styleClass="hbox-toolbar" />
+<?import javafx.scene.image.ImageView?>
+<AnchorPane styleClass="pane" stylesheets="@../css/loginStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ui.controller.loginController">
+        <HBox alignment="CENTER_RIGHT" styleClass="hbox-toolbar" >
+                <ImageView/>
+                <ImageView/>
+        </HBox>
         <Label fx:id="label" styleClass="label-login"/>
         <JFXTextField fx:id="username" styleClass="jfx-text-field-username"/>
         <JFXPasswordField fx:id="password" styleClass="jfx-password-field-password"/>

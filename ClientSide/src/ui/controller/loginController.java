@@ -1,23 +1,20 @@
-package ui.login;
+package ui.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,6 +26,8 @@ public class loginController implements Initializable {
     @FXML private JFXButton login;
     @FXML private JFXButton register;
     @FXML private Label label;
+    @FXML private ImageView close;
+    @FXML private ImageView minimize;
 
 
     @Override
@@ -38,6 +37,12 @@ public class loginController implements Initializable {
         this.login.setText("Login");
         this.register.setText("Register");
         this.label.setText("Login");
+        this.close.setImage(new Image(new File("ui/icons/close.png").toURI().toString()));
+        this.close.setFitWidth(20);
+        this.close.setPreserveRatio(true);
+        this.minimize.setImage(new Image(new File("ui/icons/minimize.png").toURI().toString()));
+        this.minimize.setFitWidth(20);
+        this.minimize.setPreserveRatio(true);
     }
 
     public void loginToAccount() {

@@ -12,12 +12,19 @@
 {
     -fx-translate-x: 0;
     -fx-translate-y: 0;
+    -fx-pref-width: 500px;
     -fx-min-height: 20px;
     -fx-pref-height: 20px;
     -fx-padding: 5px;
     -fx-alignment: center right;
     -fx-background-color: transparent;
 }
+
+.image-view-close
+{}
+
+.image-view-minimize
+{}
 
 .label-login
 {
