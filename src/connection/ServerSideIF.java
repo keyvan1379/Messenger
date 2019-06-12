@@ -17,4 +17,5 @@ public interface ServerSideIF extends Remote {
     Date lastSeen(String username) throws GetUserex,RemoteException;
     String getAllMessages(String username1) throws RemoteException;
     String getMessageBetween2Person(String username1,String username2) throws Exception,RemoteException;
+    void uploadFile(String fromUser,String filename,String toUser)throws RemoteException;
 }

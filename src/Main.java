@@ -3,6 +3,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import connection.ServerSideIF;
 import connection.ServerSideImp.ServerSideImp;
+import connection.SocketConnection.ServerSocket;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
 import dao.UserDaoImp.UserDaoImp;
@@ -29,7 +30,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(final String[] args){
-        UserDaoImp userDaoImp = new UserDaoImp();
+        /*UserDaoImp userDaoImp = new UserDaoImp();
         User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
                 "ddddddd1","sdfsf",new Date(),new Date());
         User user1 = new User("ahmad2","mohmadi2","sdkjf@djdsfk.com",
@@ -38,15 +39,16 @@ public class Main {
                 "ddddddd3","sdfsf",new Date(),new Date());
         userDaoImp.addUser(user);
         userDaoImp.addUser(user1);
-        userDaoImp.addUser(user2);
+        userDaoImp.addUser(user2);*/
         MessageQuery msg = new MessageQueryImp();
+        //msg.createTable();
         //msg.createTable();
         /*msg.addChat("sdfskjf","slam");
         msg.addChat("sdfsksdfsjf","slamsf");
-        msg.addMessage("slam khobi halet chetore","sdfskjf","slam");
-        msg.addMessage("man khobam to khobi?","slam","sdfskjf");
-        msg.addMessage("are che khabar?","sdfskjf","slam");
-        msg.addMessage("salamati","slam","sdfskjf");*/
+        msg.addMessage("slam khobi halet chetore","sdfskjf","slam",0);
+        msg.addMessage("man khobam to khobi?","slam","sdfskjf",0);
+        msg.addMessage("are che khabar?","sdfskjf","slam",0);
+        msg.addMessage("salamati","slam","sdfskjf",0);*/
         //msg.addMessage("salamati","sdfsksdfsjf","slamsf");
         /*HashMap<Integer, ArrayList> mess = new Gson().fromJson(msg.getAllChat("slam"),
                 new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
@@ -64,6 +66,8 @@ public class Main {
             e.printStackTrace();
         }*/
         try {
+            /*Thread thread = new Thread(() -> ServerSocket.start());
+            thread.start();*/
             ServerSideIF chatServer = new ServerSideImp();
             Naming.rebind("Test",chatServer);
         } catch (RemoteException e) {

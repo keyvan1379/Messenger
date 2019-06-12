@@ -9,6 +9,6 @@ public interface MessageQuery {
     boolean isChatExist(String username1,String username2) throws Exception;
     String getAllChat(String username1);
     String getChatBetweenTwoPerson(String username1, String username2);
-    void addMessage(String message,String fromUsername,String toUsername);
+    void addMessage(String message,String fromUsername,String toUsername,int isFile);
     //some function to get message
 }

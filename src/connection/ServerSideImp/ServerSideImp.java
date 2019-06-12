@@ -2,6 +2,7 @@ package connection.ServerSideImp;
 
 import connection.ClientSideIF;
 import connection.ServerSideIF;
+import connection.SocketConnection.ClientHandler;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
 import dao.UserDao;
@@ -10,6 +11,9 @@ import dao.daoExc.GetUserex;
 import dao.daoExc.Passex;
 import dao.daoExc.UsernameEx;
 
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -24,6 +28,15 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     private UserDao userDao = new UserDaoImp();
     private MessageQuery messageQuery = new MessageQueryImp();
     private HashMap<String, ClientSideIF> clients = new HashMap<>();
+    private ServerSocket serverSocket;
+
+    {
+        try {
+            serverSocket = new ServerSocket(38474);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void sendMsg(String FromUsername,String ToUsername, String msg) throws Exception {
@@ -37,7 +50,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             if(clients.get(ToUsername)==null){
                 try {
                     userDao.getUser(ToUsername);
-                    messageQuery.addMessage(msg,FromUsername,ToUsername);
+                    messageQuery.addMessage(msg,FromUsername,ToUsername,0);
                 }catch (GetUserex ex){
                     System.out.println(ex.getMessage());
                     return;
@@ -47,7 +60,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 try {
                     userDao.getUser(ToUsername);
                     clients.get(ToUsername).getMessage(msg);
-                    messageQuery.addMessage(msg,FromUsername,ToUsername);
+                    messageQuery.addMessage(msg,FromUsername,ToUsername,0);
                 }catch (GetUserex ex){
                     System.out.println(ex.getMessage());
                     return;
@@ -84,7 +97,12 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
 
     @Override
     public boolean getUser(String username) throws GetUserex {
-        return false;
+        try{
+            userDao.getUser(username);
+            return true;
+        }catch (GetUserex ex){
+            return false;
+        }
     }
 
     @Override
@@ -109,4 +127,107 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         else
             throw new IllegalArgumentException("chat dose not exist between this 2 username");
     }
+
+    @Override
+    public void uploadFile(String fromUser,String filename,String toUser) {
+        try {
+            if(!messageQuery.isChatExist(fromUser,toUser)) messageQuery.addChat(fromUser,toUser);
+            //need to check if client online then send file
+            //be careful download method must be on other side not in server interface
+            String fileN = getAlphaNumericString(16);
+            File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+            while(file.exists()){
+                fileN = getAlphaNumericString(16);
+                file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+            }
+            Socket socket = serverSocket.accept();
+            ClientHandler clientHandler = new ClientHandler
+                    (socket,socket.getInputStream(),socket.getOutputStream(),
+                            (fileN+filename),fromUser,toUser,clients.get(toUser));
+            Thread thread = new Thread(clientHandler);
+            thread.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getAlphaNumericString(int n)
+    {
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder sb = new StringBuilder(n);
+
+        for (int i = 0; i < n; i++) {
+            int index
+                    = (int)(AlphaNumericString.length()
+                    * Math.random());
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+        return sb.toString();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+/*@Override
+    public void uploadFile(byte[] data, int length,String filename) {
+        File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\" +
+                filename);
+        *//*while (file.exists()){
+            file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+
+                    filename);
+        }*//*
+        //file.mkdir();
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file, true);
+            try {
+                fileOutputStream.write(data);
+                fileOutputStream.flush();
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+
+
+
+
+
+
+
+/*
+try {
+        File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\" +
+        filename);
+        Socket socket = serverSocket.accept();
+        System.out.println("dlfksjdlfkjsdlkfjsdlkf");
+        InputStream inputStream = socket.getInputStream();
+        FileOutputStream outputStream = new FileOutputStream(file);
+        int count;
+        byte[] data = new byte[8192];
+        while ((count = inputStream.read(data))!=-1){
+        outputStream.write(data,0,count);
+        }
+        outputStream.flush();
+        inputStream.close();
+        outputStream.close();
+        socket.close();
+        serverSocket.close();
+        } catch (IOException e) {
+        e.printStackTrace();
+        }*/

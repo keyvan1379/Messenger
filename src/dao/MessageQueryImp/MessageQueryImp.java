@@ -36,6 +36,7 @@ public class MessageQueryImp implements MessageQuery {
                     "MESSAGE ClOB NOT NULL, " +
                     "USER1 varchar(255)," +
                     "C_ID int NOT NULL," +
+                    "IS_FILE int,"+
                     "SEND_TIME DATE," +
                     "FOREIGN KEY (C_ID)" +
                     "REFERENCES Conversation(C_ID)" +
@@ -54,6 +55,11 @@ public class MessageQueryImp implements MessageQuery {
             e.printStackTrace();
         }
         try {
+            try {
+                if(isChatExist(username1,username2)) return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             Connection connection = DriverManager.getConnection
                     ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
             PreparedStatement statement = connection.prepareStatement("INSERT INTO CONVERSATION (USER1, USER2, CREATED_TIME) " +
@@ -201,7 +207,7 @@ public class MessageQueryImp implements MessageQuery {
     }
 
     @Override
-    public void addMessage(String message, String fromUsername, String toUsername) {
+    public void addMessage(String message, String fromUsername, String toUsername,int isFile) {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException e) {
@@ -210,10 +216,10 @@ public class MessageQueryImp implements MessageQuery {
         try {
             Connection connection = DriverManager.getConnection
                     ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO MESSAGE (MESSAGE, USER1, C_ID, SEND_TIME) " +
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO MESSAGE (MESSAGE, USER1, C_ID, SEND_TIME,IS_FILE) " +
                     "values (? ,?," +
                     "(SELECT C_ID FROM Conversation WHERE ((USER1 IN (?,?)) AND (USER2 IN (?,?))))," +
-                    "?)");
+                    "?,?)");
             statement.setString(1,message);
             statement.setString(2,fromUsername);
             statement.setString(3,toUsername);
@@ -222,6 +228,8 @@ public class MessageQueryImp implements MessageQuery {
             statement.setString(6,fromUsername);
             Date date = new Date();
             statement.setDate(7,new java.sql.Date(date.getTime()));
+            statement.setInt(8,isFile);
+            statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

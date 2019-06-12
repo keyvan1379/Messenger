@@ -5,4 +5,6 @@ import java.rmi.RemoteException;
 
 public interface ClientSideIF extends Remote {
     void getMessage(String message) throws RemoteException;
+    String getIpAddress() throws RemoteException;//in dev mode we return ipaddress localhost but when we are going to test program we need return local ip address
+    void downloadFile(String fromUser,String fileName) throws RemoteException;
 }
