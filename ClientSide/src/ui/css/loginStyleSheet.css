@@ -1,0 +1,77 @@
+.pane
+{
+    -fx-pref-width: 500px;
+    -fx-pref-height: 300px;
+    -fx-background-color: #fff;
+    -fx-background-insets: 5px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(three-pass-box, #000, 4, 0, 1, 1);
+}
+
+.hbox-toolbar
+{
+    -fx-pref-width: 500px;
+    -fx-min-height: 20px;
+    -fx-pref-height: 20px;
+    -fx-background-color: #d9dddb;
+    -fx-spacing: 5px;
+}
+
+.image-view-close
+{
+    -fx-image: url("../icons/close.png");
+
+}
+
+.image-view-minimize
+{
+    -fx-image: url("../icons/minimize.png");
+
+}
+
+.label-login
+{
+    -fx-pref-width: 100px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-translate-x: 200px;
+    -fx-translate-y: 50px;
+}
+
+.jfx-text-field-username
+{
+    -fx-translate-x: 175px;
+    -fx-pref-width: 150px;
+    -fx-translate-y: 100px;
+    -jfx-label-float: true;
+}
+
+.jfx-password-field-password
+{
+    -fx-translate-x: 175px;
+    -fx-pref-width: 150px;
+    -fx-translate-y: 150px;
+    -jfx-label-float: true;
+}
+
+.jfx-button-login
+{
+    -fx-pref-width: 70px;
+    -fx-translate-y: 200px;
+    -fx-translate-x: 175px;
+
+}
+
+.jfx-button-register
+{
+    -fx-pref-width: 70px;
+    -fx-translate-y: 200px;
+    -fx-translate-x: 255px;
+}
+
+.jfx-button:hover
+{
+    -fx-cursor: hand;
+}
+
+

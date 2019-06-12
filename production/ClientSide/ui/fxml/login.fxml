@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane fx:id="anchorPane" styleClass="pane" stylesheets="@../css/loginStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.loginController">
+        <HBox alignment="TOP_RIGHT" onMouseDragged="#toolbarDragged" onMousePressed="#toolbarPressed" styleClass="hbox-toolbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <ImageView fx:id="minimize" fitWidth="16.0" onMouseClicked="#minimizeWindow" preserveRatio="true" styleClass="image-view-minimize">
+         <HBox.margin>
+            <Insets top="2.0" />
+         </HBox.margin></ImageView>
+                <ImageView fx:id="close" fitWidth="16.0" onMouseClicked="#closeWindow" preserveRatio="true" styleClass="image-view-close">
+         <HBox.margin>
+            <Insets right="2.0" top="2.0" />
+         </HBox.margin></ImageView>
+        </HBox>
+        <Label fx:id="label" styleClass="label-login" />
+        <JFXTextField fx:id="username" styleClass="jfx-text-field-username" />
+        <JFXPasswordField fx:id="password" styleClass="jfx-password-field-password" />
+        <JFXButton fx:id="login" onMouseClicked="#loginToAccount" styleClass="jfx-button-login" />
+        <JFXButton fx:id="register" onMouseClicked="#createNewAccount" styleClass="jfx-button-register" />
+</AnchorPane>

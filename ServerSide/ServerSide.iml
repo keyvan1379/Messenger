@@ -28,7 +28,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Hibernate 5.4.2-5.4.2" level="project" />
-    <orderEntry type="library" name="Hibernate 5.4.2-5.4.2" level="project" />
+    <orderEntry type="library" exported="" name="Hibernate 5.4.2-5.4.2" level="project" />
+    <orderEntry type="library" exported="" name="Hibernate 5.4.2-5.4.2" level="project" />
   </component>
 </module>
