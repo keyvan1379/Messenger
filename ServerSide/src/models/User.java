@@ -1,6 +1,7 @@
 package models;
 
 import com.sun.javafx.beans.IDProperty;
+import protections.MD5;
 
 import javax.persistence.*;
 import java.awt.image.BufferedImage;
@@ -45,7 +46,7 @@ public class User implements Serializable {
         setLastName(lastName);
         setEmail(email);
         setUserName(userName);
-        setPassWord(passWord);
+        setPassWord(MD5.getMd5(passWord));
         setJoinTime(joinTime);
         setLastSeen(lastSeen);
         //setProfileImage(profileImage);

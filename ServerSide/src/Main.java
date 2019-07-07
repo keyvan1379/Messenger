@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(final String[] args){
-        /*UserDaoImp userDaoImp = new UserDaoImp();
+        UserDaoImp userDaoImp = new UserDaoImp();
         User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
                 "ddddddd1","sdfsf",new Date(),new Date());
         User user1 = new User("ahmad2","mohmadi2","sdkjf@djdsfk.com",
@@ -39,7 +39,7 @@ public class Main {
                 "ddddddd3","sdfsf",new Date(),new Date());
         userDaoImp.addUser(user);
         userDaoImp.addUser(user1);
-        userDaoImp.addUser(user2);*/
+        userDaoImp.addUser(user2);
         MessageQuery msg = new MessageQueryImp();
         //msg.createTable();
         //msg.createTable();
@@ -65,15 +65,17 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        try {
-            /*Thread thread = new Thread(() -> ServerSocket.start());
-            thread.start();*/
+
+
+        /*try {
+            *//*Thread thread = new Thread(() -> ServerSocket.start());
+            thread.start();*//*
             ServerSideIF chatServer = new ServerSideImp();
             Naming.rebind("Test",chatServer);
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

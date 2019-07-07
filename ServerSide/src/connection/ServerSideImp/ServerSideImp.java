@@ -12,6 +12,7 @@ import dao.daoExc.Passex;
 import dao.daoExc.UsernameEx;
 import models.User;
 import protections.AES;
+import protections.MD5;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -95,6 +96,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             return "you must first confirm yourself";
         try {
             password = aes.decrypt(password);
+            password = MD5.getMd5(password);
         } catch (Exception e) {
             e.printStackTrace();
         }
