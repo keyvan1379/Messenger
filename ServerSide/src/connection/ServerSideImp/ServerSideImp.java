@@ -10,6 +10,8 @@ import dao.UserDaoImp.UserDaoImp;
 import dao.daoExc.GetUserex;
 import dao.daoExc.Passex;
 import dao.daoExc.UsernameEx;
+import models.User;
+import protections.AES;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -38,8 +40,11 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         }
     }
 
+    //AES added
     @Override
     public void sendMsg(String FromUsername,String ToUsername, String msg) throws Exception {
+        AES aes = AES.importKey(FromUsername);
+        msg = aes.decrypt(msg);
         try {
             if (!messageQuery.isChatExist(FromUsername, ToUsername) & userDao.getUser(ToUsername)!=null)
                 messageQuery.addChat(FromUsername, ToUsername);
@@ -82,8 +87,17 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         return null;
     }
 
+    //AES added
     @Override
     public String login(String username, String password,ClientSideIF clientSideIF) {
+        AES aes = AES.importKey(username);
+        if(aes == null)
+            return "you must first confirm yourself";
+        try {
+            password = aes.decrypt(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             userDao.login(username,password);
             clients.put(username,clientSideIF);
@@ -92,6 +106,18 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             return ex.getMessage();
         }catch (Passex ex){
             return ex.getMessage();
+        }
+    }
+
+    //need to add AES
+    @Override
+    public String signUp(User user) throws RemoteException {
+        try{
+            userDao.getUser(user.getUserName());
+            return "this username exist pls pick another username";
+        } catch (GetUserex getUserex) {
+            userDao.addUser(user);
+            return "successful";
         }
     }
 
@@ -115,15 +141,26 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         return userDao.lastSeen(username);
     }
 
+    //AES Added
+    //Security needed(check if client in list)
     @Override
     public String getAllMessages(String username1) {
-        return messageQuery.getAllChat(username1);
+        AES aes = AES.importKey(username1);
+        try {
+            return aes.encrypt(messageQuery.getAllChat(username1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
+    //AES Added
+    //Security needed(check if client in list)
     @Override
     public String getMessageBetween2Person(String username1, String username2) throws Exception {
+        AES aes = AES.importKey(username1);
         if(messageQuery.isChatExist(username1,username2))
-            return messageQuery.getChatBetweenTwoPerson(username1,username2);
+            return aes.encrypt(messageQuery.getChatBetweenTwoPerson(username1,username2));
         else
             throw new IllegalArgumentException("chat dose not exist between this 2 username");
     }
@@ -151,6 +188,23 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void downloadFileAgain(String fromUsername, String fileName,
+                                  String username,ClientSideIF clientSideIF) {
+        //need to check if file in their message(Security warning)
+        /*if(clients.get(username) != clientSideIF){
+            System.out.println("hiiiiii");
+            return;
+        }*/
+        ClientHandler clientHandler = new ClientHandler
+                (null,null,null,
+                        fileName,fromUsername,username,clientSideIF);
+        System.out.println(fileName);
+        Thread t = new Thread(() -> clientHandler.uploadFileToClient(new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\" +
+                "downloadFiles\\"+fileName)));
+        t.start();
     }
 
     private String getAlphaNumericString(int n)

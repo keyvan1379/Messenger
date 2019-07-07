@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class MessageQueryImp implements MessageQuery {
     @Override
@@ -100,6 +101,8 @@ public class MessageQueryImp implements MessageQuery {
 
     @Override
     public String getAllChat(String username1) {
+        String separator = "\\";
+        String[] replace;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException e) {
@@ -109,13 +112,13 @@ public class MessageQueryImp implements MessageQuery {
             Connection connection = DriverManager.getConnection
                     ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
             PreparedStatement statement = connection.prepareStatement("(SELECT MESSAGE.M_ID,MESSAGE.USER1 As" +
-                    "    FromUser,MESSAGE.MESSAGE,? AS" +
+                    "    FromUser,MESSAGE.MESSAGE,MESSAGE.IS_FILE,? AS" +
                     "    toUser FROM MESSAGE WHERE MESSAGE.C_ID IN (" +
                     "    SELECT C_ID FROM CONVERSATION" +
                     "    WHERE (USER1 = ? Or USER2=?)" +
                     ") AND NOT MESSAGE.USER1=?" +
                     " UNION ALL" +
-                    " SELECT MESSAGE.M_ID,MESSAGE.USER1 AS User1,MESSAGE.MESSAGE,CASE" +
+                    " SELECT MESSAGE.M_ID,MESSAGE.USER1 AS User1,MESSAGE.MESSAGE,MESSAGE.IS_FILE,CASE" +
                     "        WHEN CONVERSATION.USER1=? THEN CONVERSATION.USER2" +
                     "        WHEN CONVERSATION.USER2=? THEN CONVERSATION.USER1" +
                     "     END AS ToUser FROM MESSAGE" +
@@ -134,8 +137,15 @@ public class MessageQueryImp implements MessageQuery {
             while (rs.next()){
                 allMessages.put(i,new ArrayList<>());
                 allMessages.get(i).add(rs.getString(2));
-                allMessages.get(i).add(rs.getString(3));
-                allMessages.get(i++).add(rs.getString(4));
+                if(Integer.parseInt(rs.getString(4))==1){
+                    replace = rs.getString(3).replaceAll(Pattern.quote(separator),"\\\\")
+                            .split("\\\\");
+                    allMessages.get(i).add(replace[replace.length-1].substring(16));
+                }else{
+                    allMessages.get(i).add(rs.getString(3));
+                }
+                allMessages.get(i).add(rs.getString(4));
+                allMessages.get(i++).add(rs.getString(5));
             }
             Gson gson = new Gson();
             String json = gson.toJson(allMessages);
@@ -157,14 +167,14 @@ public class MessageQueryImp implements MessageQuery {
             Connection connection = DriverManager.getConnection
                     ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
             PreparedStatement statement = connection.prepareStatement("(SELECT MESSAGE.M_ID,MESSAGE.USER1 As" +
-                    "    FromUser,MESSAGE.MESSAGE,? AS" +
+                    "    FromUser,MESSAGE.MESSAGE,MESSAGE.IS_FILE,? AS" +
                     "    toUser FROM MESSAGE WHERE MESSAGE.C_ID IN (" +
                     "    SELECT C_ID FROM CONVERSATION" +
                     "    WHERE ((USER1 = ? AND USER2 = ?)Or" +
                     "           (USER2 = ? AND CONVERSATION.USER1= ?))" +
                     ") AND NOT MESSAGE.USER1=?" +
                     " UNION ALL" +
-                    " SELECT MESSAGE.M_ID,MESSAGE.USER1 AS User1,MESSAGE.MESSAGE,CASE" +
+                    " SELECT MESSAGE.M_ID,MESSAGE.USER1 AS User1,MESSAGE.MESSAGE,MESSAGE.IS_FILE,CASE" +
                     "        WHEN (CONVERSATION.USER1=?" +
                     "          )THEN CONVERSATION.USER2" +
                     "        WHEN (CONVERSATION.USER2=?" +
@@ -195,7 +205,8 @@ public class MessageQueryImp implements MessageQuery {
             while (rs.next()){
                 messages.put(i,new ArrayList<>());
                 messages.get(i).add(rs.getString(2));
-                messages.get(i++).add(rs.getString(3));
+                messages.get(i).add(rs.getString(3));
+                messages.get(i++).add(rs.getString(4));
             }
             Gson gson = new Gson();
             String json = gson.toJson(messages);

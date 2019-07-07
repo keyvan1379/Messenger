@@ -17,7 +17,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
 
     {
         try {
-            serverSocket = new ServerSocket(40900);//need 2 pc
+            serverSocket = new ServerSocket(40900);//more pc needed
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,6 +70,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
                 e.printStackTrace();
             }
         }
+        scanner.nextLine();
             /*System.out.print("to user : ");
             touser=scanner.nextLine();
             System.out.print("msg : ");
@@ -113,6 +114,13 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("done1");
+        String filename = scanner.nextLine();
+        try {
+            serverSideIF.downloadFileAgain("ddddddd2",filename,"ddddddd1",this);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
 
 
@@ -127,6 +135,29 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
 
 
 
+/*Thread thread = new Thread(() -> {
+                try {
+                    serverSideIF.uploadFile("ddddddd1",file.getName(),"ddddddd2");
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
+            Socket socket = new Socket("localhost",38474);
+            OutputStream outputStream = socket.getOutputStream();
+            FileInputStream inputStream = new FileInputStream(file);
+            int count;
+            while((count = inputStream.read(mydata))!=-1){
+                outputStream.write(mydata,0,count);
+            }
+            outputStream.flush();
+            outputStream.close();
+            inputStream.close();
+            socket.close();
+            System.out.println("done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
 
 

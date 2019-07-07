@@ -4,11 +4,12 @@ import com.sun.javafx.beans.IDProperty;
 
 import javax.persistence.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.InputMismatchException;
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "USERNAME")

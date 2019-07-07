@@ -50,12 +50,12 @@ public class Main {
         msg.addMessage("are che khabar?","sdfskjf","slam",0);
         msg.addMessage("salamati","slam","sdfskjf",0);*/
         //msg.addMessage("salamati","sdfsksdfsjf","slamsf");
-        /*HashMap<Integer, ArrayList> mess = new Gson().fromJson(msg.getAllChat("slam"),
+        HashMap<Integer, ArrayList> mess = new Gson().fromJson(msg.getAllChat("ddddddd1"),
                 new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
         System.out.println(new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
         for (int i = 0; i < mess.size(); i++) {
-            System.out.println(mess.get(i).get(0)+" : "+mess.get(i).get(1)+" : " + mess.get(i).get(2));
-        }*/
+            System.out.println(mess.get(i).get(0)+" : "+mess.get(i).get(1)+" : " + mess.get(i).get(2) +" : " + mess.get(i).get(3));
+        }
         /*HashMap<Integer, ArrayList> mes = msg.getAllChat("sdfsksdfsjf");
         for (int i = 0; i < mes.size(); i++) {
             System.out.println(mes.get(i).get(0) +" : "+mes.get(i).get(1) +" to "+mes.get(i).get(2));
