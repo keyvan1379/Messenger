@@ -5,11 +5,14 @@ import models.User;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 public interface ServerSideIF extends Remote {
+    PublicKey getKey() throws RemoteException;
+    public void createCon(String username,String key) throws RemoteException;
     void sendMsg(String FromUsername,String ToUsername,String msg) throws Exception, RemoteException;
     ArrayList<String> getAllOnlineUser()throws RemoteException;
     String login(String username,String password,ClientSideIF clientSideIF) throws RemoteException;

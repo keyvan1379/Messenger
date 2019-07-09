@@ -2,6 +2,8 @@ package connection.ClientSideImp;
 
 import connection.ClientSideIF;
 import connection.ServerSideIF;
+import protections.AES;
+import protections.RSA;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -63,23 +65,33 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
             username = scanner.nextLine();
             password = scanner.nextLine();
             try {
-                if (!(payam = serverSideIF.login(username, password, this)).equals("wait for server")) {
+                if (!(payam = serverSideIF.login(RSA.encrypt(username,serverSideIF.getKey()),
+                        RSA.encrypt(password,serverSideIF.getKey()), this)).equals("wait for server")) {
                     System.out.println(payam);
                 } else break;
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
+        try {
+            serverSideIF.createCon(username,RSA.encrypt("1234567890qwerty",serverSideIF.getKey()));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        AES aes = new AES("1234567890qwerty");
+        System.out.println("slkfj");
         scanner.nextLine();
-            /*System.out.print("to user : ");
+            System.out.print("to user : ");
             touser=scanner.nextLine();
             System.out.print("msg : ");
             msg=scanner.nextLine();
             try {
-                serverSideIF.sendMsg(username,touser,msg);
+                serverSideIF.sendMsg(username,touser,aes.encrypt(msg));
             } catch (Exception e) {
+                e.printStackTrace();
                 System.out.println(e.getMessage());
-            }*/
+            }
+        scanner.nextLine();
         File file = new File("C:\\Users\\ASuS\\Downloads\\ideaIU-2018.3.5.exe");
         byte[] mydata = new byte[8192];
         try {

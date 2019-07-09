@@ -12,10 +12,12 @@ import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 
 public class RSA {
-    public static final String Public_Key = ".\\PrKeyAndPuKey\\Public.key";
-    public static final String Private_Key = ".\\PrKeyAndPuKey\\Private.key";
+    public static final String Public_Key = "C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ServerSide\\src\\protections\\PrKeyAndPuKey\\Public.key";
+    public static final String Private_Key = "C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ServerSide\\src\\protections\\PrKeyAndPuKey\\Private.key";
 
     RSA(){
+    }
+    public RSA(String username){
         try {
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
             keyPairGenerator.initialize(2048);
@@ -67,6 +69,22 @@ public class RSA {
         }
         return new String(new BASE64Encoder().encode(encryptData));
     }
+
+
+    public static String encrypt(String text,PublicKey pk){
+        byte[] dataToEncrypt = text.getBytes();
+        byte[] encryptData = null;
+        try{
+            PublicKey publicKey = pk;
+            Cipher c = Cipher.getInstance("RSA");
+            c.init(Cipher.ENCRYPT_MODE,publicKey);
+            encryptData = c.doFinal(dataToEncrypt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new String(new BASE64Encoder().encode(encryptData));
+    }
+
     public String decrypt(String cipherText) throws IOException {
         byte[] dataTodecrypt = new BASE64Decoder().decodeBuffer(cipherText);
         byte[] decData = null;
@@ -80,6 +98,8 @@ public class RSA {
         }
         return new String(decData);
     }
+
+
     public PublicKey readPuKey(String filename) throws IOException {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
@@ -105,6 +125,8 @@ public class RSA {
             }
         }
     }
+
+
     public PrivateKey readPrKey(String filename) throws IOException {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
@@ -129,5 +151,24 @@ public class RSA {
                 }
             }
         }
+    }
+    public PublicKey getPublic_Key(){
+        try {
+            return readPuKey(Public_Key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public PrivateKey getPrivate_Key(){
+        try {
+            return readPrKey(Private_Key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static RSA importKey(){
+        return new RSA();
     }
 }

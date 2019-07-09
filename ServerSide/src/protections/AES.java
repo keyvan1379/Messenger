@@ -7,12 +7,15 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.security.Key;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.util.Scanner;
 
 public class AES {
     private static final String ALGO = "AES";
     private byte[] Key;
 
-    AES(String key){
+    public AES(String key){
         Key = key.getBytes();
     }
     public String encrypt(String text) throws Exception {
@@ -41,28 +44,29 @@ public class AES {
         return new String(Key);
     }
     public void exportKey(String username){
-        File file = new File(".\\UsersKey\\"+username);
+        File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ServerSide\\src\\protections\\UsersKey\\"+username+".txt");
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            /*FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.write(Key);
+            System.out.println();
+            objectOutputStream.write(Key);*/
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.println(new String(Key));
+            printWriter.flush();
+            /*objectOutputStream.flush();
+            fileOutputStream.flush();*/
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public static AES importKey(String username){
-        File file = new File(".\\UsersKey\\"+username);
+        File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ServerSide\\src\\protections\\UsersKey\\"+username+".txt");
         try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            return new AES((String)objectInputStream.readObject());
+            /*FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);*/
+            Scanner scanner = new Scanner(file);
+            return new AES(scanner.nextLine());
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         System.out.println("AES Failed");

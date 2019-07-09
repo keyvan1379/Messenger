@@ -13,12 +13,15 @@ import dao.daoExc.UsernameEx;
 import models.User;
 import protections.AES;
 import protections.MD5;
+import protections.RSA;
+import sun.security.krb5.internal.crypto.RsaMd5CksumType;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,9 +44,35 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         }
     }
 
+    @Override
+    public PublicKey getKey() throws RemoteException {
+        return RSA.importKey().getPublic_Key();
+    }
+
+
+    @Override
+    public void createCon(String username,String key) throws RemoteException {
+        if(clients.get(username)==null){
+            System.out.println("need to submit in login method");
+            return;
+        }
+        AES aes = null;
+        try {
+            aes = new AES(RSA.importKey().decrypt(key));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        aes.exportKey(username);
+    }
+
     //AES added
+    //security needed
     @Override
     public void sendMsg(String FromUsername,String ToUsername, String msg) throws Exception {
+        if(clients.get(FromUsername)==null){
+            System.out.println("send meesage from known username");
+            return;
+        }
         AES aes = AES.importKey(FromUsername);
         msg = aes.decrypt(msg);
         try {
@@ -65,7 +94,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             else {
                 try {
                     userDao.getUser(ToUsername);
-                    clients.get(ToUsername).getMessage(msg);
+                    clients.get(ToUsername).getMessage(AES.importKey(ToUsername).encrypt(msg));
                     messageQuery.addMessage(msg,FromUsername,ToUsername,0);
                 }catch (GetUserex ex){
                     System.out.println(ex.getMessage());
@@ -91,11 +120,10 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     //AES added
     @Override
     public String login(String username, String password,ClientSideIF clientSideIF) {
-        AES aes = AES.importKey(username);
-        if(aes == null)
-            return "you must first confirm yourself";
+
         try {
-            password = aes.decrypt(password);
+            username = RSA.importKey().decrypt(username);
+            password = RSA.importKey().decrypt(password);
             password = MD5.getMd5(password);
         } catch (Exception e) {
             e.printStackTrace();
