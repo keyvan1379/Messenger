@@ -3,26 +3,34 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="anchorPane" styleClass="pane" stylesheets="@../css/loginStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.loginController">
-        <HBox alignment="TOP_RIGHT" onMouseDragged="#toolbarDragged" onMousePressed="#toolbarPressed" styleClass="hbox-toolbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <ImageView fx:id="minimize" fitWidth="16.0" onMouseClicked="#minimizeWindow" preserveRatio="true" styleClass="image-view-minimize">
-         <HBox.margin>
-            <Insets top="2.0" />
-         </HBox.margin></ImageView>
-                <ImageView fx:id="close" fitWidth="16.0" onMouseClicked="#closeWindow" preserveRatio="true" styleClass="image-view-close">
-         <HBox.margin>
-            <Insets right="2.0" top="2.0" />
-         </HBox.margin></ImageView>
+<AnchorPane styleClass="pane-main" stylesheets="@../css/loginStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.LoginController">
+
+    <AnchorPane prefHeight="300.0" prefWidth="500.0" styleClass="pane-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+        <HBox alignment="CENTER_RIGHT" styleClass="hbox-toolbar" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+            <FontAwesomeIconView glyphName="ARROWS_ALT" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" style="-fx-cursor: hand"/>
+            <FontAwesomeIconView glyphName="MINUS" onMouseClicked="#minimizeWindow" style="-fx-cursor: hand"/>
+            <FontAwesomeIconView glyphName="CLOSE" onMouseClicked="#closeWindow" style="-fx-cursor: hand"/>
         </HBox>
-        <Label fx:id="label" styleClass="label-login" />
-        <JFXTextField fx:id="username" styleClass="jfx-text-field-username" />
-        <JFXPasswordField fx:id="password" styleClass="jfx-password-field-password" />
-        <JFXButton fx:id="login" onMouseClicked="#loginToAccount" styleClass="jfx-button-login" />
-        <JFXButton fx:id="register" onMouseClicked="#createNewAccount" styleClass="jfx-button-register" />
+
+        <AnchorPane styleClass="pane-menu">
+            <HBox styleClass="hbox-label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
+
+                <Label fx:id="labelLogin" styleClass="label-login" />
+
+            </HBox>
+            <JFXTextField fx:id="username" styleClass="jfx-text-field-username" />
+            <JFXPasswordField fx:id="password" styleClass="jfx-password-field-password" />
+            <JFXButton fx:id="loginButton" buttonType="RAISED" onMouseClicked="#loginToAccount" styleClass="jfx-button-login" />
+            <JFXButton fx:id="registerButton" buttonType="RAISED" onMouseClicked="#createNewAccount" styleClass="jfx-button-register" />
+        </AnchorPane>
+
+    </AnchorPane>
+
+
 </AnchorPane>

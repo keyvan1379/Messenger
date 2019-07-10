@@ -1,0 +1,150 @@
+.pane-main
+{
+    -fx-pref-width: 500px;
+    -fx-pref-height: 500px;
+    -fx-background-color: white;
+    -fx-background-insets: 5px;
+    -fx-effect: dropshadow(three-pass-box, #000, 4, 0, 1, 1);
+    -fx-padding: 5px;
+
+}
+
+.pane-bg
+{
+    -fx-background-image: url("../images/bg.jpg") ;
+    -fx-background-repeat: repeat;
+}
+
+.pane-one
+{
+    -fx-pref-width: 450px;
+    -fx-pref-height: 450px;
+    -fx-background-color: white;
+    -fx-translate-x: 20px;
+    -fx-translate-y: 20px;
+    -fx-border-color: #c6cac8;
+}
+
+.anchor-pane
+{
+    -fx-background-color: white;
+}
+
+
+.hbox-toolbar
+{
+    -fx-min-height: 20px;
+    -fx-pref-height: 20px;
+    -fx-padding: 5px;
+    -fx-background-color: #fff;
+    -fx-border-width: 1px;
+    -fx-border-color: #c6cac8;
+    -fx-border-radius: 5px;
+    -fx-spacing: 5px;
+}
+
+.hbox-label
+{
+    -fx-spacing: 2px;
+    -fx-translate-y: 0px;
+    -fx-text-fill: #989898;
+    -fx-border-color: #c6cac8;
+    -fx-border-width: 0 0 1 0;
+    -fx-alignment: center;
+}
+
+.label-labels
+{
+    -fx-font-size: 12px;
+    -fx-text-fill: #989898;
+
+}
+
+
+.text-username
+{
+    -fx-font-size: 15;
+}
+
+.text-status
+{
+    -fx-font-size: 12;
+}
+
+.jfx-text-area-message
+{
+    -jfx-focus-color: #8b0000;
+}
+
+.jfx-button-send, .jfx-button-emojis, .jfx-button-attach
+{
+    -fx-text-fill: #fff;
+    -fx-background-color: #8b0000;
+    -fx-font-family: FontAwesome;
+    -fx-background-radius: 50px;
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+}
+
+.jfx-button:hover
+{
+    -fx-cursor: hand;
+}
+
+.split-pane > .split-pane-divider {
+
+    -fx-padding: 1 1 0 0;
+    -fx-background-color: #c6cac8;
+    -fx-cursor: default;
+}
+
+.text-flow-sender
+{
+    -fx-translate-x: 60px;
+    -fx-max-width: 240px;
+    -fx-background-color: #d9dddb;
+    -fx-effect: dropshadow(three-pass-box, #000, 2, 0, 1, 1);
+    -fx-padding: 5px;
+}
+
+.text-flow-receiver
+{
+    -fx-text-fill: #fff;
+    -fx-translate-x: 0px;
+    -fx-max-width: 240px;
+    -fx-background-color: #8b0000;
+    -fx-effect: dropshadow(three-pass-box, #000, 2, 0, 1, 1);
+    -fx-padding: 5px;
+}
+
+
+
+.text-flow-receiver > Text {
+    -fx-fill: white;
+}
+
+
+.jfx-button
+{
+    -fx-text-fill: #fff;
+    -fx-background-color: #8b0000;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+}
+
+
+.jfx-button:hover
+{
+    -fx-cursor: hand;
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 0; /* its make really one-pixel-border */
+    -fx-border-color: #c6cac8;
+}
+
+.jfx-text-area{
+    -jfx-focus-color: #fff;
+    -jfx-unfocus-color: #fff;
+}

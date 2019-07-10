@@ -3,9 +3,9 @@
     -fx-pref-width: 500px;
     -fx-pref-height: 300px;
     -fx-background-color: white ;
-    -fx-background-insets: 10px;
+    -fx-background-insets: 5px;
     -fx-effect: dropshadow(three-pass-box, #000, 4, 0, 1, 1);
-    -fx-padding: 5 5 5 5;
+    -fx-padding: 5px;
 
 }
 
@@ -17,12 +17,14 @@
 
 .pane-menu
 {
-    -fx-pref-width: 250px;
+    -fx-pref-width: 390px;
     -fx-pref-height: 200px;
     -fx-background-color: #fff;
-    -fx-translate-x: 120px;
-    -fx-translate-y: 45px;
+    -fx-translate-x: 50px;
+    -fx-translate-y: 50px;
     -fx-border-color: #c6cac8;
+    -fx-padding: 5;
+
 }
 
 .hbox-toolbar
@@ -47,55 +49,40 @@
     -fx-alignment: center;
 }
 
-.label-login
+.label-profile
 {
     -fx-font-size: 12px;
     -fx-text-fill: #989898;
 }
 
-.jfx-text-field-username
+.anchor-pane-profile-picture
 {
-    -fx-translate-x: 50px;
+    -fx-pref-height: 170px;
+    -fx-border-color: #c6cac8;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.text-username
+{
     -fx-pref-width: 150px;
+    -fx-translate-x: 20px;
     -fx-translate-y: 50px;
-    -jfx-label-float: true;
-    -jfx-focus-color: #8b0000;
+    -fx-alignment: center;
 }
 
-.jfx-password-field-password
+.text-name
 {
-    -fx-translate-x: 50px;
     -fx-pref-width: 150px;
-    -fx-translate-y: 100px;
-    -jfx-label-float: true;
-    -jfx-focus-color: #8b0000;
-}
-
-.jfx-button
-{
-    -fx-text-fill: #fff;
-    -fx-background-color: #8b0000;
-}
-
-.jfx-button-login
-{
-    -fx-pref-width: 70px;
-    -fx-translate-y: 150px;
-    -fx-translate-x: 50px;
+    -fx-translate-x: 20px;
+    -fx-translate-y: 70px;
+    -fx-alignment: center;
 
 }
 
-.jfx-button-register
-{
-    -fx-pref-width: 70px;
-    -fx-translate-y: 150px;
-    -fx-translate-x: 130px;
+.split-pane > .split-pane-divider {
+
+    -fx-padding: 0 1 0 0;
+    -fx-background-color: #c6cac8;
+    -fx-cursor: default;
 }
-
-.jfx-button:hover
-{
-    -fx-cursor: hand;
-}
-
-
-
