@@ -12,6 +12,12 @@ public class ClientMain {
         Scanner scanner = new Scanner(System.in);
         String url = "rmi://localhost/Test";
         ServerSideIF chatServerIF = (ServerSideIF) Naming.lookup(url);
-        new Thread(new ClientSideImp(chatServerIF)).start();
+        new Thread(() -> {
+            try {
+                new ClientSideImp(chatServerIF,"1234567890qwerty");
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }

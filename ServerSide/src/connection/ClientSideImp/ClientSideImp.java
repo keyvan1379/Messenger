@@ -1,7 +1,10 @@
 package connection.ClientSideImp;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import connection.ClientSideIF;
 import connection.ServerSideIF;
+import dao.daoExc.GetUserex;
 import protections.AES;
 import protections.RSA;
 
@@ -10,13 +13,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Scanner;
 
-public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,Runnable {
+public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     private ServerSideIF serverSideIF;
 
     private ServerSocket serverSocket;
 
+    private AES aes;
+
+    private String AESKey;
+
+    private String username = null;
     {
         try {
             serverSocket = new ServerSocket(40900);//more pc needed
@@ -25,8 +36,9 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
         }
     }
 
-    public ClientSideImp(ServerSideIF serverSideIF) throws RemoteException {
+    public ClientSideImp(ServerSideIF serverSideIF,String AESKey) throws RemoteException {
         this.serverSideIF = serverSideIF;
+        this.AESKey = AESKey;
     }
 
     @Override
@@ -50,10 +62,179 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
             e.printStackTrace();
         }
 
-
     }
 
-    @Override
+
+    public String login(String username,String password){
+        String res;
+        try {
+            if((res = serverSideIF.login(RSA.encrypt(username,serverSideIF.getKey()),
+                    RSA.encrypt(password,serverSideIF.getKey()), this)).equals("wait for server")){
+                serverSideIF.createCon(username,RSA.encrypt(AESKey,serverSideIF.getKey()));
+                AES aes = new AES(AESKey);
+                this.username = username;
+                setStatusTo_Online();
+                return res;
+            }
+            return res;
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return "server error";
+    }
+
+    public void sendmsg(String ToUsername,String msg){
+        if(username==null){
+            System.out.println("you must first login");
+            return;
+        }
+        try {
+            serverSideIF.sendMsg(username,ToUsername,aes.encrypt(msg));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getStatus(String desusername) throws RemoteException, GetUserex {
+        if(username==null){
+            System.out.println("setStatusToOnline");
+            return null;
+        }
+        return serverSideIF.isActive(username,desusername);
+    }
+
+    public void setStatusTo_Online(){
+        if(username==null){
+            System.out.println("setStatusToOnline");
+            return;
+        }
+        try {
+            serverSideIF.setStatus(username,"-1");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+        }
+    }
+
+    public void setStatusTo_Offline(){
+        if(username==null){
+            System.out.println("setStatusToOffline");
+            return;
+        }
+        try {
+            serverSideIF.setStatus(username,"0");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+        }
+    }
+
+    public void setStatusTo_Typing(String desuser){
+        if(username==null){
+            System.out.println("setStatusToTyping");
+            return;
+        }
+        try {
+            serverSideIF.setStatus(username,desuser);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+        }
+    }
+
+    public Date get_lastseen(String username){
+        if(username==null){
+            System.out.println("get_lastseen");
+            return null;
+        }
+        try {
+            return serverSideIF.lastSeen(username);
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("get_lastseen end of method");
+        return null;
+    }
+
+    public HashMap<Integer, ArrayList> getmsg_between_2person(String desusername){
+        if(username==null){
+            System.out.println("getmsg_between_2person");
+            return null;
+        }
+        try {
+            String res = serverSideIF.getMessageBetween2Person(username,desusername);
+            res = aes.decrypt(res);
+            HashMap<Integer, ArrayList> mess = new Gson().fromJson(res,
+                    new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
+            return mess;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("getmsg_between_2person end of method");
+        return null;
+    }
+
+    public HashMap<Integer, ArrayList> getallmsg(){
+        if(username==null){
+            System.out.println("getallmsg");
+            return null;
+        }
+        try {
+            String res = serverSideIF.getAllMessages(username);
+            res = aes.decrypt(res);
+            HashMap<Integer, ArrayList> mess = new Gson().fromJson(res,
+                    new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
+            return mess;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("getallmsg");
+        return null;
+    }
+
+    public String delete_account(){
+        if(username==null){
+            System.out.println("delete_account");
+            return null;
+        }
+        try {
+            return serverSideIF.deleteProfile(username,this);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("delete_account end of method");
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*@Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
         String username;
@@ -95,14 +276,14 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
         File file = new File("C:\\Users\\ASuS\\Downloads\\ideaIU-2018.3.5.exe");
         byte[] mydata = new byte[8192];
         try {
-            /*Thread thread = new Thread(() -> {
+            *//*Thread thread = new Thread(() -> {
                 try {
                     serverSideIF.uploadFile(file.getName());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             });
-            thread.start();*/
+            thread.start();*//*
             Thread thread = new Thread(() -> {
                 try {
                     serverSideIF.uploadFile("ddddddd1",file.getName(),"ddddddd2");
@@ -132,7 +313,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
             serverSideIF.downloadFileAgain("ddddddd2",filename,"ddddddd1",this);
         } catch (RemoteException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
 
@@ -195,6 +376,4 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
             } catch (IOException e) {
                 e.printStackTrace();
             }*/
-        System.out.println("done");
-    }
 }

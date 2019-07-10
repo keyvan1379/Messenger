@@ -18,6 +18,8 @@ public interface ServerSideIF extends Remote {
     String getAllUser()throws RemoteException;
     String login(String username,String password,ClientSideIF clientSideIF) throws RemoteException;
     String signUp(User user) throws RemoteException;
+    String editProfile(String username,ClientSideIF clientSideIF,User user)throws RemoteException;
+    String deleteProfile(String username,ClientSideIF clientSideIF)throws RemoteException;
     boolean getUser(String username) throws GetUserex,RemoteException;
     ProfileInfo getUserInfo(String username) throws GetUserex,RemoteException;
     String isActive(String sourceUser,String username) throws GetUserex,RemoteException;
