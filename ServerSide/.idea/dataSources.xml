@@ -11,5 +11,24 @@
         <property name="v$session.program" value="DataGrip" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="2837efcc-15a4-4173-8195-3698a8ca5e27">
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+C:/Users/Yasaman/Desktop/Project/ServerSide/src/hibernate.cfg.xml</remarks>
+      <jdbc-driver>oracle.jdbc.driver.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@127.0.0.1:1521:XE</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="ServerSide/Hibernate" uuid="5ed79cfb-caee-418c-975a-0410b97503ea">
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <configured-by-url>true</configured-by-url>
+      <remarks>Hibernate
+
+C:/Users/Yasaman/Desktop/Project/ServerSide/src/META-INF/persistence.xml</remarks>
+      <jdbc-driver>oracle.jdbc.driver.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@127.0.0.1:1521:XE</jdbc-url>
+    </data-source>
   </component>
 </project>

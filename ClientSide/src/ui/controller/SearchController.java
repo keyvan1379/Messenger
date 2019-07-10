@@ -1,6 +1,5 @@
 package ui.controller;
 
-import chat.chatController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
