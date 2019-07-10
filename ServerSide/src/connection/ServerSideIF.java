@@ -1,6 +1,7 @@
 package connection;
 
 import dao.daoExc.GetUserex;
+import models.ProfileInfo;
 import models.User;
 
 import java.rmi.Remote;
@@ -14,10 +15,11 @@ public interface ServerSideIF extends Remote {
     PublicKey getKey() throws RemoteException;
     public void createCon(String username,String key) throws RemoteException;
     void sendMsg(String FromUsername,String ToUsername,String msg) throws Exception, RemoteException;
-    ArrayList<String> getAllOnlineUser()throws RemoteException;
+    String getAllUser()throws RemoteException;
     String login(String username,String password,ClientSideIF clientSideIF) throws RemoteException;
     String signUp(User user) throws RemoteException;
     boolean getUser(String username) throws GetUserex,RemoteException;
+    ProfileInfo getUserInfo(String username) throws GetUserex,RemoteException;
     String isActive(String sourceUser,String username) throws GetUserex,RemoteException;
     void setStatus(String username,String status) throws RemoteException, GetUserex;
     Date lastSeen(String username) throws GetUserex,RemoteException;

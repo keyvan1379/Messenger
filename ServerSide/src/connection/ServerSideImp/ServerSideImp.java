@@ -1,5 +1,6 @@
 package connection.ServerSideImp;
 
+import com.google.gson.Gson;
 import connection.ClientSideIF;
 import connection.ServerSideIF;
 import connection.SocketConnection.ClientHandler;
@@ -10,6 +11,7 @@ import dao.UserDaoImp.UserDaoImp;
 import dao.daoExc.GetUserex;
 import dao.daoExc.Passex;
 import dao.daoExc.UsernameEx;
+import models.ProfileInfo;
 import models.User;
 import protections.AES;
 import protections.MD5;
@@ -113,8 +115,15 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
-    public ArrayList<String> getAllOnlineUser() {
-        return null;
+    public String getAllUser() throws RemoteException {
+        try {
+            List<String> alluser = userDao.getUsers();
+            Gson gson = new Gson();
+            return gson.toJson(alluser);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "server error";
     }
 
     //AES added
@@ -141,12 +150,23 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
 
     //need to add AES
     @Override
-    public String signUp(User user) throws RemoteException {
+    public String signUp(User user) throws RemoteException{
         try{
             userDao.getUser(user.getUserName());
             return "this username exist pls pick another username";
         } catch (GetUserex getUserex) {
             userDao.addUser(user);
+            File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ProfilePic\\"+user.getUserName()+".jpg");
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                fileOutputStream.write(user.getProfileImage());
+                fileOutputStream.flush();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return "successful";
         }
     }
@@ -159,6 +179,12 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         }catch (GetUserex ex){
             return false;
         }
+    }
+
+    @Override
+    public ProfileInfo getUserInfo(String username) throws GetUserex, RemoteException {
+        User user = userDao.getUser(username);
+        return new ProfileInfo(user.getUserName(),user.getFistName(),user.getLastName(),user.getProfileImage());
     }
 
     @Override

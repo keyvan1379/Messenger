@@ -38,10 +38,10 @@ public class User implements Serializable {
     private String isActive = "0";
 
     @Transient
-    private BufferedImage profileImage;
+    private byte[] profileImage;
 
     public User(String fistName, String lastName, String email,
-                String userName, String passWord,Date joinTime,Date lastSeen) {
+                String userName, String passWord,Date joinTime,Date lastSeen,byte[] profileImage) {
         setFistName(fistName);
         setLastName(lastName);
         setEmail(email);
@@ -49,7 +49,7 @@ public class User implements Serializable {
         setPassWord(MD5.getMd5(passWord));
         setJoinTime(joinTime);
         setLastSeen(lastSeen);
-        //setProfileImage(profileImage);
+        setProfileImage(profileImage);
     }
 
     public User() {
@@ -98,11 +98,12 @@ public class User implements Serializable {
         return passWord;
     }
 
-    public BufferedImage getProfileImage() {
+
+    public byte[] getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(BufferedImage profileImage) {
+    public void setProfileImage(byte[] profileImage) {
         this.profileImage = profileImage;
     }
 

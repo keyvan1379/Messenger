@@ -52,7 +52,7 @@ public class Main {
         msg.addMessage("are che khabar?","sdfskjf","slam",0);
         msg.addMessage("salamati","slam","sdfskjf",0);*/
         //msg.addMessage("salamati","sdfsksdfsjf","slamsf");
-        HashMap<Integer, ArrayList> mess = new Gson().fromJson(msg.getAllChat("ddddddd1"),
+        HashMap<Integer, ArrayList> mess = new Gson().fromJson(msg.getChatBetweenTwoPerson("sdfskjf","slam"),
                 new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
         System.out.println(new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
         for (int i = 0; i < mess.size(); i++) {
@@ -73,6 +73,10 @@ public class Main {
             //Thread thread = new Thread(() -> ServerSocket.start());
             //thread.start();
             ServerSideIF chatServer = new ServerSideImp();
+            ArrayList<String> user = new Gson().fromJson(chatServer.getAllUser(),ArrayList.class);
+            for (int i = 0; i < user.size(); i++) {
+                System.out.println(user.get(i));
+            }
             Naming.rebind("Test",chatServer);
         } catch (RemoteException e) {
             e.printStackTrace();

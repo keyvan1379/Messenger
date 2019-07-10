@@ -15,8 +15,10 @@ import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.security.GeneralSecurityException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class UserDaoImp implements UserDao {
     @Override
@@ -92,8 +94,26 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public ArrayList<User> getUsers() {
-        return null;
+    public ArrayList<String> getUsers() throws Exception {
+        ArrayList<String> allUser = new ArrayList<>();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection connection = DriverManager.getConnection
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
+            PreparedStatement statement = connection.prepareStatement("SELECT USERNAME from USERS");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                allUser.add(rs.getString(1));
+            }
+            return allUser;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("wrong with query");
+        }
     }
 
     @Override
@@ -161,6 +181,7 @@ public class UserDaoImp implements UserDao {
             throw new GetUserex("this user does not exist");
         }
     }
+
 
 }
 

@@ -74,7 +74,7 @@ public class ClientHandler implements Runnable{
             inputStream.close();
             outputStream.close();
             socket.close();
-            messageQuery.addMessage(file.getPath(),fromUser,toUser,1);
+            messageQuery.addMessage(file.getPath(),fromUser,toUser,(int)file.length());
             //uploadFileToClient(file);
             //add client to send file
             if(clientSideIF==null){

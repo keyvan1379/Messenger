@@ -28,7 +28,7 @@ public class MessageQueryImp implements MessageQuery {
                     "C_ID int NOT NULL PRIMARY KEY," +
                     "USER1 varchar(255) NOT NULL, " +
                     "USER2 varchar(255) NOT NULL," +
-                    "CREATED_TIME DATE " +
+                    "CREATED_TIME varchar(255)" +
                     ")"+
                     "");
             System.out.println(statement.execute());
@@ -38,7 +38,7 @@ public class MessageQueryImp implements MessageQuery {
                     "USER1 varchar(255)," +
                     "C_ID int NOT NULL," +
                     "IS_FILE int,"+
-                    "SEND_TIME DATE," +
+                    "SEND_TIME varchar(255)," +
                     "FOREIGN KEY (C_ID)" +
                     "REFERENCES Conversation(C_ID)" +
                     ")");
@@ -67,8 +67,13 @@ public class MessageQueryImp implements MessageQuery {
                     "values (?,?,?)");
             statement.setString(1,username1);
             statement.setString(2,username2);
-            Date date = new Date();
-            statement.setDate(3,new java.sql.Date(date.getTime()));
+            java.util.Date dt = new java.util.Date();
+
+            java.text.SimpleDateFormat sdf =
+                    new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            String currentTime = sdf.format(dt);
+            statement.setString(3,currentTime);
             System.out.println(statement.execute());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -167,14 +172,15 @@ public class MessageQueryImp implements MessageQuery {
             Connection connection = DriverManager.getConnection
                     ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
             PreparedStatement statement = connection.prepareStatement("(SELECT MESSAGE.M_ID,MESSAGE.USER1 As" +
-                    "    FromUser,MESSAGE.MESSAGE,MESSAGE.IS_FILE,? AS" +
+                    "    FromUser,MESSAGE.MESSAGE,MESSAGE.IS_FILE,SEND_TIME,? AS" +
                     "    toUser FROM MESSAGE WHERE MESSAGE.C_ID IN (" +
                     "    SELECT C_ID FROM CONVERSATION" +
                     "    WHERE ((USER1 = ? AND USER2 = ?)Or" +
                     "           (USER2 = ? AND CONVERSATION.USER1= ?))" +
                     ") AND NOT MESSAGE.USER1=?" +
                     " UNION ALL" +
-                    " SELECT MESSAGE.M_ID,MESSAGE.USER1 AS User1,MESSAGE.MESSAGE,MESSAGE.IS_FILE,CASE" +
+                    " SELECT MESSAGE.M_ID,MESSAGE.USER1 AS User1,MESSAGE.MESSAGE,MESSAGE.IS_FILE,SEND_TIME," +
+                    "CASE" +
                     "        WHEN (CONVERSATION.USER1=?" +
                     "          )THEN CONVERSATION.USER2" +
                     "        WHEN (CONVERSATION.USER2=?" +
@@ -206,7 +212,8 @@ public class MessageQueryImp implements MessageQuery {
                 messages.put(i,new ArrayList<>());
                 messages.get(i).add(rs.getString(2));
                 messages.get(i).add(rs.getString(3));
-                messages.get(i++).add(rs.getString(4));
+                messages.get(i).add(rs.getString(4));
+                messages.get(i++).add(rs.getString(5));
             }
             Gson gson = new Gson();
             String json = gson.toJson(messages);
@@ -237,8 +244,13 @@ public class MessageQueryImp implements MessageQuery {
             statement.setString(4,fromUsername);
             statement.setString(5,toUsername);
             statement.setString(6,fromUsername);
-            Date date = new Date();
-            statement.setDate(7,new Date());
+            java.util.Date dt = new java.util.Date();
+
+            java.text.SimpleDateFormat sdf =
+                    new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            String currentTime = sdf.format(dt);
+            statement.setString(7,currentTime);
             statement.setInt(8,isFile);
             statement.execute();
         } catch (SQLException e) {

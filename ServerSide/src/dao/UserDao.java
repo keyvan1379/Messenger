@@ -13,6 +13,6 @@ public interface UserDao {
     void login(String username,String password);
     String isActive(String username) throws GetUserex;
     Date lastSeen(String username) throws GetUserex;
-    ArrayList<User> getUsers();
+    ArrayList<String> getUsers() throws Exception;
     User getUser(String username) throws GetUserex;
 }
