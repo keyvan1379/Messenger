@@ -52,7 +52,7 @@ public class LoginController {
 
             //register
 
-            Parent root = FXMLLoader.load(getClass().getResource("../chat/chat.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../fxml/chat.fxml"));
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.setTitle("Register");
@@ -75,7 +75,7 @@ public class LoginController {
 
     public void createNewAccount(MouseEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("register/register.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../fxml/register.fxml"));
         Stage stage = (Stage) ((Node)(event.getSource())).getScene().getWindow();
         stage.setTitle("Register");
         Scene scene = new Scene(root);
