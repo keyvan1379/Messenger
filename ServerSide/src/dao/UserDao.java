@@ -11,8 +11,8 @@ public interface UserDao {
     void deleteUser(String user);
     void updateUser(User user);
     void login(String username,String password);
-    boolean isActive(String username) throws GetUserex;
+    String isActive(String username) throws GetUserex;
     Date lastSeen(String username) throws GetUserex;
-    ArrayList<User> getUsers();
+    ArrayList<String> getUsers() throws Exception;
     User getUser(String username) throws GetUserex;
 }

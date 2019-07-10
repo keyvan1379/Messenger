@@ -1,5 +1,6 @@
 package connection.ServerSideImp;
 
+import com.google.gson.Gson;
 import connection.ClientSideIF;
 import connection.ServerSideIF;
 import connection.SocketConnection.ClientHandler;
@@ -10,12 +11,19 @@ import dao.UserDaoImp.UserDaoImp;
 import dao.daoExc.GetUserex;
 import dao.daoExc.Passex;
 import dao.daoExc.UsernameEx;
+import models.ProfileInfo;
+import models.User;
+import protections.AES;
+import protections.MD5;
+import protections.RSA;
+import sun.security.krb5.internal.crypto.RsaMd5CksumType;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,7 +47,36 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
+    public PublicKey getKey() throws RemoteException {
+        return RSA.importKey().getPublic_Key();
+    }
+
+
+    @Override
+    public void createCon(String username,String key) throws RemoteException {
+        if(clients.get(username)==null){
+            System.out.println("need to submit in login method");
+            return;
+        }
+        AES aes = null;
+        try {
+            aes = new AES(RSA.importKey().decrypt(key));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        aes.exportKey(username);
+    }
+
+    //AES added
+    //security needed
+    @Override
     public void sendMsg(String FromUsername,String ToUsername, String msg) throws Exception {
+        if(clients.get(FromUsername)==null){
+            System.out.println("send meesage from known username");
+            return;
+        }
+        AES aes = AES.importKey(FromUsername);
+        msg = aes.decrypt(msg);
         try {
             if (!messageQuery.isChatExist(FromUsername, ToUsername) & userDao.getUser(ToUsername)!=null)
                 messageQuery.addChat(FromUsername, ToUsername);
@@ -59,7 +96,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             else {
                 try {
                     userDao.getUser(ToUsername);
-                    clients.get(ToUsername).getMessage(msg);
+                    clients.get(ToUsername).getMessage(FromUsername,AES.importKey(ToUsername).encrypt(msg),0);
                     messageQuery.addMessage(msg,FromUsername,ToUsername,0);
                 }catch (GetUserex ex){
                     System.out.println(ex.getMessage());
@@ -78,12 +115,28 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
-    public ArrayList<String> getAllOnlineUser() {
-        return null;
+    public String getAllUser() throws RemoteException {
+        try {
+            List<String> alluser = userDao.getUsers();
+            Gson gson = new Gson();
+            return gson.toJson(alluser);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "server error";
     }
 
+    //AES added
     @Override
     public String login(String username, String password,ClientSideIF clientSideIF) {
+
+        try {
+            username = RSA.importKey().decrypt(username);
+            password = RSA.importKey().decrypt(password);
+            password = MD5.getMd5(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             userDao.login(username,password);
             clients.put(username,clientSideIF);
@@ -92,6 +145,29 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             return ex.getMessage();
         }catch (Passex ex){
             return ex.getMessage();
+        }
+    }
+
+    //need to add AES
+    @Override
+    public String signUp(User user) throws RemoteException{
+        try{
+            userDao.getUser(user.getUserName());
+            return "this username exist pls pick another username";
+        } catch (GetUserex getUserex) {
+            userDao.addUser(user);
+            File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ProfilePic\\"+user.getUserName()+".jpg");
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                fileOutputStream.write(user.getProfileImage());
+                fileOutputStream.flush();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return "successful";
         }
     }
 
@@ -106,8 +182,42 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
-    public boolean isActive(String username) throws GetUserex {
-        return userDao.isActive(username);
+    public ProfileInfo getUserInfo(String username) throws GetUserex, RemoteException {
+        User user = userDao.getUser(username);
+        File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ProfilePic\\"+user.getUserName()+".jpg");
+        byte[] profile = new byte[(int) file.length()];
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(profile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ProfileInfo(user.getUserName(),user.getFistName(),user.getLastName(),profile);
+    }
+
+    @Override
+    public String isActive(String sourceUser,String username) throws GetUserex {
+        if(userDao.isActive(username).equals(sourceUser)){
+            return "typing...";
+        }
+        try {
+            if (Integer.parseInt(userDao.isActive(username)) == -1) {
+                return "online";
+            }
+            return "offline";
+        }catch (NumberFormatException e){
+            return "offline";
+        }
+    }
+
+    @Override
+    public void setStatus(String username,String status) throws RemoteException, GetUserex {
+        if(clients.get(username)==null){
+            return;
+        }
+        userDao.getUser(username).setIsActive(status);
     }
 
     @Override
@@ -115,15 +225,26 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         return userDao.lastSeen(username);
     }
 
+    //AES Added
+    //Security needed(check if client in list)
     @Override
     public String getAllMessages(String username1) {
-        return messageQuery.getAllChat(username1);
+        AES aes = AES.importKey(username1);
+        try {
+            return aes.encrypt(messageQuery.getAllChat(username1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
+    //AES Added
+    //Security needed(check if client in list)
     @Override
     public String getMessageBetween2Person(String username1, String username2) throws Exception {
+        AES aes = AES.importKey(username1);
         if(messageQuery.isChatExist(username1,username2))
-            return messageQuery.getChatBetweenTwoPerson(username1,username2);
+            return aes.encrypt(messageQuery.getChatBetweenTwoPerson(username1,username2));
         else
             throw new IllegalArgumentException("chat dose not exist between this 2 username");
     }
@@ -151,6 +272,24 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //check comment
+    @Override
+    public void downloadFileAgain(String fromUsername, String fileName,
+                                  String username,ClientSideIF clientSideIF) {
+        //need to check if file in their message(Security warning)
+        /*if(clients.get(username) != clientSideIF){
+            System.out.println("hiiiiii");
+            return;
+        }*/
+        ClientHandler clientHandler = new ClientHandler
+                (null,null,null,
+                        fileName,fromUsername,username,clientSideIF);
+        System.out.println(fileName);
+        Thread t = new Thread(() -> clientHandler.uploadFileToClient(new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\" +
+                "downloadFiles\\"+fileName)));
+        t.start();
     }
 
     private String getAlphaNumericString(int n)

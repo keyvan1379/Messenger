@@ -1,14 +1,16 @@
 package models;
 
 import com.sun.javafx.beans.IDProperty;
+import protections.MD5;
 
 import javax.persistence.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.InputMismatchException;
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "USERNAME")
@@ -33,21 +35,21 @@ public class User {
     private Date lastSeen;
 
     @Column(name = "STATUS")
-    private boolean isActive = false;
+    private String isActive = "0";
 
     @Transient
-    private BufferedImage profileImage;
+    private byte[] profileImage;
 
     public User(String fistName, String lastName, String email,
-                String userName, String passWord,Date joinTime,Date lastSeen) {
+                String userName, String passWord,Date joinTime,Date lastSeen,byte[] profileImage) {
         setFistName(fistName);
         setLastName(lastName);
         setEmail(email);
         setUserName(userName);
-        setPassWord(passWord);
+        setPassWord(MD5.getMd5(passWord));
         setJoinTime(joinTime);
         setLastSeen(lastSeen);
-        //setProfileImage(profileImage);
+        setProfileImage(profileImage);
     }
 
     public User() {
@@ -96,11 +98,12 @@ public class User {
         return passWord;
     }
 
-    public BufferedImage getProfileImage() {
+
+    public byte[] getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(BufferedImage profileImage) {
+    public void setProfileImage(byte[] profileImage) {
         this.profileImage = profileImage;
     }
 
@@ -120,12 +123,12 @@ public class User {
         this.lastSeen = lastSeen;
     }
 
-    public boolean isActive() {
+    public String getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 }
 

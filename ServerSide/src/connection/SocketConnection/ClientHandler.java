@@ -3,6 +3,7 @@ package connection.SocketConnection;
 import connection.ClientSideIF;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
+import protections.AES;
 
 import java.io.*;
 import java.net.Socket;
@@ -28,6 +29,36 @@ public class ClientHandler implements Runnable{
         this.clientSideIF = clientSideIF;
     }
 
+    public void uploadFileToClient(File file){
+        int count;
+        byte[] data = new byte[8192];
+        try {
+            if (clientSideIF == null) {
+                return;
+            } else {
+                Thread t = new Thread(() -> {
+                    try {
+                        clientSideIF.downloadFile(fromUser, filename);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                });
+                t.start();
+                Socket socket = new Socket("localhost", 40900);//not local host must be clientsideif ip address
+                FileInputStream fileInputStream = new FileInputStream(file);
+                OutputStream outputStream1 = socket.getOutputStream();
+                while ((count = fileInputStream.read(data)) != -1) {
+                    outputStream1.write(data, 0, count);
+                }
+                outputStream1.flush();
+                fileInputStream.close();
+                outputStream1.close();
+                socket.close();
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
     @Override
     public void run() {
         try {
@@ -43,31 +74,17 @@ public class ClientHandler implements Runnable{
             inputStream.close();
             outputStream.close();
             socket.close();
-            messageQuery.addMessage(file.getPath(),fromUser,toUser,1);
+            messageQuery.addMessage(file.getPath(),fromUser,toUser,(int)file.length());
+            //uploadFileToClient(file);
+            //add client to send file
             if(clientSideIF==null){
                 return;
             }else{
-                Thread t = new Thread(() -> {
-                    try {
-                        clientSideIF.downloadFile(fromUser,filename.substring(16));
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                });
-                t.start();
-                Socket socket = new Socket("localhost",40900);//not local host must be clientsideif ip address
-                FileInputStream fileInputStream = new FileInputStream(file);
-                OutputStream outputStream1 = socket.getOutputStream();
-                while ((count = fileInputStream.read(data))!=-1){
-                    outputStream1.write(data,0,count);
-                }
-                outputStream1.flush();
-                fileInputStream.close();
-                outputStream1.close();
-                socket.close();
+                clientSideIF.getMessage(fromUser, AES.importKey(toUser).encrypt(filename),file.length());
             }
-            //add client to send file
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
