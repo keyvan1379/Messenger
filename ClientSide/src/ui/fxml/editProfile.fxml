@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
+
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<AnchorPane styleClass="pane-main" stylesheets="@editProfileStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.EditProfileController">
+    <AnchorPane prefHeight="300.0" prefWidth="500.0" styleClass="pane-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+
+            <HBox alignment="CENTER_RIGHT" styleClass="hbox-toolbar" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                <FontAwesomeIconView glyphName="ARROWS_ALT" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" style="-fx-cursor: hand"/>
+                <FontAwesomeIconView glyphName="CLOSE" onMouseClicked="#closeWindow" style="-fx-cursor: hand"/>
+            </HBox>
+
+            <AnchorPane styleClass="pane-menu">
+
+                    <HBox styleClass="hbox-label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
+
+                            <Label fx:id="label" styleClass="label-edit" />
+
+                    </HBox>
+
+                    <JFXTextField fx:id="email" styleClass="jfx-text-field-email"/>
+                    <JFXPasswordField fx:id="password" styleClass="jfx-password-field-password"/>
+                    <JFXButton onMouseClicked="#chooseImageFromFiles" buttonType="RAISED" fx:id="chooseProfilePicture" styleClass="jfx-button-chooseProfilePicture"/>
+                    <ImageView fx:id="profilePicture" styleClass="image-view-profilePicture" />
+
+                    <JFXTextField fx:id="firstname" styleClass="jfx-text-field-firstname"/>
+                    <JFXTextField fx:id="lastname" styleClass="jfx-text-field-lastname"/>
+                    <JFXTextField fx:id="username" styleClass="jfx-text-field-username"/>
+
+                    <JFXButton onMouseClicked="#saveChanges" buttonType="RAISED" fx:id="saveButton" styleClass="jfx-button-save"/>
+                    <JFXButton onMouseClicked="#cancel" buttonType="RAISED" fx:id="cancelButton" styleClass="jfx-button-cancel"/>
+
+
+            </AnchorPane>
+
+
+    </AnchorPane>
+
+
+</AnchorPane>
