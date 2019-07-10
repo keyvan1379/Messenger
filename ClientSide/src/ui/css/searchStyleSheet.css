@@ -1,0 +1,119 @@
+.pane-main
+{
+    -fx-pref-width: 500px;
+    -fx-pref-height: 300px;
+    -fx-background-color: white ;
+    -fx-background-insets: 10px;
+    -fx-effect: dropshadow(three-pass-box, #000, 4, 0, 1, 1);
+    -fx-padding: 5 5 5 5;
+
+}
+
+.pane-bg
+{
+    -fx-background-image: url("../images/bg.jpg") ;
+    -fx-background-repeat: repeat;
+}
+
+.pane-menu
+{
+    -fx-pref-width: 250px;
+    -fx-pref-height: 220px;
+    -fx-background-color: #fff;
+    -fx-translate-x: 120px;
+    -fx-translate-y: 35px;
+    -fx-border-color: #c6cac8;
+}
+
+.hbox-toolbar
+{
+    -fx-min-height: 20px;
+    -fx-pref-height: 20px;
+    -fx-padding: 5px;
+    -fx-background-color: #fff;
+    -fx-border-width: 1px;
+    -fx-border-color: #c6cac8;
+    -fx-border-radius: 5px;
+    -fx-spacing: 5px;
+}
+
+.hbox-label
+{
+    -fx-spacing: 2px;
+    -fx-translate-y: 0px;
+    -fx-text-fill: #989898;
+    -fx-border-color: #c6cac8;
+    -fx-border-width: 0 0 1 0;
+    -fx-alignment: center;
+}
+
+.label-search
+{
+    -fx-font-size: 12px;
+    -fx-text-fill: #989898;
+}
+
+.scroll-pane
+{
+    -fx-pref-width: 190px;
+    -fx-pref-height: 100px;
+    -fx-translate-x: 30px;
+    -fx-translate-y: 75px;
+}
+
+.jfx-text-field-username
+{
+    -fx-pref-width: 150px;
+    -fx-translate-x: 30px;
+    -fx-translate-y: 40px;
+    -jfx-label-float: true;
+    -jfx-focus-color: #8b0000;
+}
+
+.jfx-button
+{
+    -fx-text-fill: #fff;
+    -fx-background-color: #8b0000;
+}
+
+.jfx-button:hover
+{
+    -fx-cursor: hand;
+}
+
+
+.jfx-button-search
+{
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+    -fx-translate-x: 190px;
+    -fx-translate-y: 38px;
+    -fx-font-family: FontAwesome;
+    -fx-background-radius: 50px;
+}
+
+.jfx-button-start-chatting
+{
+    -fx-pref-width: 190px;
+    -fx-translate-x: 30px;
+    -fx-translate-y: 180px;
+}
+
+.radio-button
+{
+    -fx-padding : 1 0 1 2;
+}
+
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: #989898;
+    -fx-background-color: white;
+    -fx-background-image: null;
+    -fx-border-radius: 15px;
+    -fx-padding: 3px;
+}
+
+.radio-button .dot {
+    -fx-background-radius: 15px;
+    -fx-padding: 3px;
+}
