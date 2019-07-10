@@ -1,77 +1,101 @@
-.pane
+.pane-main
 {
     -fx-pref-width: 500px;
     -fx-pref-height: 300px;
-    -fx-background-color: #fff;
-    -fx-background-insets: 5px;
-    -fx-padding: 10px;
+    -fx-background-color: white ;
+    -fx-background-insets: 10px;
     -fx-effect: dropshadow(three-pass-box, #000, 4, 0, 1, 1);
+    -fx-padding: 5 5 5 5;
+
+}
+
+.pane-bg
+{
+    -fx-background-image: url("../images/bg.jpg") ;
+    -fx-background-repeat: repeat;
+}
+
+.pane-menu
+{
+    -fx-pref-width: 250px;
+    -fx-pref-height: 200px;
+    -fx-background-color: #fff;
+    -fx-translate-x: 120px;
+    -fx-translate-y: 45px;
+    -fx-border-color: #c6cac8;
 }
 
 .hbox-toolbar
 {
-    -fx-pref-width: 500px;
     -fx-min-height: 20px;
     -fx-pref-height: 20px;
-    -fx-background-color: #d9dddb;
+    -fx-padding: 5px;
+    -fx-background-color: #fff;
+    -fx-border-width: 1px;
+    -fx-border-color: #c6cac8;
+    -fx-border-radius: 5px;
     -fx-spacing: 5px;
 }
 
-.image-view-close
+.hbox-label
 {
-    -fx-image: url("../icons/close.png");
-
-}
-
-.image-view-minimize
-{
-    -fx-image: url("../icons/minimize.png");
-
+    -fx-spacing: 2px;
+    -fx-translate-y: 0px;
+    -fx-text-fill: #989898;
+    -fx-border-color: #c6cac8;
+    -fx-border-width: 0 0 1 0;
+    -fx-alignment: center;
 }
 
 .label-login
 {
-    -fx-pref-width: 100px;
-    -fx-alignment: center;
-    -fx-text-alignment: center;
-    -fx-translate-x: 200px;
-    -fx-translate-y: 50px;
+    -fx-font-size: 12px;
+    -fx-text-fill: #989898;
 }
 
 .jfx-text-field-username
 {
-    -fx-translate-x: 175px;
+    -fx-translate-x: 50px;
     -fx-pref-width: 150px;
-    -fx-translate-y: 100px;
+    -fx-translate-y: 50px;
     -jfx-label-float: true;
+    -jfx-focus-color: #8b0000;
 }
 
 .jfx-password-field-password
 {
-    -fx-translate-x: 175px;
+    -fx-translate-x: 50px;
     -fx-pref-width: 150px;
-    -fx-translate-y: 150px;
+    -fx-translate-y: 100px;
     -jfx-label-float: true;
+    -jfx-focus-color: #8b0000;
+}
+
+.jfx-button
+{
+    -fx-text-fill: #fff;
+    -fx-background-color: #8b0000;
 }
 
 .jfx-button-login
 {
     -fx-pref-width: 70px;
-    -fx-translate-y: 200px;
-    -fx-translate-x: 175px;
+    -fx-translate-y: 150px;
+    -fx-translate-x: 50px;
 
 }
 
 .jfx-button-register
 {
     -fx-pref-width: 70px;
-    -fx-translate-y: 200px;
-    -fx-translate-x: 255px;
+    -fx-translate-y: 150px;
+    -fx-translate-x: 130px;
 }
 
 .jfx-button:hover
 {
     -fx-cursor: hand;
 }
+
 
 
