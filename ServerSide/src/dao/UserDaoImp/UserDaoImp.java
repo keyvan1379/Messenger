@@ -133,7 +133,7 @@ public class UserDaoImp implements UserDao {
                 throw new Passex("Wrong password");
             }
             user.setLastSeen(new Date());
-            user.setActive(true);
+            user.setIsActive("-1");
             updateUser(user);
         } catch (GetUserex getUserex) {
             throw new UsernameEx("this username does not exist");
@@ -141,11 +141,11 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public boolean isActive(String username) throws GetUserex {
+    public String isActive(String username) throws GetUserex {
         User user;
         try {
             user = getUser(username);
-            return user.isActive();
+            return user.getIsActive();
         } catch (GetUserex getUserex) {
             throw new GetUserex("this user does not exist");
         }
@@ -161,6 +161,7 @@ public class UserDaoImp implements UserDao {
             throw new GetUserex("this user does not exist");
         }
     }
+
 }
 
 

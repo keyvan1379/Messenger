@@ -238,7 +238,7 @@ public class MessageQueryImp implements MessageQuery {
             statement.setString(5,toUsername);
             statement.setString(6,fromUsername);
             Date date = new Date();
-            statement.setDate(7,new java.sql.Date(date.getTime()));
+            statement.setDate(7,new Date());
             statement.setInt(8,isFile);
             statement.execute();
         } catch (SQLException e) {

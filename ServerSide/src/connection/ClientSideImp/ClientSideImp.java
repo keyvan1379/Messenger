@@ -30,7 +30,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF,R
     }
 
     @Override
-    public void getMessage(String message) {
+    public void getMessage(String FromUser,String message,long isfile) {
         System.out.println(message);
     }
 

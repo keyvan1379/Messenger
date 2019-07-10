@@ -35,7 +35,7 @@ public class User implements Serializable {
     private Date lastSeen;
 
     @Column(name = "STATUS")
-    private boolean isActive = false;
+    private String isActive = "0";
 
     @Transient
     private BufferedImage profileImage;
@@ -122,12 +122,12 @@ public class User implements Serializable {
         this.lastSeen = lastSeen;
     }
 
-    public boolean isActive() {
+    public String getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 }
 

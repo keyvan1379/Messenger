@@ -94,7 +94,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             else {
                 try {
                     userDao.getUser(ToUsername);
-                    clients.get(ToUsername).getMessage(AES.importKey(ToUsername).encrypt(msg));
+                    clients.get(ToUsername).getMessage(FromUsername,AES.importKey(ToUsername).encrypt(msg),0);
                     messageQuery.addMessage(msg,FromUsername,ToUsername,0);
                 }catch (GetUserex ex){
                     System.out.println(ex.getMessage());
@@ -162,8 +162,26 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
-    public boolean isActive(String username) throws GetUserex {
-        return userDao.isActive(username);
+    public String isActive(String sourceUser,String username) throws GetUserex {
+        if(userDao.isActive(username).equals(sourceUser)){
+            return "typing...";
+        }
+        try {
+            if (Integer.parseInt(userDao.isActive(username)) == -1) {
+                return "online";
+            }
+            return "offline";
+        }catch (NumberFormatException e){
+            return "offline";
+        }
+    }
+
+    @Override
+    public void setStatus(String username,String status) throws RemoteException, GetUserex {
+        if(clients.get(username)==null){
+            return;
+        }
+        userDao.getUser(username).setIsActive(status);
     }
 
     @Override
@@ -220,6 +238,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         }
     }
 
+    //check comment
     @Override
     public void downloadFileAgain(String fromUsername, String fileName,
                                   String username,ClientSideIF clientSideIF) {

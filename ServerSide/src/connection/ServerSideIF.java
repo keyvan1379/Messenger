@@ -18,7 +18,8 @@ public interface ServerSideIF extends Remote {
     String login(String username,String password,ClientSideIF clientSideIF) throws RemoteException;
     String signUp(User user) throws RemoteException;
     boolean getUser(String username) throws GetUserex,RemoteException;
-    boolean isActive(String username) throws GetUserex,RemoteException;
+    String isActive(String sourceUser,String username) throws GetUserex,RemoteException;
+    void setStatus(String username,String status) throws RemoteException, GetUserex;
     Date lastSeen(String username) throws GetUserex,RemoteException;
     String getAllMessages(String username1) throws RemoteException;
     String getMessageBetween2Person(String username1,String username2) throws Exception,RemoteException;

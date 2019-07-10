@@ -3,6 +3,7 @@ package connection.SocketConnection;
 import connection.ClientSideIF;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
+import protections.AES;
 
 import java.io.*;
 import java.net.Socket;
@@ -74,9 +75,16 @@ public class ClientHandler implements Runnable{
             outputStream.close();
             socket.close();
             messageQuery.addMessage(file.getPath(),fromUser,toUser,1);
-            uploadFileToClient(file);
+            //uploadFileToClient(file);
             //add client to send file
+            if(clientSideIF==null){
+                return;
+            }else{
+                clientSideIF.getMessage(fromUser, AES.importKey(toUser).encrypt(filename),file.length());
+            }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
