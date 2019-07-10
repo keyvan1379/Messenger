@@ -184,7 +184,17 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     @Override
     public ProfileInfo getUserInfo(String username) throws GetUserex, RemoteException {
         User user = userDao.getUser(username);
-        return new ProfileInfo(user.getUserName(),user.getFistName(),user.getLastName(),user.getProfileImage());
+        File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ProfilePic\\"+user.getUserName()+".jpg");
+        byte[] profile = new byte[(int) file.length()];
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(profile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ProfileInfo(user.getUserName(),user.getFistName(),user.getLastName(),profile);
     }
 
     @Override
