@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public interface ServerSideIF extends Remote {
     PublicKey getKey() throws RemoteException;
-    public void createCon(String username,String key) throws RemoteException;
+    void createCon(String username,String key) throws RemoteException;
     void sendMsg(String FromUsername,String ToUsername,String msg) throws Exception, RemoteException;
     String getAllUser()throws RemoteException;
     String login(String username,String password,ClientSideIF clientSideIF) throws RemoteException;

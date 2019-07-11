@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import connection.ClientSideIF;
 import connection.ServerSideIF;
 import dao.daoExc.GetUserex;
+import models.ProfileInfo;
+import models.User;
 import protections.AES;
 import protections.RSA;
 
@@ -65,13 +67,23 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     }
 
 
+    public String sign_up(User user){
+        try {
+            return serverSideIF.signUp(user);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("sign_up end of method");
+        return null;
+    }
+
     public String login(String username,String password){
         String res;
         try {
             if((res = serverSideIF.login(RSA.encrypt(username,serverSideIF.getKey()),
                     RSA.encrypt(password,serverSideIF.getKey()), this)).equals("wait for server")){
                 serverSideIF.createCon(username,RSA.encrypt(AESKey,serverSideIF.getKey()));
-                AES aes = new AES(AESKey);
+                aes = new AES(AESKey);
                 this.username = username;
                 setStatusTo_Online();
                 return res;
@@ -95,7 +107,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
     }
 
-    public String getStatus(String desusername) throws RemoteException, GetUserex {
+    public String get_Status(String desusername) throws RemoteException, GetUserex {
         if(username==null){
             System.out.println("setStatusToOnline");
             return null;
@@ -179,9 +191,9 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         return null;
     }
 
-    public HashMap<Integer, ArrayList> getallmsg(){
+    public HashMap<Integer, ArrayList> get_all_msg(){
         if(username==null){
-            System.out.println("getallmsg");
+            System.out.println("get_all_msg");
             return null;
         }
         try {
@@ -193,7 +205,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("getallmsg");
+        System.out.println("get_all_msg");
         return null;
     }
 
@@ -210,6 +222,69 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         System.out.println("delete_account end of method");
         return null;
     }
+
+    public String edit_profile(User user){
+        if(username==null){
+            System.out.println("edit_profile");
+            return null;
+        }
+        try {
+            return serverSideIF.editProfile(username,this,user);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("edit_profile end of method");
+        return null;
+    }
+
+    public boolean is_User_exist(String username){
+        if(username==null){
+            System.out.println("is_User_exist");
+            return false;
+        }
+        try {
+            return serverSideIF.getUser(username);
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("is_User_exist end of method");
+        return false;
+    }
+
+    public ArrayList<String> get_All_User(){
+        if(username==null){
+            System.out.println("get_All_User");
+            return null;
+        }
+        try {
+            ArrayList<String> user = new Gson().fromJson(serverSideIF.getAllUser(),ArrayList.class);
+            return user;
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("get_All_User end of method");
+        return null;
+    }
+
+    public ProfileInfo get_User_Profile(String username){
+        if(username==null){
+            System.out.println("get_User_Profile");
+            return null;
+        }
+        try {
+            return serverSideIF.getUserInfo(username);
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("get_User_Profile end of method");
+        return null;
+    }
+
 
 
 

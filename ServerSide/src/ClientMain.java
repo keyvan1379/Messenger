@@ -1,10 +1,14 @@
 import connection.ClientSideImp.ClientSideImp;
 import connection.ServerSideIF;
+import dao.daoExc.GetUserex;
+import models.ProfileInfo;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ClientMain {
@@ -12,12 +16,66 @@ public class ClientMain {
         Scanner scanner = new Scanner(System.in);
         String url = "rmi://localhost/Test";
         ServerSideIF chatServerIF = (ServerSideIF) Naming.lookup(url);
-        new Thread(() -> {
+        ClientSideImp csi = new ClientSideImp(chatServerIF,"1234567890qwerty");
+        String s;
+        String t;
+        String o;
+        outterline:
+        while (true){
+            switch (s = scanner.nextLine()){
+                case "login":
+                    t = scanner.nextLine();
+                    o = scanner.nextLine();
+                    csi.login(t,o);
+                    break;
+                case "getuserstatus":
+                    try {
+                        t = scanner.nextLine();
+                        System.out.println(csi.get_Status(t));
+                    } catch (GetUserex getUserex) {
+                        getUserex.printStackTrace();
+                    }
+                    break;
+                case "getlastseen":
+                    t = scanner.nextLine();
+                    System.out.println(csi.get_lastseen(t));
+                    break;
+                case "getallmsg":
+                    t = scanner.nextLine();
+                    HashMap<Integer, ArrayList> msg = csi.getmsg_between_2person(t);
+                    for (int i = 0; i < msg.size(); i++) {
+                        msg.get(i).stream().forEach(x -> System.out.print(x + " "));
+                        System.out.println();
+                    }
+                    break;
+                case "getalluser":
+                    ArrayList<String> users = csi.get_All_User();
+                    for (int i = 0; i < users.size(); i++) {
+                        System.out.print(users.get(i) + " ");
+                    }
+                    break;
+                case "sendmsg":
+                    t = scanner.nextLine();
+                    o = scanner.nextLine();
+                    csi.sendmsg(t,o);
+                    break;
+                case "getuserprofile":
+                    t = scanner.nextLine();
+                    ProfileInfo profileInfo = csi.get_User_Profile(t);
+                    System.out.println(profileInfo.getFirstname());
+                    System.out.println(profileInfo.getLastname());
+                    System.out.println(profileInfo.getUsername());
+                    break;
+                case "exit":
+                    break outterline;
+            }
+        }
+        /*new Thread(() -> {
             try {
                 new ClientSideImp(chatServerIF,"1234567890qwerty");
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-        }).start();
+        }).start();*/
     }
 }
