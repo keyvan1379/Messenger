@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-main" stylesheets="@../css/chatStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.chatController">
+<AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-main" stylesheets="@../css/chatStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.ChatController">
 
       <AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
@@ -99,7 +99,7 @@
 
                                <JFXButton fx:id="attachButton" buttonType="RAISED" onMouseClicked="#attachFile" style="padding: 3px;" styleClass="jfx-button-attach" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="63.0">
                                <graphic>
-                                   <FontAwesomeIconView fill="WHITE" glyphName="FILE" size="16.0" />
+                                   <FontAwesomeIconView fill="WHITE" glyphName="UPLOAD" size="16.0" />
                                </graphic>
                                </JFXButton>
 

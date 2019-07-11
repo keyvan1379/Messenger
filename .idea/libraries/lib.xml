@@ -20,6 +20,7 @@
       <root url="jar://$PROJECT_DIR$/ServerSide/lib/txw2-2.3.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/ServerSide/lib/hibernate-commons-annotations-5.1.0.Final.jar!/" />
       <root url="jar://$USER_HOME$/Downloads/jfoenix-8.0.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../fontawesomefx-8.9.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
