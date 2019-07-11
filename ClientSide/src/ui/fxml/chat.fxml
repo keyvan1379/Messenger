@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-main" stylesheets="@../css/chatStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.chatController">
+<AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-main" stylesheets="@../css/chatStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.ChatController">
 
       <AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
@@ -99,9 +99,57 @@
 
                                <JFXButton fx:id="attachButton" buttonType="RAISED" onMouseClicked="#attachFile" style="padding: 3px;" styleClass="jfx-button-attach" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="63.0">
                                <graphic>
-                                   <FontAwesomeIconView fill="WHITE" glyphName="FILE" size="16.0" />
+                                   <FontAwesomeIconView fill="WHITE" glyphName="UPLOAD" size="16.0" />
                                </graphic>
                                </JFXButton>
+
+                            <ScrollPane fx:id="emojiListPane" fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" layoutX="10.0" layoutY="10.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0">
+                                <VBox>
+                                    <HBox prefHeight="60.0" prefWidth="200.0" spacing="4.0">
+                                        <Text styleClass="text-emoji" text="😁" />
+                                        <Text styleClass="text-emoji" text="😂" />
+                                        <Text styleClass="text-emoji" text="😃" />
+                                        <Text styleClass="text-emoji" text="😄" />
+                                        <Text styleClass="text-emoji" text="😅" />
+
+                                        <Text styleClass="text-emoji" text="😆" />
+                                        <Text styleClass="text-emoji" text="😉" />
+                                        <Text styleClass="text-emoji" text="😊" />
+                                        <Text styleClass="text-emoji" text="😋" />
+                                        <Text styleClass="text-emoji" text="😎" />
+
+                                        <Text styleClass="text-emoji" text="😌" />
+                                        <Text styleClass="text-emoji" text="😜" />
+                                        <Text styleClass="text-emoji" text="😝" />
+                                        <Text styleClass="text-emoji" text="😒" />
+                                        <Text styleClass="text-emoji" text="😓" />
+
+                                    </HBox>
+
+                                    <HBox prefHeight="600.0" prefWidth="200.0" spacing="4">
+                                        <Text styleClass="text-emoji" text="😍" />
+                                        <Text styleClass="text-emoji" text="😘" />
+                                        <Text styleClass="text-emoji" text="😚" />
+                                        <Text styleClass="text-emoji" text="😫" />
+                                        <Text styleClass="text-emoji" text="😐" />
+
+                                        <Text styleClass="text-emoji" text="😶" />
+                                        <Text styleClass="text-emoji" text="😏" />
+                                        <Text styleClass="text-emoji" text="😣" />
+                                        <Text styleClass="text-emoji" text="😥" />
+                                        <Text styleClass="text-emoji" text="😪" />
+
+                                        <Text styleClass="text-emoji" text="😔" />
+                                        <Text styleClass="text-emoji" text="😢" />
+                                        <Text styleClass="text-emoji" text="😖" />
+                                        <Text styleClass="text-emoji" text="😞" />
+                                        <Text styleClass="text-emoji" text="😤" />
+
+
+                                    </HBox>
+
+                                </VBox>
+                            </ScrollPane>
 
                         </AnchorPane>
 

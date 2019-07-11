@@ -74,6 +74,7 @@
 .jfx-text-area-message
 {
     -jfx-focus-color: #8b0000;
+    -fx-font-size: 14px;
 }
 
 .jfx-button-send, .jfx-button-emojis, .jfx-button-attach
@@ -147,4 +148,10 @@
 .jfx-text-area{
     -jfx-focus-color: #fff;
     -jfx-unfocus-color: #fff;
+}
+
+.text-emoji
+{
+    -fx-font-size: 20;
+    -fx-cursor: hand;
 }

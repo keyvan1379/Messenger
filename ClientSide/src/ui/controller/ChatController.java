@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,10 +23,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import search.searchController;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -79,6 +81,8 @@ public class ChatController {
     @FXML private JFXButton logOutButton;
     @FXML private JFXButton deleteAccountButton;
 
+    @FXML private ScrollPane emojiListPane;
+
     String sender = "userOne";
     String receiver = "userTwo";
 
@@ -90,6 +94,9 @@ public class ChatController {
     public void initialize() {
 
         SearchController.chatController = this;
+
+        emojiListPane.setVisible(false);
+        setEmojiList();
 
         sendButton.setText("");
         openEmojisButton.setText("");
@@ -109,7 +116,7 @@ public class ChatController {
 
         username.setText("\nNo User Selected!");
         status.setText("");
-        Image image = new Image(new File("C:\\Users\\Yasaman\\Desktop\\Project\\ClientSide\\src\\ui\\images\\user.png").toURI().toString());
+        Image image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString());
         profilePicture.setImage(image);
         profilePicture.setFitHeight(60);
         profilePicture.setPreserveRatio(true);
@@ -130,12 +137,29 @@ public class ChatController {
 
     }
 
+    private void setEmojiList()
+    {
+        VBox emojiListVBox = (VBox) emojiListPane.getContent();
+        for (Node hbox :
+                emojiListVBox.getChildren()) {
+            for (Node emoji :
+                    ((HBox)hbox).getChildren()) {
+                emoji.setCursor(Cursor.HAND);
+                emoji.setOnMouseClicked(event ->
+                {
+                    messageTextArea.setText( messageTextArea.getText() + ((Text)emoji).getText() );
+                    emojiListPane.setVisible(false);
+                });
+            }
+        }
+    }
+
     private void loadMessages (String username) //(String username)
     {
 //        set username and profile picture and status
         this.username.setText(username);
         this.status.setText("");
-        Image image = new Image(new File("D:\\IdeaProjects\\JavaFXTutorials\\src\\profile\\pic.jpg").toURI().toString());
+        Image image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString());
         profilePicture.setImage(image);
         profilePicture.setFitHeight(60);
         profilePicture.setPreserveRatio(true);
@@ -210,21 +234,25 @@ public class ChatController {
     }
 
     public void openEmojis(MouseEvent mouseEvent) {
+        emojiListPane.setVisible(true);
     }
 
     public void attachFile(MouseEvent mouseEvent) {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(((Node) mouseEvent.getSource()).getScene().getWindow());
+        //send file
     }
 
     public void showProfile(MouseEvent mouseEvent) throws IOException {
         if (isChatOpen)
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../profile/profile.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/profile.fxml"));
+            Parent root = fxmlLoader.load();
             ProfileController profileController = fxmlLoader.<ProfileController>getController();
             System.out.println(profileController);
             profileController.setUsername("username");
             profileController.setName("name");
-            File file = new File("D:\\IdeaProjects\\JavaFXTutorials\\src\\profile\\pic.jpg");
+            File file = new File("ClientSide/src/ui/images/user.png");
             Image image = new Image(file.toURI().toString());
             profileController.setProfilePicture(image);
 
@@ -247,8 +275,8 @@ public class ChatController {
 
     public void OpenAddUserWindow(MouseEvent mouseEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../search/search.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/search.fxml"));
+        Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root);
@@ -261,9 +289,9 @@ public class ChatController {
     public void addUser(String username)
     {
         HBox hBox = new HBox();
-        hBox.setPadding(new Insets(3));
+        hBox.setPadding(new Insets(3, 5, 3, 10));
         hBox.setSpacing(10);
-        ImageView profilePicture = new ImageView(new Image(new File("C:\\Users\\Yasaman\\Desktop\\user.png").toURI().toString()));//set image in constructor
+        ImageView profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()));//set image in constructor
         profilePicture.setFitHeight(15);
         profilePicture.setPreserveRatio(true);
         Text user = new Text(username);
@@ -275,6 +303,7 @@ public class ChatController {
         hBox.setOnMouseClicked(e -> {
             messagesVBox.getChildren().clear();
             loadMessages(username);
+            isChatOpen = true;
 
         });
         hBox.setStyle("-fx-cursor: hand;");
@@ -283,14 +312,8 @@ public class ChatController {
 
 
 
-    private void openChatWith(String username)
-    {
-
-    }
-
-
     public void editProfile(MouseEvent mouseEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../Settings/editProfile.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../fxml/editProfile.fxml"));
         Stage stage = new Stage();
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -310,7 +333,7 @@ public class ChatController {
         if (option.get().equals(ButtonType.YES))
         {
             //delete account
-            Parent root = FXMLLoader.load(getClass().getResource("../login/loginFXML.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../fxml/login.fxml"));
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
             Scene scene = new Scene(root);
@@ -338,7 +361,7 @@ public class ChatController {
         if (option.get().equals(ButtonType.YES))
         {
             System.out.println("log out");
-            Parent root = FXMLLoader.load(getClass().getResource("../login/loginFXML.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../fxml/login.fxml"));
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
             Scene scene = new Scene(root);
