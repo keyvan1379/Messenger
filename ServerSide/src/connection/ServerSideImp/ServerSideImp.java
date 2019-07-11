@@ -172,6 +172,29 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
+    public String editProfile(String username, ClientSideIF clientSideIF,User user) {
+        if(clients.get(username)!=null & clients.get(username)==clientSideIF){
+            userDao.updateUser(user);
+            return "successful";
+        }
+        else{
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String deleteProfile(String username, ClientSideIF clientSideIF) {
+        if(clients.get(username)!=null & clients.get(username)==clientSideIF){
+            userDao.deleteUser(username);
+            clients.remove(clientSideIF);
+            return "successful";
+        }
+        else{
+            return "unsuccessful";
+        }
+    }
+
+    @Override
     public boolean getUser(String username) throws GetUserex {
         try{
             userDao.getUser(username);
