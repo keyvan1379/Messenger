@@ -155,6 +155,14 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             userDao.getUser(user.getUserName());
             return "this username exist pls pick another username";
         } catch (GetUserex getUserex) {
+            try {
+                user.setPassWord(RSA.importKey().decrypt(user.getPassWord()));
+                user.setLastName(RSA.importKey().decrypt(user.getLastName()));
+                user.setFistName(RSA.importKey().decrypt(user.getFistName()));
+                user.setEmail(RSA.importKey().decrypt(user.getEmail()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             userDao.addUser(user);
             File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ProfilePic\\"+user.getUserName()+".jpg");
             try {
@@ -174,6 +182,14 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     @Override
     public String editProfile(String username, ClientSideIF clientSideIF,User user) {
         if(clients.get(username)!=null & clients.get(username)==clientSideIF){
+            try {
+                user.setPassWord(RSA.importKey().decrypt(user.getPassWord()));
+                user.setLastName(RSA.importKey().decrypt(user.getLastName()));
+                user.setFistName(RSA.importKey().decrypt(user.getFistName()));
+                user.setEmail(RSA.importKey().decrypt(user.getEmail()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             userDao.updateUser(user);
             return "successful";
         }

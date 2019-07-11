@@ -24,6 +24,8 @@ import javax.persistence.metamodel.EntityType;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -73,14 +75,15 @@ public class Main {
             //Thread thread = new Thread(() -> ServerSocket.start());
             //thread.start();
             ServerSideIF chatServer = new ServerSideImp();
-            ArrayList<String> user = new Gson().fromJson(chatServer.getAllUser(),ArrayList.class);
+            /*ArrayList<String> user = new Gson().fromJson(chatServer.getAllUser(),ArrayList.class);
             for (int i = 0; i < user.size(); i++) {
                 System.out.println(user.get(i));
-            }
-            Naming.rebind("Test",chatServer);
+            }*/
+            System.setProperty("java.rmi.server.hostname","192.168.43.215");
+            Registry registry = LocateRegistry.createRegistry(1099);
+            registry.rebind("Test",chatServer);
+            //Naming.rebind("Test",chatServer);
         } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }

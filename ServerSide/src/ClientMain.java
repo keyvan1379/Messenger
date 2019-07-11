@@ -17,7 +17,7 @@ public class ClientMain {
         Scanner scanner = new Scanner(System.in);
         String url = "rmi://localhost/Test";
         ServerSideIF chatServerIF = (ServerSideIF) Naming.lookup(url);
-        ClientSideImp csi = new ClientSideImp(chatServerIF,"1234567890qwerty");
+        ClientSideImp csi = ClientSideImp.getInstance(chatServerIF,"1234567890qwerty");
         String s;
         String t;
         String o;

@@ -46,7 +46,7 @@ public class ClientHandler implements Runnable{
                     }
                 });
                 t.start();
-                Socket socket = new Socket("localhost", 40900);//not local host must be clientsideif ip address
+                Socket socket = new Socket(clientSideIF.getIpAddress(), 40900);//not local host must be clientsideif ip address
                 FileInputStream fileInputStream = new FileInputStream(file);
                 OutputStream outputStream1 = socket.getOutputStream();
                 while ((count = fileInputStream.read(data)) != -1) {

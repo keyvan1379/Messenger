@@ -25,6 +25,8 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
 
     private ServerSocket serverSocket;
 
+    private static ClientSideImp _ClientSideImp = null;
+
     private AES aes;
 
     private String AESKey;
@@ -38,9 +40,29 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
     }
 
-    public ClientSideImp(ServerSideIF serverSideIF,String AESKey) throws RemoteException {
+    private ClientSideImp(ServerSideIF serverSideIF,String AESKey) throws RemoteException {
         this.serverSideIF = serverSideIF;
         this.AESKey = AESKey;
+    }
+
+    public static synchronized ClientSideImp getInstance(ServerSideIF serverSideIF,String AESKey){
+        if(_ClientSideImp == null){
+            try {
+                _ClientSideImp = new ClientSideImp(serverSideIF,AESKey);
+                return _ClientSideImp;
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return _ClientSideImp;
+    }
+
+    public static synchronized ClientSideImp getInstance(){
+        if(_ClientSideImp == null){
+            System.out.println("set serversideif and aeskey");
+            return null;
+        }
+        return _ClientSideImp;
     }
 
     @Override
@@ -69,6 +91,10 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
 
     public String sign_up(User user){
         try {
+            user.setEmail(RSA.encrypt(user.getEmail(),serverSideIF.getKey()));
+            user.setPassWord(RSA.encrypt(user.getPassWord(),serverSideIF.getKey()));
+            user.setFistName(RSA.encrypt(user.getFistName(),serverSideIF.getKey()));
+            user.setLastName(RSA.encrypt(user.getLastName(),serverSideIF.getKey()));
             return serverSideIF.signUp(user);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -229,6 +255,10 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             return null;
         }
         try {
+            user.setEmail(RSA.encrypt(user.getEmail(),serverSideIF.getKey()));
+            user.setPassWord(RSA.encrypt(user.getPassWord(),serverSideIF.getKey()));
+            user.setFistName(RSA.encrypt(user.getFistName(),serverSideIF.getKey()));
+            user.setLastName(RSA.encrypt(user.getLastName(),serverSideIF.getKey()));
             return serverSideIF.editProfile(username,this,user);
         } catch (RemoteException e) {
             e.printStackTrace();
