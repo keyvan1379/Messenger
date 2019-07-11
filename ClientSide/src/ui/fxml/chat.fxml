@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<?import com.jfoenix.controls.JFXSlider?>
 <AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-main" stylesheets="@../css/chatStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.ChatController">
 
       <AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -20,10 +21,10 @@
              <SplitPane dividerPositions="0.25" prefHeight="450.0" prefWidth="450.0" styleClass="pane-one">
 
 
-                  <SplitPane dividerPositions="0.65" minWidth="111.0" orientation="VERTICAL">
+                  <SplitPane dividerPositions="0.55" minWidth="111.0" orientation="VERTICAL">
 
 
-                      <AnchorPane minHeight="289.0" style="-fx-background-color: white;">
+                      <AnchorPane minHeight="245.0" style="-fx-background-color: white;">
 
                           <HBox styleClass="hbox-label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
                                   <Label fx:id="labelUsers" styleClass="label-labels" />
@@ -43,12 +44,14 @@
                       </AnchorPane>
 
 
-                      <AnchorPane minHeight="156.0" style="-fx-background-color: white;">
+                      <AnchorPane minHeight="200.0" style="-fx-background-color: white;">
 
                           <HBox styleClass="hbox-label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
                               <Label fx:id="labelSettings" styleClass="label-labels" />
                           </HBox>
-                          <VBox alignment="TOP_CENTER" prefHeight="133.0" prefWidth="111.0" spacing="5.0" style="-fx-padding: 0 5 0 5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                          <VBox alignment="TOP_CENTER" spacing="5.0" style="-fx-padding: 0 5 0 5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                              <Text text="Font Size:" />
+                              <JFXSlider fx:id="slider" />
                               <JFXButton fx:id="editProfileButton" buttonType="RAISED" onMouseClicked="#editProfile" prefWidth="90" />
                               <JFXButton fx:id="deleteAccountButton" buttonType="RAISED" onMouseClicked="#deleteAccount" prefWidth="90" />
                               <JFXButton fx:id="logOutButton" buttonType="RAISED" onMouseClicked="#logOut" prefWidth="90" />

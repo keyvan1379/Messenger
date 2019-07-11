@@ -1,9 +1,12 @@
 package ui.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -83,6 +86,8 @@ public class ChatController {
 
     @FXML private ScrollPane emojiListPane;
 
+    @FXML private JFXSlider slider;
+
     String sender = "userOne";
     String receiver = "userTwo";
 
@@ -122,6 +127,18 @@ public class ChatController {
         profilePicture.setPreserveRatio(true);
 
         this.isChatOpen = false;
+
+        slider.setMin(10);
+        slider.setMax(20);
+        slider.setValue(14);
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//                System.out.println(newValue);
+                messagesVBox.setStyle("-fx-font-size: " + newValue + "px; -fx-background-color: white; -fx-padding: 10");
+
+            }
+        });
 
 
         //get messages
@@ -181,7 +198,6 @@ public class ChatController {
         {
             Text text = new Text(m.getMessage());
             textFlow = new TextFlow(text);
-            text.setStyle("-fx-font-size: 14px");
 
         }
         else
@@ -194,10 +210,9 @@ public class ChatController {
             });
             icon.setCursor(Cursor.HAND);
             Text fileName = new Text(m.getMessage());
-            fileName.setStyle("-fx-font-size: 14px");
+
 
             Text fileSize = new Text(" ( size )");
-            fileSize.setStyle("-fx-font-size: 14px");
 
             textFlow = new TextFlow(icon, new Text("  "), fileName, fileSize);
 
