@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -80,6 +81,8 @@ public class ChatController {
     @FXML private JFXButton logOutButton;
     @FXML private JFXButton deleteAccountButton;
 
+    @FXML private ScrollPane emojiListPane;
+
     String sender = "userOne";
     String receiver = "userTwo";
 
@@ -91,6 +94,9 @@ public class ChatController {
     public void initialize() {
 
         SearchController.chatController = this;
+
+        emojiListPane.setVisible(false);
+        setEmojiList();
 
         sendButton.setText("");
         openEmojisButton.setText("");
@@ -129,6 +135,23 @@ public class ChatController {
         messages.add(m3);
 
 
+    }
+
+    private void setEmojiList()
+    {
+        VBox emojiListVBox = (VBox) emojiListPane.getContent();
+        for (Node hbox :
+                emojiListVBox.getChildren()) {
+            for (Node emoji :
+                    ((HBox)hbox).getChildren()) {
+                emoji.setCursor(Cursor.HAND);
+                emoji.setOnMouseClicked(event ->
+                {
+                    messageTextArea.setText( messageTextArea.getText() + ((Text)emoji).getText() );
+                    emojiListPane.setVisible(false);
+                });
+            }
+        }
     }
 
     private void loadMessages (String username) //(String username)
@@ -211,6 +234,7 @@ public class ChatController {
     }
 
     public void openEmojis(MouseEvent mouseEvent) {
+        emojiListPane.setVisible(true);
     }
 
     public void attachFile(MouseEvent mouseEvent) {
