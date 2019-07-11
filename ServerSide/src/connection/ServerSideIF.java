@@ -29,5 +29,5 @@ public interface ServerSideIF extends Remote {
     String getMessageBetween2Person(String username1,String username2) throws Exception,RemoteException;
     void uploadFile(String fromUser,String filename,String toUser)throws RemoteException;
     void downloadFileAgain(String fromUsername, String fileName,
-                           String username,ClientSideIF clientSideIF) throws RemoteException;
+                           String username,ClientSideIF clientSideIF,String path) throws RemoteException;
 }

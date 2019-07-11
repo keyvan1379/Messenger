@@ -17,9 +17,10 @@ public class ClientHandler implements Runnable{
     private String fromUser;
     private String toUser;
     private ClientSideIF clientSideIF=null;
+    private String path;
     public ClientHandler(Socket socket, InputStream inputStream,
                          OutputStream outputStream,String filename,
-                         String fromUser,String toUser,ClientSideIF clientSideIF) {
+                         String fromUser,String toUser,ClientSideIF clientSideIF,String path) {
         this.socket = socket;
         this.outputStream = outputStream;
         this.inputStream = inputStream;
@@ -27,6 +28,7 @@ public class ClientHandler implements Runnable{
         this.fromUser = fromUser;
         this.toUser = toUser;
         this.clientSideIF = clientSideIF;
+        this.path = path;
     }
 
     public void uploadFileToClient(File file){
@@ -38,7 +40,7 @@ public class ClientHandler implements Runnable{
             } else {
                 Thread t = new Thread(() -> {
                     try {
-                        clientSideIF.downloadFile(fromUser, filename);
+                        clientSideIF.downloadFile(fromUser, filename,path);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }

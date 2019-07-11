@@ -54,10 +54,10 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     }
 
     @Override
-    public void downloadFile(String fromUser, String fileName) throws RemoteException {
+    public void downloadFile(String fromUser, String fileName,String path) throws RemoteException {
         try {
             Socket socket = serverSocket.accept();
-            fileHandler fileHandler = new fileHandler(socket,fileName,socket.getInputStream(),socket.getOutputStream());
+            fileHandler fileHandler = new fileHandler(socket,fileName,socket.getInputStream(),socket.getOutputStream(),path);
             Thread t = new Thread(fileHandler);
             t.start();
         } catch (IOException e) {
@@ -283,6 +283,59 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
         System.out.println("get_User_Profile end of method");
         return null;
+    }
+
+    //need to change host
+    //be careful to read and write file
+    public void upload_File(File file,String filename,String toUser){
+        if(username==null){
+            System.out.println("upload_File");
+            return;
+        }
+        byte[] mydata = new byte[8192];
+        Thread thread = new Thread(() -> {
+            try {
+                serverSideIF.uploadFile(username,filename,toUser);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+        try {
+            Thread.sleep(600);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Thread thread1 = new Thread(() -> {
+            try {
+                Socket socket = new Socket("localhost", 38474);//change localhost to server ip
+                OutputStream outputStream = socket.getOutputStream();
+                FileInputStream inputStream = new FileInputStream(file);
+                int count;
+                while ((count = inputStream.read(mydata)) != -1) {
+                    outputStream.write(mydata, 0, count);
+                }
+                outputStream.flush();
+                outputStream.close();
+                inputStream.close();
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        thread1.start();
+    }
+
+    public void download_File(String path,String fromUsername, String fileName){
+        if(username==null){
+            System.out.println("download_File");
+            return;
+        }
+        try {
+            serverSideIF.downloadFileAgain(fromUsername,fileName,username,this,path);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
 

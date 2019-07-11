@@ -3,6 +3,7 @@ import connection.ServerSideIF;
 import dao.daoExc.GetUserex;
 import models.ProfileInfo;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -20,13 +21,14 @@ public class ClientMain {
         String s;
         String t;
         String o;
+        String u;
         outterline:
         while (true){
             switch (s = scanner.nextLine()){
                 case "login":
                     t = scanner.nextLine();
                     o = scanner.nextLine();
-                    csi.login(t,o);
+                    System.out.println(csi.login(t,o));
                     break;
                 case "getuserstatus":
                     try {
@@ -59,12 +61,25 @@ public class ClientMain {
                     o = scanner.nextLine();
                     csi.sendmsg(t,o);
                     break;
-                case "getuserprofile":
+                case "seeprof":
                     t = scanner.nextLine();
-                    ProfileInfo profileInfo = csi.get_User_Profile(t);
-                    System.out.println(profileInfo.getFirstname());
-                    System.out.println(profileInfo.getLastname());
-                    System.out.println(profileInfo.getUsername());
+                    ProfileInfo pi = csi.get_User_Profile(t);
+                    System.out.println(pi.getFirstname());
+                    System.out.println(pi.getLastname());
+                    System.out.println(pi.getUsername());
+                    break;
+                case "uploadfile":
+                    t = scanner.nextLine();
+                    o = scanner.nextLine();
+                    u= scanner.nextLine();
+                    File file = new File(t);
+                    csi.upload_File(file,o,u);
+                    break;
+                case "downloadfile":
+                    t = scanner.nextLine();
+                    o = scanner.nextLine();
+                    u= scanner.nextLine();
+                    csi.download_File(t,o,u);
                     break;
                 case "exit":
                     break outterline;
