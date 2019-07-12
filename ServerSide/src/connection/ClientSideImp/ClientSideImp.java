@@ -11,8 +11,10 @@ import protections.AES;
 import protections.RSA;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -72,7 +74,13 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
 
     @Override
     public String getIpAddress() throws RemoteException {
-        return "localhost";//we need change this when we are going to test program
+        try {
+            return InetAddress.getLocalHost().getHostAddress();//we need change this when we are going to test program
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        System.out.println("error in getipaddress");
+        return "localhost";
     }
 
     @Override
