@@ -80,6 +80,15 @@
 
 }
 
+.text-lastname
+{
+    -fx-pref-width: 150px;
+    -fx-translate-x: 20px;
+    -fx-translate-y: 90px;
+    -fx-alignment: center;
+
+}
+
 .split-pane > .split-pane-divider {
 
     -fx-padding: 0 1 0 0;

@@ -1,7 +1,7 @@
 .pane-main
 {
     -fx-pref-width: 500px;
-    -fx-pref-height: 300px;
+    -fx-pref-height: 350px;
     -fx-background-color: white ;
     -fx-background-insets: 5px;
     -fx-effect: dropshadow(three-pass-box, #000, 4, 0, 1, 1);
@@ -18,7 +18,7 @@
 .pane-menu
 {
     -fx-pref-width: 430px;
-    -fx-pref-height: 230px;
+    -fx-pref-height: 255px;
     -fx-background-color: #fff;
     -fx-translate-x: 30px;
     -fx-translate-y: 30px;
@@ -62,7 +62,7 @@
 {
     -fx-pref-width: 150px;
     -fx-translate-x: 235px;
-    -fx-translate-y: 50px;
+    -fx-translate-y: 40px;
 }
 
 .jfx-text-field-lastname
@@ -76,7 +76,7 @@
 {
     -fx-pref-width: 150px;
     -fx-translate-x: 45px;
-    -fx-translate-y: 50px;
+    -fx-translate-y: 40px;
 
 }
 
@@ -84,7 +84,7 @@
 {
     -fx-pref-width: 150px;
     -fx-translate-x: 235px;
-    -fx-translate-y: 130px;
+    -fx-translate-y: 140px;
 }
 
 .jfx-password-field-password
@@ -114,7 +114,7 @@
 {
     -fx-pref-width: 150px;
     -fx-translate-x: 235px;
-    -fx-translate-y: 170px;
+    -fx-translate-y: 180px;
 }
 
 

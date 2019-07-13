@@ -33,7 +33,7 @@
                        </HBox>
                        <Text fx:id="username" styleClass="text-username" />
                        <Text fx:id="name" styleClass="text-name" />
-
+                       <Text fx:id="lastname" styleClass="text-lastname" />
                </AnchorPane>
 
            </SplitPane>

@@ -23,6 +23,7 @@ public class ProfileController implements Initializable {
     @FXML private ImageView profilePicture;
     @FXML private Text username;
     @FXML private Text name;
+    @FXML private Text lastname;
     @FXML private Label labelProfile;
     @FXML private AnchorPane imagePane;
     @FXML private AnchorPane namePane;
@@ -38,6 +39,7 @@ public class ProfileController implements Initializable {
 
         setName("");
         setUsername("");
+        setLastname("sfsf");
         setProfilePicture(image);
 
         this.labelProfile.setText("Profile");
@@ -49,6 +51,10 @@ public class ProfileController implements Initializable {
 
     public void setUsername(String username) {
         this.username.setText("Username: " + username);
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname.setText("LastName: " + lastname);
     }
 
     public void setProfilePicture(Image image) {

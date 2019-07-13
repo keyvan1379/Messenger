@@ -42,6 +42,9 @@ public class RegisterController implements Initializable {
     private double x;
     private double y;
 
+    File file = null;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.label.setText("Register");
@@ -61,7 +64,10 @@ public class RegisterController implements Initializable {
     public void chooseImageFromFiles(MouseEvent mouseEvent) {
         FileChooser fileChooser = new FileChooser();
         //Window window = ((Node) mouseEvent.getSource()).getScene().getWindow();
-        File file = fileChooser.showOpenDialog(((Node) mouseEvent.getSource()).getScene().getWindow());
+        file = fileChooser.showOpenDialog(((Node) mouseEvent.getSource()).getScene().getWindow());
+        if(file == null){
+            return;
+        }
         Image image = new Image(file.toURI().toString());
         System.out.println(this.profilePicture.getStyle());
         this.profilePicture.setImage(image);
@@ -71,27 +77,39 @@ public class RegisterController implements Initializable {
     }
 
     public void registerAccount(MouseEvent mouseEvent) throws IOException {
+        String username = this.username.getText();
+        String lastname = this.lastname.getText();
+        String firstname = this.firstname.getText();
+        String email = this.email.getText();
+        String password = this.password.getText();
+        //image on file global
         //register
+        try {
+            if(file==null){
+                throw new Exception("pls choose image");
+            }
+            //register
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Welcome!", ButtonType.OK);
+            alert.setTitle("Welcome");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+            Parent root = FXMLLoader.load(getClass().getResource("../fxml/chat.fxml"));
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setTitle("Register");
+            Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setScene(scene);
+            stage.show();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Welcome!", ButtonType.OK);
-        alert.setTitle("Welcome");
-        alert.setHeaderText(null);
-        alert.showAndWait();
-
-        //register
-
-        Parent root = FXMLLoader.load(getClass().getResource("../fxml/chat.fxml"));
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.setTitle("Register");
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        stage.show();
-
-        Stage lastStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        lastStage.close();
-
+            Stage lastStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            lastStage.close();
+        }catch (Exception ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+        }
     }
 
     public void minimizeWindow(MouseEvent mouseEvent) {

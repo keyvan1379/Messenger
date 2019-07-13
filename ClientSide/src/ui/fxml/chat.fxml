@@ -76,7 +76,7 @@
 
                               </HBox>
 
-                              <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="285.0" style="-fx-background-color: white;" vbarPolicy="ALWAYS">
+                              <ScrollPane fx:id="messagepane" fitToHeight="true" fitToWidth="true" minHeight="285.0" style="-fx-background-color: white;" vbarPolicy="ALWAYS">
 
                                     <VBox fx:id="messagesVBox" spacing="10" style="-fx-background-color: white; -fx-padding: 10" />
 

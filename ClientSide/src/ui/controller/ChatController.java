@@ -85,6 +85,7 @@ public class ChatController {
     @FXML private JFXButton deleteAccountButton;
 
     @FXML private ScrollPane emojiListPane;
+    @FXML private ScrollPane messagepane;
 
     @FXML private JFXSlider slider;
 
@@ -227,6 +228,7 @@ public class ChatController {
             textFlow.getStyleClass().add("text-flow-receiver");
         }
         messagesVBox.getChildren().add(textFlow);
+        messagepane.vvalueProperty().bind(messagesVBox.heightProperty());
     }
 
 
