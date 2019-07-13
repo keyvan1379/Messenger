@@ -31,5 +31,6 @@
     <orderEntry type="library" exported="" name="Hibernate 5.4.2-5.4.2" level="project" />
     <orderEntry type="library" exported="" name="Hibernate 5.4.2-5.4.2" level="project" />
     <orderEntry type="library" name="Hibernate (2)" level="project" />
+    <orderEntry type="library" name="ojdbc6-11.2.0.2.0" level="project" />
   </component>
 </module>

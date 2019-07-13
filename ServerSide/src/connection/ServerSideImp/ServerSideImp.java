@@ -189,6 +189,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 user.setEmail(RSA.importKey().decrypt(user.getEmail()));
                 user.setLastSeen(new Date());
                 user.setJoinTime(new Date());
+                messageQuery.updateUser(username,user.getUserName());
                 File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\profilePic\\"+username+".jpg");
                 file.delete();
                 file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ProfilePic\\"+user.getUserName()+".jpg");

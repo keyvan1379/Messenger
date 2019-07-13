@@ -14,7 +14,7 @@
             <property name="hibernate.connection.username" value="ADMIN"/>
             <property name="hibernate.connection.password" value="admin"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
     </persistence-unit>

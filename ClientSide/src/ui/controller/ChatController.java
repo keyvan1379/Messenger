@@ -10,6 +10,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -25,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -35,18 +37,27 @@ import javafx.stage.StageStyle;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 class Message
 {
     String user;
     String message;
+    String time;
     int isFile;
-    Message(String user, String message, int isFile)
+    Message(String user, String message, int isFile,String time)
     {
         this.user = user;
         this.message = message;
         this.isFile = isFile;
+        this.time = time;
+    }
+
+    public static String dateToString(Date date){
+        java.text.SimpleDateFormat sdf =
+                new java.text.SimpleDateFormat("HH:mm:ss");
+        return sdf.format(date);
     }
 
     public String getMessage() {
@@ -59,6 +70,10 @@ class Message
 
     public int getIsFile() {
         return isFile;
+    }
+
+    public String getTime() {
+        return time;
     }
 }
 
@@ -143,9 +158,9 @@ public class ChatController {
 
 
         //get messages
-        Message m1 = new Message("userOne", "hello", 1);
-        Message m2 = new Message("userTwo", "hi", 1);
-        Message m3 = new Message("userTwo", "bye", 0);
+        Message m1 = new Message("userOne", "hello", 1,Message.dateToString(new Date()));
+        Message m2 = new Message("userTwo", "hi", 1,Message.dateToString(new Date()));
+        Message m3 = new Message("userTwo", "bye", 0,Message.dateToString(new Date()));
 
 
         messages.add(m1);
@@ -198,11 +213,14 @@ public class ChatController {
         if (m.getIsFile() == 1)
         {
             Text text = new Text(m.getMessage());
+            Label label = new Label(m.getTime());
             textFlow = new TextFlow(text);
-
+            textFlow.getChildren().add(new Text(System.lineSeparator()));
+            textFlow.getChildren().add(label);
         }
         else
         {
+            //need to add time to file
             FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.DOWNLOAD);
             icon.setFill(Color.WHITE);
             icon.setSize("26");
@@ -235,7 +253,7 @@ public class ChatController {
     public void sendMessege(MouseEvent mouseEvent) {
         if ( (!(messageTextArea.getText().equals(""))) && (isChatOpen) )
         {
-            Message message = new Message("userOne", messageTextArea.getText().trim(), 1);
+            Message message = new Message("userOne", messageTextArea.getText().trim(), 1,Message.dateToString(new Date()));
             messages.add(message);
             messageTextArea.setText("");
             addMessage(message);

@@ -10,5 +10,6 @@ public interface MessageQuery {
     String getAllChat(String username1);
     String getChatBetweenTwoPerson(String username1, String username2);
     void addMessage(String message,String fromUsername,String toUsername,int isFile);
+    void updateUser(String OldUserName,String newUserName);
     //some function to get message
 }

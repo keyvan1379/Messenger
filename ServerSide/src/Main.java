@@ -36,25 +36,29 @@ import java.util.Map;
 public class Main {
     public static void main(final String[] args){
         //RSA rsa = new RSA("ss");
-        /*UserDaoImp userDaoImp = new UserDaoImp();
-        User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
-                "ddddddd1","sdfsf",new Date(),new Date());
+        UserDaoImp userDaoImp = new UserDaoImp();
+        String s = "slam";
+        byte[] o = s.getBytes();
+        /*User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
+                "ddddddd1","sdfsf",new Date(),new Date(),o);
         User user1 = new User("ahmad2","mohmadi2","sdkjf@djdsfk.com",
-                "ddddddd2","sdfsf",new Date(),new Date());
+                "ddddddd2","sdfsf",new Date(),new Date(),o);
         User user2 = new User("ahmad3","mohmadi3","sdkjf@djfdsk.com",
-                "ddddddd3","sdfsf",new Date(),new Date());
+                "ddddddd3","sdfsf",new Date(),new Date(),o);
         userDaoImp.addUser(user);
         userDaoImp.addUser(user1);
         userDaoImp.addUser(user2);*/
         MessageQuery msg = new MessageQueryImp();
         //msg.createTable();
         //msg.createTable();
-        /*msg.addChat("sdfskjf","slam");
+        /*msg.addChat("ddddddd1","ddddddd2");
         msg.addChat("sdfsksdfsjf","slamsf");
-        msg.addMessage("slam khobi halet chetore","sdfskjf","slam",0);
-        msg.addMessage("man khobam to khobi?","slam","sdfskjf",0);
-        msg.addMessage("are che khabar?","sdfskjf","slam",0);
-        msg.addMessage("salamati","slam","sdfskjf",0);*/
+        msg.addMessage("slam khobi halet chetore","ddddddd1","ddddddd2",0);
+        msg.addMessage("man khobam to khobi?","ddddddd2","ddddddd1",0);
+        msg.addMessage("are che khabar?","ddddddd1","ddddddd2",0);*/
+        msg.updateUser("ddddddd2","ddd2");
+        msg.updateUser("ddddddd1","ddd1");
+        //msg.addMessage("salamati","slam","sdfskjf",0);
         //msg.addMessage("salamati","sdfsksdfsjf","slamsf");
         /*HashMap<Integer, ArrayList> mess = new Gson().fromJson(msg.getChatBetweenTwoPerson("sdfskjf","slam"),
                 new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
