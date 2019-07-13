@@ -181,16 +181,34 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
 
     @Override
     public String editProfile(String username, ClientSideIF clientSideIF,User user) {
-        if(clients.get(username)!=null & clients.get(username)==clientSideIF){
+        if(clients.get(username)!=null){
             try {
                 user.setPassWord(RSA.importKey().decrypt(user.getPassWord()));
                 user.setLastName(RSA.importKey().decrypt(user.getLastName()));
                 user.setFistName(RSA.importKey().decrypt(user.getFistName()));
                 user.setEmail(RSA.importKey().decrypt(user.getEmail()));
+                user.setLastSeen(new Date());
+                user.setJoinTime(new Date());
+                File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\profilePic\\"+username+".jpg");
+                file.delete();
+                file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ProfilePic\\"+user.getUserName()+".jpg");
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(file);
+                    fileOutputStream.write(user.getProfileImage());
+                    fileOutputStream.flush();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            userDao.updateUser(user);
+            clients.put(user.getUserName(),clientSideIF);
+            clients.remove(username);
+            userDao.deleteUser(username);
+            userDao.addUser(user);
+            System.out.println(user.getUserName());
             return "successful";
         }
         else{
@@ -257,7 +275,16 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         if(clients.get(username)==null){
             return;
         }
-        userDao.getUser(username).setIsActive(status);
+        try{
+            if(Integer.parseInt(status)==0){
+                clients.remove(username);
+            }
+        }catch (NumberFormatException ex){
+            System.out.println(username + "going to offline");
+        }
+        User user = userDao.getUser(username);
+        user.setIsActive(status);
+        userDao.updateUser(user);
     }
 
     @Override
