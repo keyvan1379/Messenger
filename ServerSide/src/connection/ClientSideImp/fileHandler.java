@@ -8,18 +8,20 @@ public class fileHandler implements Runnable{
     private String fileName;
     private InputStream inputStream;
     private OutputStream outputStream;
+    private String path;
 
-    public fileHandler(Socket socket, String fileName, InputStream inputStream, OutputStream outputStream) {
+    public fileHandler(Socket socket, String fileName, InputStream inputStream, OutputStream outputStream,String path) {
         this.socket = socket;
         this.fileName = fileName;
         this.inputStream = inputStream;
         this.outputStream = outputStream;
+        this.path = path;
     }
 
     @Override
     public void run() {
         try {
-            File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\clientdownloadFiles\\" + fileName);
+            File file = new File(path+"\\"+ fileName);
             byte[] data = new byte[8192];
             int count;
             FileOutputStream outputStream = new FileOutputStream(file);
