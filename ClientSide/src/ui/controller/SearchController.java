@@ -29,7 +29,7 @@ public class SearchController implements Initializable {
     public static ChatController chatController;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        labelSearch.setText("Search");
+        labelSearch.setText("Add Private Chat");
         searchTextField.setPromptText("Username");
         searchButton.setText("\uf002");
         startChattingButton.setText("Add User!");

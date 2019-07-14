@@ -87,7 +87,7 @@ public class ChatController {
     @FXML private JFXButton attachButton;
     @FXML private VBox messagesVBox;
 
-    @FXML private Label labelUsers;
+    @FXML private Label labelChats;
     @FXML private Label labelSettings;
     @FXML private Text username;
     @FXML private Text status;
@@ -95,6 +95,9 @@ public class ChatController {
     @FXML private VBox usersVBox;
 
     @FXML private JFXButton addUsersButton;
+    @FXML private JFXButton addGPButton;
+    @FXML private JFXButton addChannelButton;
+
     @FXML private JFXButton editProfileButton;
     @FXML private JFXButton logOutButton;
     @FXML private JFXButton deleteAccountButton;
@@ -125,8 +128,10 @@ public class ChatController {
         messageTextArea.setPromptText("Message...");
 //        loadMessages(messages);
 
-        labelUsers.setText("Users");
-        addUsersButton.setText("Add User");
+        labelChats.setText("Chats");
+//        addUsersButton.setText("");
+//        addGPButton.setText("");
+//        addChannelButton.setText("");
         labelSettings.setText("Settings");
 
         editProfileButton.setText("Edit Your Profile");
@@ -147,14 +152,7 @@ public class ChatController {
         slider.setMin(10);
         slider.setMax(20);
         slider.setValue(14);
-        slider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//                System.out.println(newValue);
-                messagesVBox.setStyle("-fx-font-size: " + newValue + "px; -fx-background-color: white; -fx-padding: 10");
-
-            }
-        });
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> messagesVBox.setStyle("-fx-font-size: " + newValue + "px; -fx-background-color: white; -fx-padding: 10"));
 
 
         //get messages
@@ -169,6 +167,7 @@ public class ChatController {
 
 
     }
+
 
     private void setEmojiList()
     {
@@ -309,6 +308,32 @@ public class ChatController {
     }
 
     public void OpenAddUserWindow(MouseEvent mouseEvent) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/search.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Scene scene = new Scene(root);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
+    public void OpenAddGPWindow(MouseEvent mouseEvent) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/addGroupChat.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Scene scene = new Scene(root);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
+    public void OpenAddChannelWindow(MouseEvent mouseEvent) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/search.fxml"));
         Parent root = fxmlLoader.load();
