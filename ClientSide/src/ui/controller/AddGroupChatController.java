@@ -29,7 +29,6 @@ public class AddGroupChatController implements Initializable {
     private double x;
     private double y;
 
-    public static ChatController chatController;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         labelSearch.setText("Add Group Chat");

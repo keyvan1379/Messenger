@@ -335,7 +335,7 @@ public class ChatController {
 
     public void OpenAddChannelWindow(MouseEvent mouseEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/search.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/addChannel.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
