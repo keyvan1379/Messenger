@@ -10,15 +10,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -181,21 +179,41 @@ public class ChatController {
         }
     }
 
-    private void loadMessages (String chat)
+    private void loadMessages (String chat, int type) // 0 = pv, 1 = gp, 2 = ch
     {
 //        set username and profile picture and status
-        this.username.setText(chat);
-        this.status.setText("");
-        Image image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString());
-        profilePicture.setImage(image);
-        profilePicture.setFitHeight(60);
-        profilePicture.setPreserveRatio(true);
+        if (type == 0)
+        {
+            this.username.setText(chat);
+            this.status.setText("");
+            Image image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString());
+            profilePicture.setImage(image);
+            profilePicture.setFitHeight(60);
+            profilePicture.setPreserveRatio(true);
+        }
+        else if (type == 1)
+        {
+            this.username.setText(chat);
+            this.status.setText(""); //?
+            Image image = new Image(new File("ClientSide/src/ui/images/gp.png").toURI().toString());
+            profilePicture.setImage(image);
+            profilePicture.setFitHeight(60);
+            profilePicture.setPreserveRatio(true);
+        }
+        else if (type == 2)
+        {
+            this.username.setText(chat);
+            this.status.setText(""); //?
+            Image image = new Image(new File("ClientSide/src/ui/images/channel.png").toURI().toString());
+            profilePicture.setImage(image);
+            profilePicture.setFitHeight(60);
+            profilePicture.setPreserveRatio(true);
+        }
 
 
 
         for (Message m :
                 messages) {
-//            System.out.println(m.getMessage());
             addMessage(m);
 
         }
@@ -204,13 +222,18 @@ public class ChatController {
     private void addMessage(Message m)
     {
         TextFlow textFlow;
+        HBox hBox = new HBox(5);
+        hBox.setPadding(new Insets(0, 5, 0, 5));
+        Image image;
+        ImageView imageView;
+
         if (m.getIsFile() == 1)
         {
             Text text = new Text(m.getMessage());
             Text time = new Text(m.getTime());
             time.setStyle("-fx-font-size: 10px");
 
-            textFlow = new TextFlow(text, new Text(System.lineSeparator()), time);
+            textFlow = new TextFlow(text, new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
 
         }
         else
@@ -227,19 +250,38 @@ public class ChatController {
             Text fileSize = new Text(" ( size )");
             Text time = new Text(m.getTime());
             time.setStyle("-fx-font-size: 10px");
-            textFlow = new TextFlow(icon, new Text("  "), fileName, fileSize, new Text(System.lineSeparator()), time);
+            textFlow = new TextFlow(icon, new Text("  "), fileName, fileSize, new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
 
         }
 
         if (m.getUser().equals(sender))
         {
+            image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()); //get user profile img
             textFlow.getStyleClass().add("text-flow-sender");
+            imageView = new ImageView(image);
+            imageView.setFitWidth(40);
+            imageView.setPreserveRatio(true);
+            hBox.setAlignment(Pos.TOP_RIGHT);
+            hBox.getChildren().add(textFlow);
+            hBox.getChildren().add(imageView);
+
         }
-        else if (m.getUser().equals(receiver))
+        else
         {
+            image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()); //get other users profile img
             textFlow.getStyleClass().add("text-flow-receiver");
+            hBox.setAlignment(Pos.TOP_LEFT);
+            imageView = new ImageView(image);
+            imageView.setFitWidth(40);
+            imageView.setPreserveRatio(true);
+            hBox.getChildren().add(imageView);
+            hBox.getChildren().add(textFlow);
+
         }
-        messagesVBox.getChildren().add(textFlow);
+
+
+
+        messagesVBox.getChildren().add(hBox);
         messagepane.vvalueProperty().bind(messagesVBox.heightProperty());
     }
 
@@ -346,7 +388,22 @@ public class ChatController {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(3, 5, 3, 10));
         hBox.setSpacing(10);
-        ImageView profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()));//set image in constructor
+        ImageView profilePicture;//
+        if (type == 0)
+        {
+            profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()));
+        }
+        else if (type == 1)
+        {
+            profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/gp.png").toURI().toString()));
+        }
+        else
+        {
+            profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/channel.png").toURI().toString()));
+        }
+
+
+
         profilePicture.setFitHeight(15);
         profilePicture.setPreserveRatio(true);
         Text user = new Text(username);
@@ -357,7 +414,7 @@ public class ChatController {
         usersVBox.getChildren().add(0, hBox);
         hBox.setOnMouseClicked(e -> {
             messagesVBox.getChildren().clear();
-            loadMessages(username);
+            loadMessages(username, type);
             isChatOpen = true;
         });
         hBox.setStyle("-fx-cursor: hand;");

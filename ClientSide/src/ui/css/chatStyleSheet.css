@@ -1,6 +1,6 @@
 .pane-main
 {
-    -fx-pref-width: 500px;
+    -fx-pref-width: 600px;
     -fx-pref-height: 500px;
     -fx-background-color: white;
     -fx-background-insets: 5px;
@@ -18,7 +18,7 @@
 
 .pane-one
 {
-    -fx-pref-width: 450px;
+    -fx-pref-width: 550px;
     -fx-pref-height: 450px;
     -fx-background-color: white;
     -fx-translate-x: 20px;
@@ -102,21 +102,19 @@
 
 .text-flow-sender
 {
-    -fx-translate-x: 60px;
     -fx-max-width: 240px;
     -fx-background-color: #d9dddb;
     -fx-effect: dropshadow(three-pass-box, #000, 2, 0, 1, 1);
-    -fx-padding: 5px;
+    -fx-padding: 5 10 5 10;
 }
 
 .text-flow-receiver
 {
     -fx-text-fill: #fff;
-    -fx-translate-x: 0px;
     -fx-max-width: 240px;
     -fx-background-color: #8b0000;
     -fx-effect: dropshadow(three-pass-box, #000, 2, 0, 1, 1);
-    -fx-padding: 5px;
+    -fx-padding: 5 10 5 10;
 }
 
 .text-flow-receiver > Text {

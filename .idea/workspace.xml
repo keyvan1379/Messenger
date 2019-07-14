@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="844b1544-d08a-470b-a643-ce39b9bd9fb8" name="Default Changelist" comment="">
+    <list default="true" id="844b1544-d08a-470b-a643-ce39b9bd9fb8" name="Default Changelist" comment="msg time ui improved">
+      <change afterPath="$PROJECT_DIR$/ClientSide/src/ui/images/channel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClientSide/src/ui/images/gp.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClientSide/src/ui/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ClientSide/src/ui/controller/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientSide/src/ui/css/chatStyleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/ClientSide/src/ui/css/chatStyleSheet.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientSide/src/ui/fxml/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ClientSide/src/ui/fxml/chat.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/controller/ChatController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4114">
-              <caret line="337" column="89" selection-start-line="337" selection-start-column="89" selection-end-line="337" selection-end-column="89" />
+            <state relative-caret-position="274">
+              <caret line="401" column="95" selection-start-line="401" selection-start-column="95" selection-end-line="401" selection-end-column="95" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -28,14 +32,34 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/controller/AddChannelController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/javafx-src.zip!/javafx/scene/layout/HBox.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="69" column="17" lean-forward="true" selection-start-line="69" selection-start-column="17" selection-end-line="69" selection-end-column="17" />
+            <state relative-caret-position="121">
+              <caret line="328" column="22" selection-start-line="328" selection-start-column="22" selection-end-line="328" selection-end-column="22" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#8592#8593#0" expanded="true" />
+                <element signature="e#8615#8616#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/fxml/chat.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="92" column="56" selection-start-line="92" selection-start-column="49" selection-end-line="92" selection-end-column="56" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/css/chatStyleSheet.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="292">
+              <caret line="116" column="26" selection-start-line="116" selection-start-column="26" selection-end-line="116" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -58,7 +82,14 @@
       <find>area</find>
       <find>font</find>
       <find>users</find>
+      <find>usersFound</find>
+      <find>User</find>
+      <find>message</find>
+      <find>type</find>
     </findStrings>
+    <replaceStrings>
+      <replace>channelsFound</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -87,16 +118,16 @@
         <option value="$PROJECT_DIR$/ClientSide/src/ui/fxml/search.fxml" />
         <option value="$PROJECT_DIR$/ClientSide/src/ui/controller/chatController.java" />
         <option value="$PROJECT_DIR$/ClientSide/src/ui/css/addGroupChat.css" />
-        <option value="$PROJECT_DIR$/ClientSide/src/ui/controller/SearchController.java" />
         <option value="$PROJECT_DIR$/ClientSide/src/ui/fxml/addGroupChat.fxml" />
-        <option value="$PROJECT_DIR$/ClientSide/src/ui/css/chatStyleSheet.css" />
-        <option value="$PROJECT_DIR$/ClientSide/src/ui/fxml/chat.fxml" />
         <option value="$PROJECT_DIR$/ClientSide/src/ui/css/addGroupChatStyleSheet.css" />
-        <option value="$PROJECT_DIR$/ClientSide/src/ui/controller/AddGroupChatController.java" />
         <option value="$PROJECT_DIR$/ClientSide/src/ui/css/addChannelStyleSheet.css" />
         <option value="$PROJECT_DIR$/ClientSide/src/ui/fxml/addChannel.fxml" />
-        <option value="$PROJECT_DIR$/ClientSide/src/ui/controller/ChatController.java" />
+        <option value="$PROJECT_DIR$/ClientSide/src/ui/controller/AddGroupChatController.java" />
+        <option value="$PROJECT_DIR$/ClientSide/src/ui/controller/SearchController.java" />
         <option value="$PROJECT_DIR$/ClientSide/src/ui/controller/AddChannelController.java" />
+        <option value="$PROJECT_DIR$/ClientSide/src/ui/fxml/chat.fxml" />
+        <option value="$PROJECT_DIR$/ClientSide/src/ui/css/chatStyleSheet.css" />
+        <option value="$PROJECT_DIR$/ClientSide/src/ui/controller/ChatController.java" />
       </list>
     </option>
   </component>
@@ -162,6 +193,13 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="ui" type="462c0819:PsiDirectoryNode" />
               <item name="fxml" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientSide" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Project" type="b2602c69:ProjectViewProjectNode" />
@@ -325,7 +363,7 @@
       <workItem from="1562759569680" duration="3480000" />
       <workItem from="1562839753659" duration="1252000" />
       <workItem from="1562843260172" duration="502000" />
-      <workItem from="1563100711944" duration="5445000" />
+      <workItem from="1563100711944" duration="9959000" />
     </task>
     <task id="LOCAL-00001" summary="login ui improved">
       <created>1562760143965</created>
@@ -362,15 +400,28 @@
       <option name="project" value="LOCAL" />
       <updated>1563106072693</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add channel window ui added">
+      <created>1563107385268</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1563107385268</updated>
+    </task>
+    <task id="LOCAL-00007" summary="msg time ui improved">
+      <created>1563108562446</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1563108562446</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26182000" />
+    <option name="totallyTimeSpent" value="30696000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1603631" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -382,7 +433,7 @@
       <window_info id="Persistence" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32843137" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32843137" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -487,7 +538,9 @@
     <MESSAGE value="paths checked" />
     <MESSAGE value="emojis ui added" />
     <MESSAGE value="add gp chat window ui added" />
-    <option name="LAST_COMMIT_MESSAGE" value="add gp chat window ui added" />
+    <MESSAGE value="add channel window ui added" />
+    <MESSAGE value="msg time ui improved" />
+    <option name="LAST_COMMIT_MESSAGE" value="msg time ui improved" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -649,45 +702,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/fxml/chat.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="50" column="131" selection-start-line="50" selection-start-column="131" selection-end-line="50" selection-end-column="131" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/css/addGroupChatStyleSheet.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
           <caret line="94" column="26" lean-forward="true" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/css/chatStyleSheet.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="131" column="31" selection-start-line="131" selection-start-column="31" selection-end-line="131" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/controller/AddGroupChatController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="47" column="44" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClientSide/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -721,20 +739,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/controller/SearchController.java">
+    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/controller/AddGroupChatController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="28" column="48" lean-forward="true" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="48" />
+        <state relative-caret-position="-634">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/controller/ChatController.java">
+    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/controller/SearchController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4114">
-          <caret line="337" column="89" selection-start-line="337" selection-start-column="89" selection-end-line="337" selection-end-column="89" />
+        <state relative-caret-position="128">
+          <caret line="67" column="78" selection-start-line="67" selection-start-column="78" selection-end-line="67" selection-end-column="78" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -743,8 +761,68 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/controller/AddChannelController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="69" column="17" lean-forward="true" selection-start-line="69" selection-start-column="17" selection-end-line="69" selection-end-column="17" />
+        <state relative-caret-position="227">
+          <caret line="69" column="91" selection-start-line="69" selection-start-column="91" selection-end-line="69" selection-end-column="91" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/javafx-src.zip!/javafx/scene/control/Separator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="92" column="32" selection-start-line="92" selection-start-column="21" selection-end-line="92" selection-end-column="32" />
+          <folding>
+            <element signature="e#2427#2428#0" expanded="true" />
+            <element signature="e#2471#2472#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/fxml/chat.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="92" column="56" selection-start-line="92" selection-start-column="49" selection-end-line="92" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/css/chatStyleSheet.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="116" column="26" selection-start-line="116" selection-start-column="26" selection-end-line="116" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/javafx-src.zip!/javafx/scene/layout/HBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="328" column="22" selection-start-line="328" selection-start-column="22" selection-end-line="328" selection-end-column="22" />
+          <folding>
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8615#8616#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClientSide/ClientSide.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClientSide/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClientSide/src/ui/controller/ChatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="401" column="95" selection-start-line="401" selection-start-column="95" selection-end-line="401" selection-end-column="95" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
