@@ -67,7 +67,7 @@ public class AddChannelController implements Initializable {
                     System.out.println(fxmlLoader.getController().toString());*/
 
 //                    System.out.println(chatController);
-                SearchController.chatController.addUser(((RadioButton)toggle ).getText());
+                SearchController.chatController.addChat(((RadioButton)toggle ).getText(), 2);
 
 
                 Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();

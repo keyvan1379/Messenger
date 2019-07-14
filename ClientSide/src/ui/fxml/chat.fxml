@@ -36,19 +36,19 @@
                                      </VBox>
                                 </ScrollPane>
                   <HBox alignment="TOP_CENTER" spacing="3">
-                         <JFXButton fx:id="addUsersButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddUserWindow">
+                         <JFXButton alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddUserWindow">
                              <graphic>
                                  <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" size="16.0" />
                              </graphic>
                          </JFXButton>
       
-                         <JFXButton fx:id="addGPButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddGPWindow">
+                         <JFXButton alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddGPWindow">
                              <graphic>
                                  <FontAwesomeIconView fill="WHITE" glyphName="GROUP" size="16.0" />
                              </graphic>
                          </JFXButton>
       
-                         <JFXButton fx:id="addChannelButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddChannelWindow">
+                         <JFXButton alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddChannelWindow">
                              <graphic>
                                  <FontAwesomeIconView fill="WHITE" glyphName="BULLHORN" size="16.0" />
                              </graphic>

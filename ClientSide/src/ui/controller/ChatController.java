@@ -94,10 +94,6 @@ public class ChatController {
     @FXML private ImageView profilePicture;
     @FXML private VBox usersVBox;
 
-    @FXML private JFXButton addUsersButton;
-    @FXML private JFXButton addGPButton;
-    @FXML private JFXButton addChannelButton;
-
     @FXML private JFXButton editProfileButton;
     @FXML private JFXButton logOutButton;
     @FXML private JFXButton deleteAccountButton;
@@ -126,12 +122,9 @@ public class ChatController {
         openEmojisButton.setText("");
         attachButton.setText("");
         messageTextArea.setPromptText("Message...");
-//        loadMessages(messages);
 
         labelChats.setText("Chats");
-//        addUsersButton.setText("");
-//        addGPButton.setText("");
-//        addChannelButton.setText("");
+
         labelSettings.setText("Settings");
 
         editProfileButton.setText("Edit Your Profile");
@@ -148,6 +141,8 @@ public class ChatController {
         profilePicture.setPreserveRatio(true);
 
         this.isChatOpen = false;
+
+        messagesVBox.setStyle("-fx-font-size: 14px; -fx-background-color: white; -fx-padding: 10");
 
         slider.setMin(10);
         slider.setMax(20);
@@ -186,10 +181,10 @@ public class ChatController {
         }
     }
 
-    private void loadMessages (String username) //(String username)
+    private void loadMessages (String chat)
     {
 //        set username and profile picture and status
-        this.username.setText(username);
+        this.username.setText(chat);
         this.status.setText("");
         Image image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString());
         profilePicture.setImage(image);
@@ -212,10 +207,11 @@ public class ChatController {
         if (m.getIsFile() == 1)
         {
             Text text = new Text(m.getMessage());
-            Label label = new Label(m.getTime());
-            textFlow = new TextFlow(text);
-            textFlow.getChildren().add(new Text(System.lineSeparator()));
-            textFlow.getChildren().add(label);
+            Text time = new Text(m.getTime());
+            time.setStyle("-fx-font-size: 10px");
+
+            textFlow = new TextFlow(text, new Text(System.lineSeparator()), time);
+
         }
         else
         {
@@ -228,11 +224,10 @@ public class ChatController {
             });
             icon.setCursor(Cursor.HAND);
             Text fileName = new Text(m.getMessage());
-
-
             Text fileSize = new Text(" ( size )");
-
-            textFlow = new TextFlow(icon, new Text("  "), fileName, fileSize);
+            Text time = new Text(m.getTime());
+            time.setStyle("-fx-font-size: 10px");
+            textFlow = new TextFlow(icon, new Text("  "), fileName, fileSize, new Text(System.lineSeparator()), time);
 
         }
 
@@ -346,7 +341,7 @@ public class ChatController {
         stage.showAndWait();
     }
 
-    public void addUser(String username)
+    public void addChat(String username, int type) // 0 = pv, 1 = gp, 2 = ch
     {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(3, 5, 3, 10));
@@ -364,7 +359,6 @@ public class ChatController {
             messagesVBox.getChildren().clear();
             loadMessages(username);
             isChatOpen = true;
-
         });
         hBox.setStyle("-fx-cursor: hand;");
         //usersVBox.getChildren().add(1, new Separator());

@@ -65,7 +65,7 @@ public class SearchController implements Initializable {
                     System.out.println(fxmlLoader.getController().toString());*/
 
 //                    System.out.println(chatController);
-                    chatController.addUser(((RadioButton)toggle ).getText());
+                    chatController.addChat(((RadioButton)toggle ).getText(), 0);
 
 
                     Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
