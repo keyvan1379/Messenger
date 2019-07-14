@@ -4,12 +4,15 @@ import com.google.gson.reflect.TypeToken;
 import connection.ServerSideIF;
 import connection.ServerSideImp.ServerSideImp;
 import connection.SocketConnection.ServerSocket;
+import dao.ChannelDao;
+import dao.ChannelDaoImp.ChannelDaoImp;
 import dao.GroupDao;
 import dao.GroupDaoImp.GroupDaoImp;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
 import dao.UserDaoImp.UserDaoImp;
 import dao.daoExc.GetUserex;
+import models.Channel;
 import models.Group;
 import models.GroupMessage;
 import models.User;
@@ -44,7 +47,7 @@ public class Main {
         UserDaoImp userDaoImp = new UserDaoImp();
         String s = "slam";
         byte[] o = s.getBytes();
-        User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
+        /*User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
                 "ddddddd1","sdfsf",new Date(),new Date(),o);
         User user1 = new User("ahmad2","mohmadi2","sdkjf@djdsfk.com",
                 "ddddddd2","sdfsf",new Date(),new Date(),o);
@@ -52,22 +55,25 @@ public class Main {
                 "ddddddd3","sdfsf",new Date(),new Date(),o);
         userDaoImp.addUser(user);
         userDaoImp.addUser(user1);
-        userDaoImp.addUser(user2);
+        userDaoImp.addUser(user2);*/
         Group group = new Group("sdfs","sfsdf","sfsf","sdfsf",new Date());
         GroupMessage groupMessage = new GroupMessage("ss","sss",new Date());
+        ChannelDao channelDao = new ChannelDaoImp();
+        Channel channel = new Channel("sjfk","fdsf","dfjj",new Date());
         GroupDao groupDao = new GroupDaoImp();
         group.getGroupMessages().add(groupMessage);
         groupDao.updateGroup(group);
-        MessageQuery msg = new MessageQueryImp();
+        channelDao.addChannel(channel);
+        //MessageQuery msg = new MessageQueryImp();
         try {
             User u1 = userDaoImp.getUser("ddddddd1");
             User u2 = userDaoImp.getUser("ddddddd2");
-            Group g = groupDao.getGroup("sdfs");
-            g.getUsers().add(u1);
-            g.getUsers().add(u2);
-            u1.getGroups().add(g);
-            u2.getGroups().add(g);
-            groupDao.updateGroup(g);
+            Channel c = channelDao.getChannel("sjfk");
+            c.getUsers().add(u1);
+            c.getUsers().add(u2);
+            u1.getChannels().add(c);
+            u2.getChannels().add(c);
+            channelDao.updateChannel(c);
             /*userDaoImp.updateUser(u1);
             userDaoImp.updateUser(u2);*/
         } catch (Exception e) {
@@ -76,6 +82,7 @@ public class Main {
         try {
             Group u = groupDao.getGroup("sdfs");
             System.out.println(u.getUsers().iterator().next().getUserName());
+            System.out.println(u.getGroupMessages().get(0).getMessage());
             User uu = userDaoImp.getUser("ddddddd2");
             System.out.println(uu.getGroups().iterator().next().getName());
         } catch (GetUserex getUserex) {
@@ -109,6 +116,7 @@ public class Main {
         msg.addMessage("slam khobi halet chetore","ddddddd1","ddddddd2",0);
         msg.addMessage("man khobam to khobi?","ddddddd2","ddddddd1",0);
         msg.addMessage("are che khabar?","ddddddd1","ddddddd2",0);*/
+        MessageQuery msg = new MessageQueryImp();
         msg.updateUser("ddddddd2","ddd2");
         msg.updateUser("ddddddd1","ddd1");
         //msg.addMessage("salamati","slam","sdfskjf",0);
