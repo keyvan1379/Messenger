@@ -21,6 +21,11 @@ public class User implements Serializable {
     private Set<Group> groups = new HashSet<>();
 
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "CHANNELS_USERS",joinColumns = @JoinColumn(name = "USER_NAME"),inverseJoinColumns = @JoinColumn(name = "CHANNELS_USERNAME"))
+    private Set<Channel> channels = new HashSet<>();
+
+
     @Column(name = "FIRST_NAME")
     private String fistName;
 
@@ -144,6 +149,14 @@ public class User implements Serializable {
 
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
+    }
+
+    public Set<Channel> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(Set<Channel> channels) {
+        this.channels = channels;
     }
 }
 
