@@ -28,7 +28,7 @@ public class Group implements Serializable {
     private Set<User> users = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "USERNAME",nullable = false)
+    @JoinColumn(name = "USERNAME")
     private List<GroupMessage> groupMessages = new ArrayList<>();
 
     public Group(){

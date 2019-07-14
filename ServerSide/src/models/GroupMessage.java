@@ -6,21 +6,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "GroupMessage")
+@Table(name = "GROUP_MESSAGE")
 public class GroupMessage implements Serializable {
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "MESSAGE_ID")
     @GeneratedValue
     private long id;
 
     @Column(name = "FROM_USER")
     private String fromUser;
 
-    @Column(name = "MESSAGE")
+    @Column(name = "MSG")
     private String message;
 
-    @Column(name = "DATE")
+    @Column(name = "DATE_OF_MSG")
     private Date sendDate;
 
     public GroupMessage(String fromUser, String message, Date sendDate) {

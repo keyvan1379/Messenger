@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/META-INF/persistence.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ServerSide/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/models/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/models/Group.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/models/GroupMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/models/GroupMessage.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

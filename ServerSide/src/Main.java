@@ -44,7 +44,7 @@ public class Main {
         UserDaoImp userDaoImp = new UserDaoImp();
         String s = "slam";
         byte[] o = s.getBytes();
-        /*User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
+        User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
                 "ddddddd1","sdfsf",new Date(),new Date(),o);
         User user1 = new User("ahmad2","mohmadi2","sdkjf@djdsfk.com",
                 "ddddddd2","sdfsf",new Date(),new Date(),o);
@@ -52,10 +52,14 @@ public class Main {
                 "ddddddd3","sdfsf",new Date(),new Date(),o);
         userDaoImp.addUser(user);
         userDaoImp.addUser(user1);
-        userDaoImp.addUser(user2);*/
+        userDaoImp.addUser(user2);
         Group group = new Group("sdfs","sfsdf","sfsf","sdfsf",new Date());
         GroupMessage groupMessage = new GroupMessage("ss","sss",new Date());
-        /*try {
+        GroupDao groupDao = new GroupDaoImp();
+        group.getGroupMessages().add(groupMessage);
+        groupDao.updateGroup(group);
+        MessageQuery msg = new MessageQueryImp();
+        try {
             User u1 = userDaoImp.getUser("ddddddd1");
             User u2 = userDaoImp.getUser("ddddddd2");
             Group g = groupDao.getGroup("sdfs");
@@ -64,12 +68,22 @@ public class Main {
             u1.getGroups().add(g);
             u2.getGroups().add(g);
             groupDao.updateGroup(g);
-            userDaoImp.updateUser(u1);
-            userDaoImp.updateUser(u2);
+            /*userDaoImp.updateUser(u1);
+            userDaoImp.updateUser(u2);*/
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
-        EntityManager em=null;
+        }
+        try {
+            Group u = groupDao.getGroup("sdfs");
+            System.out.println(u.getUsers().iterator().next().getUserName());
+            User uu = userDaoImp.getUser("ddddddd2");
+            System.out.println(uu.getGroups().iterator().next().getName());
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        /*EntityManager em=null;
         EntityTransaction et=null;
         try {
             em = JPAUtil.getEntitManager();
@@ -87,11 +101,7 @@ public class Main {
             System.out.println(ex.getCause());
         }finally {
             em.close();
-        }
-        GroupDao groupDao = new GroupDaoImp();
-        group.getGroupMessages().add(groupMessage);
-        groupDao.addGroup(group);
-        MessageQuery msg = new MessageQueryImp();
+        }*/
         //msg.createTable();
         //msg.createTable();
         /*msg.addChat("ddddddd1","ddddddd2");
