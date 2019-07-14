@@ -10,6 +10,12 @@ public class ChannelMessage implements Serializable {
     public ChannelMessage() {
     }
 
+    public ChannelMessage(String admin, String msg, Date date) {
+        this.admin = admin;
+        this.msg = msg;
+        this.date = date;
+    }
+
     @Id
     @Column(name = "CHANNEL_MESSAGE_ID")
     @GeneratedValue

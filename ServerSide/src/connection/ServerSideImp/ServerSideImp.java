@@ -4,6 +4,10 @@ import com.google.gson.Gson;
 import connection.ClientSideIF;
 import connection.ServerSideIF;
 import connection.SocketConnection.ClientHandler;
+import dao.ChannelDao;
+import dao.ChannelDaoImp.ChannelDaoImp;
+import dao.GroupDao;
+import dao.GroupDaoImp.GroupDaoImp;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
 import dao.UserDao;
@@ -11,8 +15,7 @@ import dao.UserDaoImp.UserDaoImp;
 import dao.daoExc.GetUserex;
 import dao.daoExc.Passex;
 import dao.daoExc.UsernameEx;
-import models.ProfileInfo;
-import models.User;
+import models.*;
 import protections.AES;
 import protections.MD5;
 import protections.RSA;
@@ -35,6 +38,8 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
 
     private UserDao userDao = new UserDaoImp();
     private MessageQuery messageQuery = new MessageQueryImp();
+    private GroupDao groupDao = new GroupDaoImp();
+    private ChannelDao channelDao = new ChannelDaoImp();
     private HashMap<String, ClientSideIF> clients = new HashMap<>();
     private ServerSocket serverSocket;
 
@@ -77,6 +82,47 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         }
         AES aes = AES.importKey(FromUsername);
         msg = aes.decrypt(msg);
+        try {
+            //check if msg sended to channel
+            if (ToUsername.startsWith("#")) {
+                Channel channel = channelDao.getChannel(ToUsername);
+                if(channel.getAdmin().equals(FromUsername)){
+                    ChannelMessage channelMessage = new ChannelMessage(FromUsername,msg,new Date());
+                    channel.getChannelMessages().add(channelMessage);
+                    channelDao.updateChannel(channel);
+                    //send channel msg to online users
+                    for (User user:
+                         channel.getUsers()) {
+                        if(clients.keySet().contains(user.getUserName())){
+                            clients.get(user.getUserName()).getMessage(ToUsername,AES.importKey(user.getUserName()).encrypt(msg),0);
+                        }
+                    }
+                }
+                return;
+            }
+            //check if msg sended to group
+            if(ToUsername.startsWith("$")){
+                Group group = groupDao.getGroup(ToUsername);
+                User user = userDao.getUser(FromUsername);
+                //check is username in group
+                if(group.getUsers().contains(user)){
+                    GroupMessage groupMessage = new GroupMessage(FromUsername,msg,new Date());
+                    group.getGroupMessages().add(groupMessage);
+                    groupDao.updateGroup(group);
+                    //send group msg to online users
+                    for (User user1:
+                            group.getUsers()) {
+                        if(clients.keySet().contains(user1.getUserName())){
+                            clients.get(user1.getUserName()).getMessage(ToUsername,AES.importKey(user1.getUserName()).encrypt(msg),0);
+                        }
+                    }
+                }
+                return;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return;
+        }
         try {
             if (!messageQuery.isChatExist(FromUsername, ToUsername) & userDao.getUser(ToUsername)!=null)
                 messageQuery.addChat(FromUsername, ToUsername);
@@ -305,7 +351,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         }
         return null;
     }
-
+    
     //AES Added
     //Security needed(check if client in list)
     @Override

@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/models/GroupMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/models/GroupMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/models/ChannelMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/models/ChannelMessage.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
