@@ -22,7 +22,8 @@ public class AddGroupChatController implements Initializable {
     @FXML private Label labelSearch;
     @FXML private JFXTextField searchTextField;
     @FXML private JFXButton searchButton;
-    @FXML private JFXButton startChattingButton;
+    @FXML private JFXButton createGroupChatButton;
+    @FXML private JFXTextField gpNameTextField;
     @FXML private VBox vBox;
     ArrayList<String> users = new ArrayList<>();
 
@@ -34,7 +35,8 @@ public class AddGroupChatController implements Initializable {
         labelSearch.setText("Add Group Chat");
         searchTextField.setPromptText("Username");
         searchButton.setText("\uf002");
-        startChattingButton.setText("Create the Group!");
+        createGroupChatButton.setText("Create!");
+        gpNameTextField.setPromptText("Group Name");
         addUser("one");
         addUser("two");
 
@@ -44,45 +46,40 @@ public class AddGroupChatController implements Initializable {
     {
         CheckBox user = new CheckBox(name);
         user.setStyle("-fx-cursor: hand;");
-        user.selectedProperty().addListener((observable, oldValue, newValue) -> users.add(user.getText()));
+        user.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if ( !(users.contains(user.getText())) )
+            {
+                users.add(user.getText());
+            }
+            else
+            {
+                users.remove(user.getText());
+            }
+        });
         vBox.getChildren().add(user);
     }
 
 
-    public void startChattingWithUser(MouseEvent mouseEvent) throws IOException {
+    public void createGroupChat(MouseEvent mouseEvent) throws IOException {
         Alert alert;
-//        for (Node user :
-//                vBox.getChildren()) {
-////            try {
-//            CheckBox u = (CheckBox) user;
-//            if (u.isSelected())
-//            {
-//                System.out.println(u.getText());
-//                userFound = true;
-//
-//                //FXMLLoader fxmlLoader = new FXMLLoader();
-//                //fxmlLoader.setController(new chatController());
-//
-//                    /*chatController chatController = (chatController) fxmlLoader.getController();
-//                    fxmlLoader.setLocation(chatController.class.getResource("D:\\IdeaProjects\\JavaFXTutorials\\src\\chat\\chat.fxml"));
-//                    Parent root = (Parent) fxmlLoader.load();
-//                    System.out.println(fxmlLoader.getController().toString());*/
-//
-////                    System.out.println(chatController);
-////                chatController.addUser(((RadioButton)toggle ).getText());
-//            }
-////            }
-////            catch (Exception e)
-////            {
-////                System.out.println(e.getCause());
-////            }
-//        }
 
         if (users.size() > 0)
         {
             //add
-            Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
-            stage.close();
+            if (gpNameTextField.getText().equals(""))
+            {
+                alert = new Alert(Alert.AlertType.ERROR, "Please enter a name for your group chat!", ButtonType.OK);
+                alert.setTitle("No Name Entered");
+                alert.setHeaderText(null);
+                alert.showAndWait();
+            }
+            else
+            {
+                SearchController.chatController.addChat(gpNameTextField.getText(), 1);
+                System.out.println(users);
+                Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
+                stage.close();
+            }
         }
         else
         {

@@ -68,8 +68,6 @@ public class AddChannelController implements Initializable {
 
 //                    System.out.println(chatController);
                 SearchController.chatController.addChat(((RadioButton)toggle ).getText(), 2);
-
-
                 Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
                 stage.close();
                 return;
@@ -86,6 +84,10 @@ public class AddChannelController implements Initializable {
         String channelID = searchTextField.getText();
         //create the channel
         //error if it already exists
+        SearchController.chatController.addChat(channelID, 2);
+        Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
+        stage.close();
+
     }
 
     public void closeWindow(MouseEvent mouseEvent) {

@@ -208,6 +208,11 @@ public class ChatController {
             profilePicture.setImage(image);
             profilePicture.setFitHeight(60);
             profilePicture.setPreserveRatio(true);
+            // if the channel writer is not the user
+            messageTextArea.setDisable(true);
+            sendButton.setDisable(true);
+            attachButton.setDisable(true);
+            openEmojisButton.setDisable(true);
         }
 
 
@@ -226,6 +231,9 @@ public class ChatController {
         hBox.setPadding(new Insets(0, 5, 0, 5));
         Image image;
         ImageView imageView;
+        imageView = new ImageView();
+        imageView.setFitWidth(40);
+        imageView.setPreserveRatio(true);
 
         if (m.getIsFile() == 1)
         {
@@ -258,9 +266,7 @@ public class ChatController {
         {
             image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()); //get user profile img
             textFlow.getStyleClass().add("text-flow-sender");
-            imageView = new ImageView(image);
-            imageView.setFitWidth(40);
-            imageView.setPreserveRatio(true);
+            imageView.setImage(image);
             hBox.setAlignment(Pos.TOP_RIGHT);
             hBox.getChildren().add(textFlow);
             hBox.getChildren().add(imageView);
@@ -271,14 +277,11 @@ public class ChatController {
             image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()); //get other users profile img
             textFlow.getStyleClass().add("text-flow-receiver");
             hBox.setAlignment(Pos.TOP_LEFT);
-            imageView = new ImageView(image);
-            imageView.setFitWidth(40);
-            imageView.setPreserveRatio(true);
+            imageView.setImage(image);
             hBox.getChildren().add(imageView);
             hBox.getChildren().add(textFlow);
 
         }
-
 
 
         messagesVBox.getChildren().add(hBox);
@@ -397,12 +400,10 @@ public class ChatController {
         {
             profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/gp.png").toURI().toString()));
         }
-        else
+        else //channel
         {
             profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/channel.png").toURI().toString()));
         }
-
-
 
         profilePicture.setFitHeight(15);
         profilePicture.setPreserveRatio(true);

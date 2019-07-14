@@ -92,11 +92,20 @@
     -fx-background-radius: 50px;
 }
 
-.jfx-button-start-chatting
+.jfx-button-create
 {
-    -fx-pref-width: 190px;
+    -fx-pref-width: 90px;
+    -fx-translate-x: 130px;
+    -fx-translate-y: 180px;
+}
+
+.jfx-text-field-gp-name
+{
+    -fx-pref-width: 90px;
     -fx-translate-x: 30px;
     -fx-translate-y: 180px;
+    -jfx-label-float: false;
+    -jfx-focus-color: #8b0000;
 }
 
 .check-box > .box {

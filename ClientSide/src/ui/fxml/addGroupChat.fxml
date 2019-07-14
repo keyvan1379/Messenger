@@ -29,7 +29,8 @@
 
             <JFXTextField fx:id="searchTextField" styleClass="jfx-text-field-username" />
             <JFXButton fx:id="searchButton" buttonType="RAISED" styleClass="jfx-button-search"/>
-            <JFXButton fx:id="startChattingButton" buttonType="RAISED" onMouseClicked="#startChattingWithUser" styleClass="jfx-button-start-chatting" />
+            <JFXButton fx:id="createGroupChatButton" buttonType="RAISED" onMouseClicked="#createGroupChat" styleClass="jfx-button-create" />
+            <JFXTextField fx:id="gpNameTextField" styleClass="jfx-text-field-gp-name" />
             <ScrollPane fitToHeight="true" fitToWidth="true">
 
                 <VBox fx:id="vBox">
