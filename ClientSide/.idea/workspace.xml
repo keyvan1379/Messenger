@@ -3,14 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/controller/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/css/chatStyleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/css/chatStyleSheet.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/ServerSide.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/ServerSide.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/META-INF/persistence.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ServerSide/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQueryImp/MessageQueryImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQueryImp/MessageQueryImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/models/User.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +26,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ui/fxml/chat.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="1326">
               <caret line="78" column="60" selection-start-line="78" selection-start-column="60" selection-end-line="78" selection-end-column="60" />
             </state>
           </provider>
@@ -42,8 +36,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-915">
-              <caret line="193" column="29" selection-start-line="193" selection-start-column="29" selection-end-line="193" selection-end-column="29" />
+            <state relative-caret-position="17">
+              <caret line="222" column="38" selection-start-line="222" selection-start-column="38" selection-end-line="222" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -51,7 +45,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ui/css/chatStyleSheet.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
+            <state relative-caret-position="2040">
               <caret line="120" selection-start-line="120" selection-end-line="120" />
             </state>
           </provider>
@@ -125,8 +119,8 @@
         <option value="$PROJECT_DIR$/src/ui/css/profileStylesheet.css" />
         <option value="$PROJECT_DIR$/src/ui/controller/ProfileController.java" />
         <option value="$PROJECT_DIR$/src/ui/fxml/chat.fxml" />
-        <option value="$PROJECT_DIR$/src/ui/controller/ChatController.java" />
         <option value="$PROJECT_DIR$/src/ui/css/chatStyleSheet.css" />
+        <option value="$PROJECT_DIR$/src/ui/controller/ChatController.java" />
       </list>
     </option>
   </component>
@@ -140,7 +134,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1390" />
@@ -152,7 +146,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -204,6 +197,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -257,15 +251,16 @@
       <workItem from="1560507661105" duration="1042000" />
       <workItem from="1562862336625" duration="131000" />
       <workItem from="1563020149260" duration="4819000" />
-      <workItem from="1563039117933" duration="4722000" />
+      <workItem from="1563039117933" duration="5404000" />
+      <workItem from="1563086724489" duration="605000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10714000" />
+    <option name="totallyTimeSpent" value="12001000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17516778" />
@@ -348,13 +343,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/javafx-src.zip!/javafx/scene/text/TextFlow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
@@ -362,9 +350,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/fxml/chat.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="1326">
           <caret line="78" column="60" selection-start-line="78" selection-start-column="60" selection-end-line="78" selection-end-column="60" />
         </state>
       </provider>
@@ -372,15 +367,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/css/chatStyleSheet.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
+        <state relative-caret-position="2040">
           <caret line="120" selection-start-line="120" selection-end-line="120" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-915">
-          <caret line="193" column="29" selection-start-line="193" selection-start-column="29" selection-end-line="193" selection-end-column="29" />
+        <state relative-caret-position="17">
+          <caret line="222" column="38" selection-start-line="222" selection-start-column="38" selection-end-line="222" selection-end-column="38" />
         </state>
       </provider>
     </entry>

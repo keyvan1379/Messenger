@@ -6,8 +6,8 @@ import protections.MD5;
 import javax.persistence.*;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.InputMismatchException;
+import java.util.*;
+
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable {
@@ -15,6 +15,11 @@ public class User implements Serializable {
     @Id
     @Column(name = "USERNAME")
     private String userName;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "GROUPS_USERS",joinColumns = @JoinColumn(name = "USER_NAME"),inverseJoinColumns = @JoinColumn(name = "GROUP_USERNAME"))
+    private Set<Group> groups = new HashSet<>();
+
 
     @Column(name = "FIRST_NAME")
     private String fistName;
@@ -37,8 +42,10 @@ public class User implements Serializable {
     @Column(name = "STATUS")
     private String isActive = "0";
 
+
     @Transient
     private byte[] profileImage;
+
 
     public User(String fistName, String lastName, String email,
                 String userName, String passWord,Date joinTime,Date lastSeen,byte[] profileImage) {
@@ -129,6 +136,14 @@ public class User implements Serializable {
 
     public void setIsActive(String isActive) {
         this.isActive = isActive;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
     }
 }
 

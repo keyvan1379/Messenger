@@ -4,10 +4,14 @@ import com.google.gson.reflect.TypeToken;
 import connection.ServerSideIF;
 import connection.ServerSideImp.ServerSideImp;
 import connection.SocketConnection.ServerSocket;
+import dao.GroupDao;
+import dao.GroupDaoImp.GroupDaoImp;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
 import dao.UserDaoImp.UserDaoImp;
 import dao.daoExc.GetUserex;
+import models.Group;
+import models.GroupMessage;
 import models.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
@@ -17,6 +21,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import protections.RSA;
 
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.metamodel.EntityType;
@@ -48,6 +53,44 @@ public class Main {
         userDaoImp.addUser(user);
         userDaoImp.addUser(user1);
         userDaoImp.addUser(user2);*/
+        Group group = new Group("sdfs","sfsdf","sfsf","sdfsf",new Date());
+        GroupMessage groupMessage = new GroupMessage("ss","sss",new Date());
+        /*try {
+            User u1 = userDaoImp.getUser("ddddddd1");
+            User u2 = userDaoImp.getUser("ddddddd2");
+            Group g = groupDao.getGroup("sdfs");
+            g.getUsers().add(u1);
+            g.getUsers().add(u2);
+            u1.getGroups().add(g);
+            u2.getGroups().add(g);
+            groupDao.updateGroup(g);
+            userDaoImp.updateUser(u1);
+            userDaoImp.updateUser(u2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        EntityManager em=null;
+        EntityTransaction et=null;
+        try {
+            em = JPAUtil.getEntitManager();
+            et = em.getTransaction();
+            et.begin();
+            em.persist(groupMessage);
+            et.commit();
+        }catch (Exception ex){
+            et.rollback();
+            ex.printStackTrace();
+            System.out.println("-----------------------------------------------------" +
+                    "------------------------------------------------");
+            System.out.println("-----------------------------------------------------" +
+                    "-------------------------------------------------");
+            System.out.println(ex.getCause());
+        }finally {
+            em.close();
+        }
+        GroupDao groupDao = new GroupDaoImp();
+        group.getGroupMessages().add(groupMessage);
+        groupDao.addGroup(group);
         MessageQuery msg = new MessageQueryImp();
         //msg.createTable();
         //msg.createTable();
