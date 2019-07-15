@@ -35,6 +35,8 @@ public interface ServerSideIF extends Remote {
                            String username,ClientSideIF clientSideIF,String path) throws RemoteException;
     String createChannel(Channel channel) throws RemoteException;
     String joinChannel(String channelUsername,String username) throws RemoteException;
+    String getChannelMsgs(String username,String channelUsername) throws RemoteException;
     String createGroup(Group group) throws RemoteException;
     String joinGroup(String groupUsername,String username) throws RemoteException;
+    String getGroupMsgs(String username,String groupUsername) throws RemoteException;
 }

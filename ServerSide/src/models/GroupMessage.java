@@ -20,13 +20,17 @@ public class GroupMessage implements Serializable {
     @Column(name = "MSG")
     private String message;
 
+    @Column(name = "IS_FILE")
+    private int isFile;
+
     @Column(name = "DATE_OF_MSG")
     private Date sendDate;
 
-    public GroupMessage(String fromUser, String message, Date sendDate) {
+    public GroupMessage(String fromUser, String message,int isFile,Date sendDate) {
         this.fromUser = fromUser;
         this.message = message;
         this.sendDate = sendDate;
+        this.isFile = isFile;
     }
 
     public GroupMessage(){}
@@ -35,9 +39,6 @@ public class GroupMessage implements Serializable {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getFromUser() {
         return fromUser;
@@ -61,5 +62,13 @@ public class GroupMessage implements Serializable {
 
     public void setSendDate(Date sendDate) {
         this.sendDate = sendDate;
+    }
+
+    public long getIsFile() {
+        return isFile;
+    }
+
+    public void setIsFile(int isFile) {
+        this.isFile = isFile;
     }
 }

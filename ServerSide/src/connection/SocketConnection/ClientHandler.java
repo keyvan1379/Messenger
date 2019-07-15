@@ -1,13 +1,25 @@
 package connection.SocketConnection;
 
 import connection.ClientSideIF;
+import dao.ChannelDao;
+import dao.ChannelDaoImp.ChannelDaoImp;
+import dao.GroupDao;
+import dao.GroupDaoImp.GroupDaoImp;
 import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
+import models.Channel;
+import models.ChannelMessage;
+import models.Group;
+import models.GroupMessage;
 import protections.AES;
 
 import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class ClientHandler implements Runnable{
     private Socket socket;
@@ -18,6 +30,7 @@ public class ClientHandler implements Runnable{
     private String toUser;
     private ClientSideIF clientSideIF=null;
     private String path;
+    private HashMap clientsList;
     public ClientHandler(Socket socket, InputStream inputStream,
                          OutputStream outputStream,String filename,
                          String fromUser,String toUser,ClientSideIF clientSideIF,String path) {
@@ -29,6 +42,14 @@ public class ClientHandler implements Runnable{
         this.toUser = toUser;
         this.clientSideIF = clientSideIF;
         this.path = path;
+    }
+
+    public HashMap getClientsList() {
+        return clientsList;
+    }
+
+    public void setClientsList(HashMap clientsList) {
+        this.clientsList = clientsList;
     }
 
     public void uploadFileToClient(File file){
@@ -76,6 +97,39 @@ public class ClientHandler implements Runnable{
             inputStream.close();
             outputStream.close();
             socket.close();
+            if(toUser.startsWith("#")){
+                ChannelMessage channelMessage = new ChannelMessage(fromUser,file.getPath(),file.length(),new Date());
+                ChannelDao channelDao = new ChannelDaoImp();
+                Channel channel = channelDao.getChannel(toUser.substring(1));
+                channel.getChannelMessages().add(channelMessage);
+                channelDao.updateChannel(channel);
+                List<String> users = new ArrayList<>();
+                channel.getUsers().stream().forEach(x -> users.add(x.getUserName()));
+                for (String user:
+                     users) {
+                    if(clientsList.keySet().contains(user)){
+                        ((ClientSideIF )clientsList.get(user)).getMessage(toUser, AES.importKey(user).encrypt(filename),file.length());
+                    }
+                }
+                return;
+            }
+            if(toUser.startsWith("$")){
+                GroupMessage groupMessage = new GroupMessage(fromUser,file.getPath(),(int)file.length(),new Date());
+                GroupDao groupDao = new GroupDaoImp();
+                Group group = groupDao.getGroup(toUser.substring(1));
+                group.getGroupMessages().add(groupMessage);
+                groupDao.updateGroup(group);
+                List<String> users = new ArrayList<>();
+                if(users.contains(fromUser)) users.remove(fromUser);
+                group.getUsers().stream().forEach(x -> users.add(x.getUserName()));
+                for (String user:
+                        users) {
+                    if(clientsList.keySet().contains(user)){
+                        ((ClientSideIF )clientsList.get(user)).getMessage(toUser, AES.importKey(user).encrypt(filename),file.length());
+                    }
+                }
+                return;
+            }
             messageQuery.addMessage(file.getPath(),fromUser,toUser,(int)file.length());
             //uploadFileToClient(file);
             //add client to send file

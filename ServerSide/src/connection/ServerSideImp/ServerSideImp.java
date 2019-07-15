@@ -88,7 +88,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 ToUsername = ToUsername.substring(1);
                 Channel channel = channelDao.getChannel(ToUsername);
                 if(channel.getAdmin().equals(FromUsername)){
-                    ChannelMessage channelMessage = new ChannelMessage(FromUsername,msg,new Date());
+                    ChannelMessage channelMessage = new ChannelMessage(FromUsername,msg,0,new Date());
                     channel.getChannelMessages().add(channelMessage);
                     channelDao.updateChannel(channel);
                     //send channel msg to online users
@@ -110,7 +110,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 List<String> users = new ArrayList<>();
                 group.getUsers().stream().forEach(x -> users.add(x.getUserName()));
                 if(users.contains(user.getUserName())){
-                    GroupMessage groupMessage = new GroupMessage(FromUsername,msg,new Date());
+                    GroupMessage groupMessage = new GroupMessage(FromUsername,msg,0,new Date());
                     group.getGroupMessages().add(groupMessage);
                     groupDao.updateGroup(group);
                     //send group msg to online users
@@ -373,6 +373,51 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     @Override
     public void uploadFile(String fromUser,String filename,String toUser) {
         try {
+            if(toUser.startsWith("#")){
+                Channel channel = channelDao.getChannel(toUser.substring(1));
+                if(channel.getAdmin().equals(fromUser)){
+                    String fileN = getAlphaNumericString(16);
+                    File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+                    while(file.exists()){
+                        fileN = getAlphaNumericString(16);
+                        file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+                    }
+                    Socket socket = serverSocket.accept();
+                    ClientHandler clientHandler = new ClientHandler
+                            (socket,socket.getInputStream(),socket.getOutputStream(),
+                                    (fileN+filename),fromUser,toUser,null,null);
+                    clientHandler.setClientsList(clients);
+                    Thread thread = new Thread(clientHandler);
+                    thread.start();
+                }
+                return;
+            }
+            if(toUser.startsWith("$")){
+                Group group = groupDao.getGroup(toUser.substring(1));
+                List<String> users = new ArrayList<>();
+                group.getUsers().stream().forEach(x -> users.add(x.getUserName()));
+                if(users.contains(fromUser)){
+                    String fileN = getAlphaNumericString(16);
+                    File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+                    while(file.exists()){
+                        fileN = getAlphaNumericString(16);
+                        file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+                    }
+                    Socket socket = serverSocket.accept();
+                    ClientHandler clientHandler = new ClientHandler
+                            (socket,socket.getInputStream(),socket.getOutputStream(),
+                                    (fileN+filename),fromUser,toUser,null,null);
+                    clientHandler.setClientsList(clients);
+                    Thread thread = new Thread(clientHandler);
+                    thread.start();
+                }
+                return;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return;
+        }
+        try {
             if(!messageQuery.isChatExist(fromUser,toUser)) messageQuery.addChat(fromUser,toUser);
             //need to check if client online then send file
             //be careful download method must be on other side not in server interface
@@ -440,6 +485,26 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
+    public String getChannelMsgs(String username,String channelUsername) throws RemoteException {
+        AES aes = AES.importKey(username);
+        Gson gson = new Gson();
+        HashMap<Integer, ArrayList> channelMsg = new HashMap<>();
+        try {
+            Channel channel = channelDao.getChannel(channelUsername);
+            for (int i = 0; i < channel.getChannelMessages().size(); i++) {
+                channelMsg.put(i,new ArrayList());
+                channelMsg.get(i).add(channel.getChannelMessages().get(i).getMsg());
+                channelMsg.get(i).add(channel.getChannelMessages().get(i).getIsFile());
+                channelMsg.get(i).add(channel.getChannelMessages().get(i).getDate());
+            }
+            return aes.encrypt(gson.toJson(channelMsg));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
     public String createGroup(Group group) throws RemoteException {
         try {
             groupDao.addGroup(group);
@@ -465,6 +530,27 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             groupDao.updateGroup(group);
             return "successful";
         }catch (Exception e){
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String getGroupMsgs(String username, String groupUsername) throws RemoteException {
+        AES aes = AES.importKey(username);
+        Gson gson = new Gson();
+        HashMap<Integer, ArrayList> groupMsg = new HashMap<>();
+        try {
+            Group group = groupDao.getGroup(groupUsername);
+            for (int i = 0; i < group.getGroupMessages().size(); i++) {
+                groupMsg.put(i,new ArrayList());
+                groupMsg.get(i).add(group.getGroupMessages().get(i).getFromUser());
+                groupMsg.get(i).add(group.getGroupMessages().get(i).getMessage());
+                groupMsg.get(i).add(group.getGroupMessages().get(i).getIsFile());
+                groupMsg.get(i).add(group.getGroupMessages().get(i).getSendDate());
+            }
+            return aes.encrypt(gson.toJson(groupMsg));
+        } catch (Exception e) {
             e.printStackTrace();
             return "unsuccessful";
         }
