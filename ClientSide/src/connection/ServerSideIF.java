@@ -19,6 +19,8 @@ public interface ServerSideIF extends Remote {
     void createCon(String username, String key) throws RemoteException;
     void sendMsg(String FromUsername, String ToUsername, String msg) throws Exception, RemoteException;
     String getAllUser()throws RemoteException;
+    String getAllGroups() throws RemoteException;
+    String getAllChannel() throws RemoteException;
     String login(String username, String password, ClientSideIF clientSideIF) throws RemoteException;
     String signUp(User user) throws RemoteException;
     String editProfile(String username, ClientSideIF clientSideIF, User user)throws RemoteException;

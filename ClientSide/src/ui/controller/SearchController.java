@@ -55,32 +55,14 @@ public class SearchController implements Initializable {
         Alert alert;
         for (Toggle toggle :
                 usersFound.getToggles()) {
-//            try {
                 if (toggle.isSelected())
                 {
                     System.out.println(((RadioButton)toggle ).getText());
-
-                    //FXMLLoader fxmlLoader = new FXMLLoader();
-                    //fxmlLoader.setController(new chatController());
-
-                    /*chatController chatController = (chatController) fxmlLoader.getController();
-                    fxmlLoader.setLocation(chatController.class.getResource("D:\\IdeaProjects\\JavaFXTutorials\\src\\chat\\chat.fxml"));
-                    Parent root = (Parent) fxmlLoader.load();
-                    System.out.println(fxmlLoader.getController().toString());*/
-
-//                    System.out.println(chatController);
                     chatController.addChat(((RadioButton)toggle ).getText(), 0);
-
-
                     Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
                     stage.close();
                     return;
                 }
-//            }
-//            catch (Exception e)
-//            {
-//                System.out.println(e.getCause());
-//            }
         }
         alert = new Alert(Alert.AlertType.ERROR, "Please select a user!", ButtonType.OK);
         alert.setTitle("No User Selected");

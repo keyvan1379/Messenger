@@ -52,10 +52,10 @@ public class AddGroupChatController implements Initializable {
         gpNameTextField.setPromptText("Group Name");
 
 
-//        for (String gp :
-//                ClientSideImp.getInstance().g) {
-//
-//        }
+        for (String gp :
+                ClientSideImp.getInstance().get_All_Group()) {
+            addGroupChat(gp);
+        }
 
         for (String username :
                 ClientSideImp.getInstance().get_All_User()) {
@@ -121,7 +121,7 @@ public class AddGroupChatController implements Initializable {
     }
 
     public void joinGroupChat(MouseEvent mouseEvent) {
-        ClientSideImp
+
     }
 
     public void closeWindow(MouseEvent mouseEvent) {

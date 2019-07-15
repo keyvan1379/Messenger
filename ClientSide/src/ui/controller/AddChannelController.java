@@ -2,6 +2,7 @@ package ui.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import connection.ClientSideImp.ClientSideImp;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -9,9 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import models.Channel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 
@@ -38,12 +41,15 @@ public class AddChannelController implements Initializable {
         joinButton.setText("Join!");
         createButton.setText("Create!");
         createTextField.setPromptText("Channel ID");
-        addUser("one");
-        addUser("two");
+
+        for (String username :
+                ClientSideImp.getInstance().get_ALL_Channel()) {
+            addChannel(username);
+        }
 
     }
 
-    public void addUser(String name)
+    public void addChannel(String name)
     {
         RadioButton user = new RadioButton(name);
         user.setStyle("-fx-cursor: hand;");
@@ -56,21 +62,11 @@ public class AddChannelController implements Initializable {
         Alert alert;
         for (Toggle toggle :
                 channelsFound.getToggles()) {
-//            try {
             if (toggle.isSelected())
             {
-                System.out.println(((RadioButton)toggle ).getText());
-
-                //FXMLLoader fxmlLoader = new FXMLLoader();
-                //fxmlLoader.setController(new chatController());
-
-                    /*chatController chatController = (chatController) fxmlLoader.getController();
-                    fxmlLoader.setLocation(chatController.class.getResource("D:\\IdeaProjects\\JavaFXTutorials\\src\\chat\\chat.fxml"));
-                    Parent root = (Parent) fxmlLoader.load();
-                    System.out.println(fxmlLoader.getController().toString());*/
-
-//                    System.out.println(chatController);
-                SearchController.chatController.addChat(((RadioButton)toggle ).getText(), 2);
+                String channelID = ((RadioButton)toggle ).getText();
+                ClientSideImp.getInstance().joinChannel(channelID);
+                SearchController.chatController.addChat(channelID, 2);
                 Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
                 stage.close();
                 return;
@@ -85,19 +81,28 @@ public class AddChannelController implements Initializable {
 
     public void createChannel(MouseEvent mouseEvent) {
         String channelID = createTextField.getText();
-        if (channelID.equals(""))
-        {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a name for your channel!", ButtonType.OK);
-            alert.setTitle("No Name Entered");
-            alert.setHeaderText(null);
-            alert.showAndWait();
-        }
-        else {
-            //create the channel
-            //error if it already exists
+        try {
+            if (channelID.equals(""))
+            {
+                throw new Exception("Please enter a name for your channel!");
+            }
+
+            for (String id :
+                    ClientSideImp.getInstance().get_ALL_Channel()) {
+                if (channelID.equals(id))
+                    throw new Exception("Channel already exists!");
+            }
+            ClientSideImp.getInstance().createChannel(new Channel(channelID, null, "", new Date()));
+
             SearchController.chatController.addChat(channelID, 2);
             Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
             stage.close();
+
+        } catch (Exception e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
+            alert.setHeaderText(null);
+            alert.showAndWait();
         }
     }
 

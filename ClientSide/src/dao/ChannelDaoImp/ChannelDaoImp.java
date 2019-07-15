@@ -9,6 +9,7 @@ import models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -112,6 +113,30 @@ public class ChannelDaoImp implements ChannelDao {
             em.close();
         }
     }
+
+    @Override
+    public ArrayList<String> getAllChannel() throws Exception {
+        ArrayList<String> allChannel = new ArrayList<>();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection connection = DriverManager.getConnection
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE", "ADMIN", "admin");
+            PreparedStatement statement = connection.prepareStatement("SELECT USERNAME from CHANNELS");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                allChannel.add(rs.getString(1));
+            }
+            return allChannel;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("wrong with query");
+        }
+    }
+
 
     @Override
     public Set<User> getChannelUsers(String username) throws Exception {

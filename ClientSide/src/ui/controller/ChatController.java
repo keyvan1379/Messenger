@@ -31,9 +31,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import models.ProfileInfo;
 
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -104,9 +106,6 @@ public class ChatController {
 
     @FXML private JFXSlider slider;
 
-    String sender = "userOne";
-
-
     private double x;
     private double y;
     private boolean isChatOpen;
@@ -161,6 +160,26 @@ public class ChatController {
         messages.add(m2);
         messages.add(m3);
 
+
+        try {
+            for (String pv :
+                    ClientSideImp.getInstance().getChatUsers()) {
+                addChat(pv, 0);
+            }
+
+            for (String gp :
+                    ClientSideImp.getInstance().getChatGroup()) {
+                addChat(gp, 1);
+            }
+
+            for (String ch :
+                    ClientSideImp.getInstance().getChatChannels()) {
+                addChat(ch, 2);
+            }
+        } catch (Exception ex)
+        {
+            System.out.println("server error");
+        }
 
     }
 
@@ -289,7 +308,7 @@ public class ChatController {
 
         }
 
-        if (m.getUser().equals(sender))
+        if (m.getUser().equals(""))
         {
             image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()); //get user profile img
             textFlow.getStyleClass().add("text-flow-sender");
@@ -362,12 +381,19 @@ public class ChatController {
 
     public void showProfile(MouseEvent mouseEvent, String username) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/profile.fxml"));
+        ProfileInfo profileInfo = ClientSideImp.getInstance().get_User_Profile(username);
         Parent root = fxmlLoader.load();
         ProfileController profileController = fxmlLoader.<ProfileController>getController();
-        System.out.println(profileController);
-        profileController.setUsername(username);
-        profileController.setName("name");
-        File file = new File("ClientSide/src/ui/images/user.png");
+        profileController.setUsername(profileInfo.getUsername());
+        profileController.setName(profileInfo.getFirstname());
+        profileController.setLastname(profileInfo.getLastname());
+
+        System.out.println(System.getProperty("user.dir"));
+        File file = new File("ClientSide/src/ui/profilePictures/" + profileInfo.getUsername() + ".jpg");
+        byte[] img = profileInfo.getProfile();
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(img);
+
         Image image = new Image(file.toURI().toString());
         profileController.setProfilePicture(image);
 
