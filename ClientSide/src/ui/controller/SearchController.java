@@ -109,4 +109,14 @@ public class SearchController implements Initializable {
         x = mouseEvent.getSceneX();
         y = mouseEvent.getSceneY();
     }
+
+    public void searchUsers(MouseEvent mouseEvent) {
+        vBox.getChildren().clear();
+        String search = searchTextField.getText();
+        for (String username :
+                ClientSideImp.getInstance().get_All_User()) {
+            if (username.contains(search))
+                addUser(username);
+        }
+    }
 }

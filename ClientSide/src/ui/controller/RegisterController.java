@@ -89,9 +89,21 @@ public class RegisterController implements Initializable {
         //image on file global
         //register
         try {
-            if(file==null){
-                throw new Exception("pls choose image");
-            }
+            if(file==null)
+                throw new Exception("Please choose your profile picture!");
+
+            if (username.equals(""))
+                throw new Exception("Please enter a username!");
+            if (lastname.equals(""))
+                throw new Exception("Please enter your last name!");
+            if (firstname.equals(""))
+                throw new Exception("Please enter your first name!");
+            if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
+                throw new Exception("Please enter a valid email!");
+            if (password.equals(""))
+                throw new Exception("Please enter a password!");
+
+
             byte[] img = new byte[(int)file.length()];
             FileInputStream fileInputStream = new FileInputStream(file);
             fileInputStream.read(img);

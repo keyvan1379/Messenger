@@ -28,7 +28,7 @@
                   </HBox>
 
                   <JFXTextField fx:id="searchTextField" styleClass="jfx-text-field-username" />
-                  <JFXButton fx:id="searchButton" buttonType="RAISED" styleClass="jfx-button-search"/>
+                  <JFXButton onMouseClicked="#searchUsers" fx:id="searchButton" buttonType="RAISED" styleClass="jfx-button-search"/>
                   <JFXButton fx:id="startChattingButton" buttonType="RAISED" onMouseClicked="#startChattingWithUser" styleClass="jfx-button-start-chatting" />
                   <ScrollPane fitToHeight="true" fitToWidth="true">
 
