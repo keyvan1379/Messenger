@@ -85,6 +85,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         try {
             //check if msg sended to channel
             if (ToUsername.startsWith("#")) {
+                ToUsername = ToUsername.substring(1);
                 Channel channel = channelDao.getChannel(ToUsername);
                 if(channel.getAdmin().equals(FromUsername)){
                     ChannelMessage channelMessage = new ChannelMessage(FromUsername,msg,new Date());
@@ -102,16 +103,22 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             }
             //check if msg sended to group
             if(ToUsername.startsWith("$")){
+                ToUsername = ToUsername.substring(1);
                 Group group = groupDao.getGroup(ToUsername);
                 User user = userDao.getUser(FromUsername);
                 //check is username in group
-                if(group.getUsers().contains(user)){
+                List<String> users = new ArrayList<>();
+                group.getUsers().stream().forEach(x -> users.add(x.getUserName()));
+                if(users.contains(user.getUserName())){
                     GroupMessage groupMessage = new GroupMessage(FromUsername,msg,new Date());
                     group.getGroupMessages().add(groupMessage);
                     groupDao.updateGroup(group);
                     //send group msg to online users
                     for (User user1:
                             group.getUsers()) {
+                        if(user1.getUserName().equals(user.getUserName())){
+                            continue;
+                        }
                         if(clients.keySet().contains(user1.getUserName())){
                             clients.get(user1.getUserName()).getMessage(ToUsername,AES.importKey(user1.getUserName()).encrypt(msg),0);
                         }
@@ -351,7 +358,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         }
         return null;
     }
-    
+
     //AES Added
     //Security needed(check if client in list)
     @Override
@@ -404,6 +411,63 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         Thread t = new Thread(() -> clientHandler.uploadFileToClient(new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\" +
                 "downloadFiles\\"+fileName)));
         t.start();
+    }
+
+    @Override
+    public String createChannel(Channel channel) {
+        try {
+            channelDao.addChannel(channel);
+            return "successful";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String joinChannel(String channelUsername, String username) {
+        try{
+            User user = userDao.getUser(username);
+            Channel channel = channelDao.getChannel(channelUsername);
+            user.getChannels().add(channel);
+            channel.getUsers().add(user);
+            channelDao.updateChannel(channel);
+            return "successful";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String createGroup(Group group) throws RemoteException {
+        try {
+            groupDao.addGroup(group);
+            Group g1 = groupDao.getGroup(group.getUserName());
+            User user = userDao.getUser(group.getAdmin());
+            g1.getUsers().add(user);
+            user.getGroups().add(g1);
+            groupDao.updateGroup(g1);
+            return "successful";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String joinGroup(String groupUsername, String username) throws RemoteException {
+        try{
+            User user = userDao.getUser(username);
+            Group group = groupDao.getGroup(groupUsername);
+            user.getGroups().add(group);
+            group.getUsers().add(user);
+            groupDao.updateGroup(group);
+            return "successful";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "unsuccessful";
+        }
     }
 
     private String getAlphaNumericString(int n)

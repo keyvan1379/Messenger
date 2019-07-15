@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import connection.ClientSideIF;
 import connection.ServerSideIF;
 import dao.daoExc.GetUserex;
+import models.Channel;
+import models.Group;
 import models.ProfileInfo;
 import models.User;
 import protections.AES;
@@ -69,7 +71,11 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
 
     @Override
     public void getMessage(String FromUser,String message,long isfile) {
-        System.out.println(message);
+        try {
+            System.out.println(aes.decrypt(message));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -372,6 +378,40 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         try {
             serverSideIF.downloadFileAgain(fromUsername,fileName,username,this,path);
         } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createChannel(Channel channel){
+        try {
+            channel.setAdmin(username);
+            serverSideIF.createChannel(channel);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void joinChannel(String channelUsername){
+        try {
+            serverSideIF.joinChannel(channelUsername,username);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void createGroup(Group group){
+        try {
+            group.setAdmin(username);
+            serverSideIF.createGroup(group);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void joinGroup(String groupUsername){
+        try {
+            serverSideIF.joinGroup(groupUsername,username);
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

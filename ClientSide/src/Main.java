@@ -8,6 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.Date;
+
 public class Main extends Application {
 
     @Override
@@ -18,7 +20,6 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
-
         primaryStage.show();
     }
     public static void main(String[] args) {
