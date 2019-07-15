@@ -37,11 +37,6 @@ public class ProfileController implements Initializable {
         File file = new File("D:\\IdeaProjects\\JavaFXTutorials\\src\\profile\\pic.jpg");
         Image image = new Image(file.toURI().toString());
 
-        setName("");
-        setUsername("");
-        setLastname("sfsf");
-        setProfilePicture(image);
-
         this.labelProfile.setText("Profile");
     }
 

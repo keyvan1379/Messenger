@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import connection.ClientSideImp.ClientSideImp;
+import dao.daoExc.GetUserex;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.value.ChangeListener;
@@ -35,10 +36,14 @@ import models.ProfileInfo;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Optional;
 
 class Message
@@ -47,7 +52,7 @@ class Message
     String message;
     String time;
     int isFile;
-    Message(String user, String message, int isFile,String time)
+    Message(String user, String message, int isFile, String time)
     {
         this.user = user;
         this.message = message;
@@ -108,7 +113,7 @@ public class ChatController {
 
     private double x;
     private double y;
-    private boolean isChatOpen;
+    private String isChatOpen;
 
 
     public void initialize() {
@@ -140,7 +145,7 @@ public class ChatController {
         profilePicture.setFitHeight(60);
         profilePicture.setPreserveRatio(true);
 
-        this.isChatOpen = false;
+        this.isChatOpen = null;
 
         messagesVBox.setStyle("-fx-font-size: 14px; -fx-background-color: white; -fx-padding: 10");
 
@@ -148,18 +153,6 @@ public class ChatController {
         slider.setMax(20);
         slider.setValue(14);
         slider.valueProperty().addListener((observable, oldValue, newValue) -> messagesVBox.setStyle("-fx-font-size: " + newValue + "px; -fx-background-color: white; -fx-padding: 10"));
-
-
-        //get messages
-        Message m1 = new Message("userOne", "hello", 1,Message.dateToString(new Date()));
-        Message m2 = new Message("userTwo", "hi", 1,Message.dateToString(new Date()));
-        Message m3 = new Message("userTwo", "bye", 0,Message.dateToString(new Date()));
-
-
-        messages.add(m1);
-        messages.add(m2);
-        messages.add(m3);
-
 
         try {
             for (String pv :
@@ -207,9 +200,46 @@ public class ChatController {
 //        set username and profile picture and status
         if (type == 0)
         {
+
+            try {
+                HashMap<Integer, ArrayList> msg = ClientSideImp.getInstance().getmsg_between_2person(chat);
+                if (msg != null)
+                {
+                    for (int i = 0; i < msg.size(); i++) {
+                        addMessage(new Message((String)msg.get(i).get(0), (String)msg.get(i).get(1), Integer.parseInt((String)msg.get(i).get(2)), (String)msg.get(i).get(3)));
+                    }
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            // userfrom msg isfile sendtime userto
+
             this.username.setText(chat);
-            this.status.setText("");
-            Image image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString());
+            try {
+                this.status.setText(ClientSideImp.getInstance().get_Status(chat));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (GetUserex getUserex) {
+                getUserex.printStackTrace();
+            }
+
+            ProfileInfo profileInfo = ClientSideImp.getInstance().get_User_Profile(chat);
+
+            File file = new File("ClientSide/src/ui/profilePictures/" + profileInfo.getUsername() + ".jpg");
+            byte[] img = profileInfo.getProfile();
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(file);
+                fileOutputStream.write(img);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Image image = new Image(file.toURI().toString());
+
             profilePicture.setImage(image);
             profilePicture.setFitHeight(60);
             profilePicture.setPreserveRatio(true);
@@ -262,16 +292,11 @@ public class ChatController {
         }
 
 
-
-        for (Message m :
-                messages) {
-            addMessage(m);
-
-        }
     }
 
     private void addMessage(Message m)
     {
+        //from msg isfile sendtime
         TextFlow textFlow;
         HBox hBox = new HBox(5);
         hBox.setPadding(new Insets(0, 5, 0, 5));
@@ -281,7 +306,7 @@ public class ChatController {
         imageView.setFitWidth(40);
         imageView.setPreserveRatio(true);
 
-        if (m.getIsFile() == 1)
+        if (m.getIsFile() == 0)
         {
             Text text = new Text(m.getMessage());
             Text time = new Text(m.getTime());
@@ -301,14 +326,14 @@ public class ChatController {
             });
             icon.setCursor(Cursor.HAND);
             Text fileName = new Text(m.getMessage());
-            Text fileSize = new Text(" ( size )");
+            Text fileSize = new Text(" ( "+ m.getIsFile() +" )");
             Text time = new Text(m.getTime());
             time.setStyle("-fx-font-size: 10px");
             textFlow = new TextFlow(icon, new Text("  "), fileName, fileSize, new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
 
         }
 
-        if (m.getUser().equals(""))
+        if (m.getUser().equals(ClientSideImp.getInstance().getUser()))
         {
             image = new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()); //get user profile img
             textFlow.getStyleClass().add("text-flow-sender");
@@ -335,16 +360,20 @@ public class ChatController {
     }
 
 
-    public void sendMessege(MouseEvent mouseEvent) {
-        if ( (!(messageTextArea.getText().equals(""))) && (isChatOpen) )
+    public void sendMessege(MouseEvent mouseEvent   ) {
+        if ( (!(messageTextArea.getText().equals(""))) && isChatOpen != null)
         {
-            Message message = new Message("userOne", messageTextArea.getText().trim(), 1,Message.dateToString(new Date()));
-            messages.add(message);
-            messageTextArea.setText("");
+
+            Message message = new Message(ClientSideImp.getInstance().getUser(),
+                    messageTextArea.getText().trim(), 0,Message.dateToString(new Date()));
+
             addMessage(message);
+            ClientSideImp.getInstance().sendmsg(isChatOpen, messageTextArea.getText().trim());
+
+            messageTextArea.setText("");
         }
 
-        else if ( !(isChatOpen) )
+        else if ( isChatOpen == null )
         {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a chat!", ButtonType.OK);
             alert.setHeaderText(null);
@@ -388,7 +417,6 @@ public class ChatController {
         profileController.setName(profileInfo.getFirstname());
         profileController.setLastname(profileInfo.getLastname());
 
-        System.out.println(System.getProperty("user.dir"));
         File file = new File("ClientSide/src/ui/profilePictures/" + profileInfo.getUsername() + ".jpg");
         byte[] img = profileInfo.getProfile();
         FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -477,7 +505,7 @@ public class ChatController {
         hBox.setOnMouseClicked(e -> {
             messagesVBox.getChildren().clear();
             loadMessages(username, type);
-            isChatOpen = true;
+            isChatOpen = username;
         });
         hBox.setStyle("-fx-cursor: hand;");
         //usersVBox.getChildren().add(1, new Separator());

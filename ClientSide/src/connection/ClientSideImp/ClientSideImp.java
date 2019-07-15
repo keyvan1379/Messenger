@@ -216,7 +216,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         return null;
     }
 
-    public HashMap<Integer, ArrayList> getmsg_between_2person(String desusername){
+    public HashMap<Integer, ArrayList> getmsg_between_2person(String desusername) throws Exception{
         if(username==null){
             System.out.println("getmsg_between_2person");
             return null;
@@ -228,7 +228,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
                     new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
             return mess;
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         System.out.println("getmsg_between_2person end of method");
         return null;
