@@ -47,7 +47,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     public String getUser(){
         return username;
     }
-    
+
     private ClientSideImp(ServerSideIF serverSideIF,String AESKey) throws RemoteException {
         this.serverSideIF = serverSideIF;
         this.AESKey = AESKey;
@@ -459,10 +459,10 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
     }
 
-    public void createGroup(Group group){
+    public void createGroup(Group group,ArrayList<String> users){
         try {
             group.setAdmin(username);
-            serverSideIF.createGroup(group);
+            serverSideIF.createGroup(group,new Gson().toJson(users));
         }catch (Exception e){
             e.printStackTrace();
         }

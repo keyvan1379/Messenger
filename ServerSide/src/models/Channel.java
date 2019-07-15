@@ -28,7 +28,6 @@ public class Channel implements Serializable {
     @JoinColumn(name = "USERNAME")
     private List<ChannelMessage> channelMessages = new ArrayList<>();
 
-
     public Channel(String username, String admin, String bio, Date date) {
         this.username = username;
         this.admin = admin;
