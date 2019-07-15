@@ -19,24 +19,38 @@ import java.util.ResourceBundle;
 
 
 public class AddGroupChatController implements Initializable {
-    @FXML private Label labelSearch;
-    @FXML private JFXTextField searchTextField;
-    @FXML private JFXButton searchButton;
+    @FXML private Label labelCreate;
+    @FXML private Label labelJoin;
+    @FXML private JFXTextField joinSearchTextField;
+    @FXML private JFXTextField createSearchTextField;
+    @FXML private JFXButton createSearchButton;
+    @FXML private JFXButton joinSearchButton;
     @FXML private JFXButton createGroupChatButton;
     @FXML private JFXTextField gpNameTextField;
-    @FXML private VBox vBox;
+    @FXML private VBox createVBox;
+    @FXML private VBox joinVBox;
+
+    @FXML public JFXButton joinGroupChatButton;
     ArrayList<String> users = new ArrayList<>();
+    private ToggleGroup gpsFound = new ToggleGroup();
 
     private double x;
     private double y;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        labelSearch.setText("Add Group Chat");
-        searchTextField.setPromptText("Username");
-        searchButton.setText("\uf002");
+
+        labelJoin.setText("Join");
+        joinSearchTextField.setPromptText("Username");
+        joinSearchButton.setText("\uf002");
+        joinGroupChatButton.setText("Join!");
+
+        labelCreate.setText("Create");
         createGroupChatButton.setText("Create!");
+        createSearchButton.setText("\uf002");
         gpNameTextField.setPromptText("Group Name");
+
+
         addUser("one");
         addUser("two");
 
@@ -56,7 +70,15 @@ public class AddGroupChatController implements Initializable {
                 users.remove(user.getText());
             }
         });
-        vBox.getChildren().add(user);
+        createVBox.getChildren().add(user);
+    }
+
+    public void addGroupChat(String name)
+    {
+        RadioButton gp = new RadioButton(name);
+        gp.setStyle("-fx-cursor: hand;");
+        gp.setToggleGroup(gpsFound);
+        joinVBox.getChildren().add(gp);
     }
 
 
@@ -90,6 +112,9 @@ public class AddGroupChatController implements Initializable {
         }
     }
 
+    public void joinGroupChat(MouseEvent mouseEvent) {
+    }
+
     public void closeWindow(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         stage.close();
@@ -111,4 +136,6 @@ public class AddGroupChatController implements Initializable {
         x = mouseEvent.getSceneX();
         y = mouseEvent.getSceneY();
     }
+
+
 }

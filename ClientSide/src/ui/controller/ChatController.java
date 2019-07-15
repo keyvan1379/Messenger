@@ -102,7 +102,7 @@ public class ChatController {
     @FXML private JFXSlider slider;
 
     String sender = "userOne";
-    String receiver = "userTwo";
+
 
     private double x;
     private double y;

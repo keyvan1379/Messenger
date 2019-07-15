@@ -17,10 +17,10 @@
 
 .pane-menu
 {
-    -fx-pref-width: 250px;
+    -fx-pref-width: 350px;
     -fx-pref-height: 220px;
     -fx-background-color: #fff;
-    -fx-translate-x: 120px;
+    -fx-translate-x: 70px;
     -fx-translate-y: 35px;
     -fx-border-color: #c6cac8;
 }
@@ -47,7 +47,8 @@
     -fx-alignment: center;
 }
 
-.label-search
+
+.label-labels
 {
     -fx-font-size: 12px;
     -fx-text-fill: #989898;
@@ -55,20 +56,21 @@
 
 .scroll-pane
 {
-    -fx-pref-width: 190px;
+    -fx-pref-width: 140px;
     -fx-pref-height: 100px;
-    -fx-translate-x: 30px;
+    -fx-translate-x: 16px;
     -fx-translate-y: 75px;
 }
 
-.jfx-text-field-username
+.jfx-text-field-gp
 {
-    -fx-pref-width: 150px;
-    -fx-translate-x: 30px;
+    -fx-pref-width: 110px;
+    -fx-translate-x: 16px;
     -fx-translate-y: 40px;
     -jfx-label-float: true;
     -jfx-focus-color: #8b0000;
 }
+
 
 .jfx-button
 {
@@ -86,27 +88,19 @@
 {
     -fx-pref-width: 30px;
     -fx-pref-height: 30px;
-    -fx-translate-x: 190px;
+    -fx-translate-x: 140px;
     -fx-translate-y: 38px;
     -fx-font-family: FontAwesome;
     -fx-background-radius: 50px;
 }
 
-.jfx-button-create
+.jfx-button-create, .jfx-button-join
 {
-    -fx-pref-width: 90px;
-    -fx-translate-x: 130px;
+    -fx-pref-width: 140px;
+    -fx-translate-x: 16px;
     -fx-translate-y: 180px;
 }
 
-.jfx-text-field-gp-name
-{
-    -fx-pref-width: 90px;
-    -fx-translate-x: 30px;
-    -fx-translate-y: 180px;
-    -jfx-label-float: false;
-    -jfx-focus-color: #8b0000;
-}
 
 .check-box > .box {
     -fx-padding: 1px;
@@ -114,4 +108,11 @@
 
 .check-box {
     -fx-translate-x: 2px;
+}
+
+.split-pane > .split-pane-divider {
+
+    -fx-padding: 0 1 0 0;
+    -fx-background-color: #c6cac8;
+    -fx-cursor: default;
 }

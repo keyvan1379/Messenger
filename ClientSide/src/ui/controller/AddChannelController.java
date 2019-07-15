@@ -16,8 +16,10 @@ import java.util.ResourceBundle;
 
 
 public class AddChannelController implements Initializable {
-    @FXML private Label labelSearch;
+    @FXML private Label labelCreate;
+    @FXML private Label labelJoin;
     @FXML private JFXTextField searchTextField;
+    @FXML private JFXTextField createTextField;
     @FXML private JFXButton searchButton;
     @FXML private JFXButton joinButton;
     @FXML private JFXButton createButton;
@@ -27,14 +29,15 @@ public class AddChannelController implements Initializable {
     private double x;
     private double y;
 
-//    public static ChatController chatController;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        labelSearch.setText("Channel");
+        labelJoin.setText("Join");
+        labelCreate.setText("Create");
         searchTextField.setPromptText("Channel ID");
         searchButton.setText("\uf002");
         joinButton.setText("Join!");
         createButton.setText("Create!");
+        createTextField.setPromptText("Channel ID");
         addUser("one");
         addUser("two");
 
@@ -82,12 +85,20 @@ public class AddChannelController implements Initializable {
 
     public void createChannel(MouseEvent mouseEvent) {
         String channelID = searchTextField.getText();
-        //create the channel
-        //error if it already exists
-        SearchController.chatController.addChat(channelID, 2);
-        Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
-        stage.close();
-
+        if (channelID.equals(""))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a name for your channel!", ButtonType.OK);
+            alert.setTitle("No Name Entered");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+        }
+        else {
+            //create the channel
+            //error if it already exists
+            SearchController.chatController.addChat(channelID, 2);
+            Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
+            stage.close();
+        }
     }
 
     public void closeWindow(MouseEvent mouseEvent) {

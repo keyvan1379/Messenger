@@ -46,7 +46,7 @@ public class ProfileController implements Initializable {
     }
 
     public void setName(String name) {
-        this.name.setText("Name: " + name);
+        this.name.setText("First Name: " + name);
     }
 
     public void setUsername(String username) {
@@ -54,7 +54,7 @@ public class ProfileController implements Initializable {
     }
 
     public void setLastname(String lastname) {
-        this.lastname.setText("LastName: " + lastname);
+        this.lastname.setText("Last Name: " + lastname);
     }
 
     public void setProfilePicture(Image image) {

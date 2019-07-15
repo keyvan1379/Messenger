@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
 <AnchorPane styleClass="pane-main" stylesheets="@../css/addGroupChatStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.AddGroupChatController">
 
     <AnchorPane prefHeight="300.0" prefWidth="500.0" styleClass="pane-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -19,27 +20,48 @@
             <FontAwesomeIconView glyphName="CLOSE" onMouseClicked="#closeWindow" style="-fx-cursor: hand"/>
         </HBox>
 
-        <AnchorPane styleClass="pane-menu">
 
-            <HBox styleClass="hbox-label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
 
-                <Label fx:id="labelSearch" styleClass="label-search" />
+        <SplitPane dividerPositions="0.5" scaleShape="false" styleClass="pane-menu">
 
-            </HBox>
+            <AnchorPane minWidth="173.0">
 
-            <JFXTextField fx:id="searchTextField" styleClass="jfx-text-field-username" />
-            <JFXButton fx:id="searchButton" buttonType="RAISED" styleClass="jfx-button-search"/>
-            <JFXButton fx:id="createGroupChatButton" buttonType="RAISED" onMouseClicked="#createGroupChat" styleClass="jfx-button-create" />
-            <JFXTextField fx:id="gpNameTextField" styleClass="jfx-text-field-gp-name" />
-            <ScrollPane fitToHeight="true" fitToWidth="true">
+                <HBox styleClass="hbox-label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
+                    <Label fx:id="labelJoin" styleClass="label-labels" />
+                </HBox>
 
-                <VBox fx:id="vBox">
+                <JFXTextField fx:id="joinSearchTextField" styleClass="jfx-text-field-gp" />
+                <JFXButton fx:id="joinSearchButton" buttonType="RAISED" styleClass="jfx-button-search" />
+                <JFXButton fx:id="joinGroupChatButton" buttonType="RAISED" onMouseClicked="#joinGroupChat" styleClass="jfx-button-join" />
 
-                </VBox>
+                <ScrollPane fitToHeight="true" fitToWidth="true">
 
-            </ScrollPane>
+                    <VBox fx:id="joinVBox">
 
-        </AnchorPane>
+                    </VBox>
+
+                </ScrollPane>
+
+            </AnchorPane>
+
+            <AnchorPane minWidth="172.0">
+                <HBox styleClass="hbox-label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
+                    <Label fx:id="labelCreate" styleClass="label-labels" />
+                </HBox>
+                <JFXTextField fx:id="createSearchTextField" styleClass="jfx-text-field-gp" />
+                <JFXButton fx:id="createSearchButton" buttonType="RAISED" styleClass="jfx-button-search"/>
+                <JFXButton fx:id="createGroupChatButton" buttonType="RAISED" onMouseClicked="#createGroupChat" styleClass="jfx-button-create" />
+                <JFXTextField fx:id="gpNameTextField" styleClass="jfx-text-field-gp" />
+                <ScrollPane fitToHeight="true" fitToWidth="true">
+
+                    <VBox fx:id="createVBox">
+
+                    </VBox>
+
+                </ScrollPane>
+            </AnchorPane>
+
+        </SplitPane>
 
     </AnchorPane>
 
