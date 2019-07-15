@@ -15,4 +15,5 @@ public interface UserDao {
     Date lastSeen(String username) throws GetUserex;
     ArrayList<String> getUsers() throws Exception;
     User getUser(String username) throws GetUserex;
+    ArrayList<String> getChatUsersList(String username) throws Exception;
 }

@@ -181,6 +181,35 @@ public class UserDaoImp implements UserDao {
             throw new GetUserex("this user does not exist");
         }
     }
+
+    @Override
+    public ArrayList<String> getChatUsersList(String username) throws Exception {
+        List<String> ChatUsers = new ArrayList<>();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection connection = DriverManager.getConnection
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE", "ADMIN", "admin");
+            PreparedStatement statement = connection.prepareStatement("SELECT CASE WHEN CONVERSATION.USER1 = ? THEN USER2" +
+                    " WHEN CONVERSATION.USER2 = ? THEN USER1 END FROM CONVERSATION" +
+                    " WHERE (CONVERSATION.USER1=? OR CONVERSATION.USER2=?)");
+            statement.setString(1,username);
+            statement.setString(2,username);
+            statement.setString(3,username);
+            statement.setString(4,username);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                ChatUsers.add(rs.getString(1));
+            }
+            return (ArrayList)ChatUsers;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception(e.getCause());
+        }
+    }
 }
 
 

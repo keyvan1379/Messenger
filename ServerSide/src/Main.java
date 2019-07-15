@@ -46,6 +46,14 @@ public class Main {
         //RSA rsa = new RSA("ss");
         UserDaoImp userDaoImp = new UserDaoImp();
         String s = "slam";
+        try {
+            for (String s1:
+                 userDaoImp.getChatUsersList("ddddddd1")) {
+                System.out.println(s1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         byte[] o = s.getBytes();
         /*User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
                 "ddddddd1","sdfsf",new Date(),new Date(),o);

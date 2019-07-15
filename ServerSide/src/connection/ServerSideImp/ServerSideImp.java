@@ -556,6 +556,45 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         }
     }
 
+    @Override
+    public String getChatUsers(String username) throws RemoteException {
+        Gson gson = new Gson();
+        try {
+            return gson.toJson(userDao.getChatUsersList(username));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "server error";
+        }
+    }
+
+    @Override
+    public String getChatGroups(String username) throws RemoteException {
+        Gson gson = new Gson();
+        try {
+            ArrayList<String> groups = new ArrayList<>();
+            User user = userDao.getUser(username);
+            user.getGroups().stream().forEach(x -> groups.add(x.getUserName()));
+            return gson.toJson(groups);
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+            return "server error";
+        }
+    }
+
+    @Override
+    public String getChatChannels(String username) throws RemoteException {
+        Gson gson = new Gson();
+        try {
+            ArrayList<String> channels = new ArrayList<>();
+            User user = userDao.getUser(username);
+            user.getChannels().stream().forEach(x -> channels.add(x.getUsername()));
+            return gson.toJson(channels);
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+            return "server error";
+        }
+    }
+
     private String getAlphaNumericString(int n)
     {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

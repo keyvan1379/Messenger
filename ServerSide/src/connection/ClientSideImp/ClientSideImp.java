@@ -231,6 +231,30 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         return null;
     }
 
+    public HashMap<Integer,ArrayList> getGroupMsg(String groupUsername) throws Exception {
+        try {
+            String json = aes.decrypt(serverSideIF.getGroupMsgs(username,groupUsername));
+            HashMap<Integer, ArrayList> mess = new Gson().fromJson(json,
+                    new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
+            return mess;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("error while decrypt");
+        }
+    }
+
+    public HashMap<Integer,ArrayList> getChannelMsg(String channelUsername) throws Exception {
+        try {
+            String json = aes.decrypt(serverSideIF.getChannelMsgs(username,channelUsername));
+            HashMap<Integer, ArrayList> mess = new Gson().fromJson(json,
+                    new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
+            return mess;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("error while decrypt");
+        }
+    }
+
     public HashMap<Integer, ArrayList> get_all_msg(){
         if(username==null){
             System.out.println("get_all_msg");
@@ -413,6 +437,36 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             serverSideIF.joinGroup(groupUsername,username);
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    public ArrayList<String> getChatUsers() throws Exception {
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serverSideIF.getChatUsers(username),ArrayList.class);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new Exception("error");
+        }
+    }
+
+    public ArrayList<String> getChatGroup() throws Exception {
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serverSideIF.getChatGroups(username),ArrayList.class);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new Exception("error");
+        }
+    }
+
+    public ArrayList<String> getChatChannels() throws Exception {
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serverSideIF.getChatChannels(username),ArrayList.class);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new Exception("error");
         }
     }
 
