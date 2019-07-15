@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
@@ -12,13 +13,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<?import com.jfoenix.controls.JFXSlider?>
-<AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-main" stylesheets="@../css/chatStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.ChatController">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" styleClass="pane-main" stylesheets="@../css/chatStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.ChatController">
 
-      <AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="pane-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="500.0" prefWidth="600.0" styleClass="pane-bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
 
-             <SplitPane dividerPositions="0.25" prefHeight="450.0" prefWidth="450.0" styleClass="pane-one">
+             <SplitPane dividerPositions="0.25" prefHeight="450.0" prefWidth="550.0" styleClass="pane-one">
 
 
                   <SplitPane dividerPositions="0.55" minWidth="111.0" orientation="VERTICAL">
@@ -27,20 +27,34 @@
                       <AnchorPane minHeight="245.0" style="-fx-background-color: white;">
 
                           <HBox styleClass="hbox-label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
-                                  <Label fx:id="labelUsers" styleClass="label-labels" />
+                                  <Label fx:id="labelChats" styleClass="label-labels" />
                           </HBox>
-                          <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <VBox alignment="TOP_CENTER" layoutY="30.0" spacing="3" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="200.0" minHeight="0.0" style="-fx-background-color: white;">
+                                     <VBox fx:id="usersVBox" alignment="TOP_CENTER" spacing="3" style="-fx-background-color: white;">
 
-                               <VBox fx:id="usersVBox" alignment="TOP_CENTER" spacing="3" style="-fx-background-color: white;">
-                                        <JFXButton fx:id="addUsersButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddUserWindow">
-                                        <graphic>
-                                            <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" size="16.0" />
-                                        </graphic>
-                                        </JFXButton>
-
-                               </VBox>
-
-                          </ScrollPane>
+                                     </VBox>
+                                </ScrollPane>
+                  <HBox alignment="TOP_CENTER" spacing="3">
+                         <JFXButton alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddUserWindow">
+                             <graphic>
+                                 <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" size="16.0" />
+                             </graphic>
+                         </JFXButton>
+      
+                         <JFXButton alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddGPWindow">
+                             <graphic>
+                                 <FontAwesomeIconView fill="WHITE" glyphName="GROUP" size="16.0" />
+                             </graphic>
+                         </JFXButton>
+      
+                         <JFXButton alignment="CENTER" buttonType="RAISED" onMouseClicked="#OpenAddChannelWindow">
+                             <graphic>
+                                 <FontAwesomeIconView fill="WHITE" glyphName="BULLHORN" size="16.0" />
+                             </graphic>
+                         </JFXButton>
+                  </HBox>
+               </VBox>
                       </AnchorPane>
 
 
@@ -62,7 +76,7 @@
 
                   </SplitPane>
 
-                  <SplitPane dividerPositions="0.8" minWidth="334.0" orientation="VERTICAL" style="-fx-background-color: white;">
+                  <SplitPane dividerPositions="0.8" minWidth="434.0" orientation="VERTICAL" style="-fx-background-color: white;">
 
                         <SplitPane dividerPositions="0.15" minHeight="356.0" orientation="VERTICAL">
                               <HBox minHeight="70.0" onMouseClicked="#showProfile" spacing="10" style="-fx-background-color: white; -fx-padding: 5; -fx-cursor: hand">

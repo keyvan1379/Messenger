@@ -15,24 +15,26 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class SearchController implements Initializable {
+public class AddChannelController implements Initializable {
     @FXML private Label labelSearch;
     @FXML private JFXTextField searchTextField;
     @FXML private JFXButton searchButton;
-    @FXML private JFXButton startChattingButton;
+    @FXML private JFXButton joinButton;
+    @FXML private JFXButton createButton;
     @FXML private VBox vBox;
-    private ToggleGroup usersFound = new ToggleGroup();
+    private ToggleGroup channelsFound = new ToggleGroup();
 
     private double x;
     private double y;
 
-    public static ChatController chatController;
+//    public static ChatController chatController;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        labelSearch.setText("Add Private Chat");
-        searchTextField.setPromptText("Username");
+        labelSearch.setText("Channel");
+        searchTextField.setPromptText("Channel ID");
         searchButton.setText("\uf002");
-        startChattingButton.setText("Add User!");
+        joinButton.setText("Join!");
+        createButton.setText("Create!");
         addUser("one");
         addUser("two");
 
@@ -42,22 +44,22 @@ public class SearchController implements Initializable {
     {
         RadioButton user = new RadioButton(name);
         user.setStyle("-fx-cursor: hand;");
-        user.setToggleGroup(usersFound);
+        user.setToggleGroup(channelsFound);
         vBox.getChildren().add(user);
     }
 
 
-    public void startChattingWithUser(MouseEvent mouseEvent) throws IOException {
+    public void joinChannel(MouseEvent mouseEvent) throws IOException {
         Alert alert;
         for (Toggle toggle :
-                usersFound.getToggles()) {
+                channelsFound.getToggles()) {
 //            try {
-                if (toggle.isSelected())
-                {
-                    System.out.println(((RadioButton)toggle ).getText());
+            if (toggle.isSelected())
+            {
+                System.out.println(((RadioButton)toggle ).getText());
 
-                    //FXMLLoader fxmlLoader = new FXMLLoader();
-                    //fxmlLoader.setController(new chatController());
+                //FXMLLoader fxmlLoader = new FXMLLoader();
+                //fxmlLoader.setController(new chatController());
 
                     /*chatController chatController = (chatController) fxmlLoader.getController();
                     fxmlLoader.setLocation(chatController.class.getResource("D:\\IdeaProjects\\JavaFXTutorials\\src\\chat\\chat.fxml"));
@@ -65,23 +67,25 @@ public class SearchController implements Initializable {
                     System.out.println(fxmlLoader.getController().toString());*/
 
 //                    System.out.println(chatController);
-                    chatController.addChat(((RadioButton)toggle ).getText(), 0);
+                SearchController.chatController.addChat(((RadioButton)toggle ).getText(), 2);
 
 
-                    Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
-                    stage.close();
-                    return;
-                }
-//            }
-//            catch (Exception e)
-//            {
-//                System.out.println(e.getCause());
-//            }
+                Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
+                stage.close();
+                return;
+            }
+
         }
-        alert = new Alert(Alert.AlertType.ERROR, "Please select a user!", ButtonType.OK);
-        alert.setTitle("No User Selected");
+        alert = new Alert(Alert.AlertType.ERROR, "Please select a channel!", ButtonType.OK);
+        alert.setTitle("No Channel Selected");
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+
+    public void createChannel(MouseEvent mouseEvent) {
+        String channelID = searchTextField.getText();
+        //create the channel
+        //error if it already exists
     }
 
     public void closeWindow(MouseEvent mouseEvent) {
@@ -105,4 +109,6 @@ public class SearchController implements Initializable {
         x = mouseEvent.getSceneX();
         y = mouseEvent.getSceneY();
     }
+
+
 }
