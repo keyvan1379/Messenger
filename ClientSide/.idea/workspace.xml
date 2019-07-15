@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/ClientSide.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ClientSide.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/.idea/artifacts/ServerSide_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/.idea/artifacts/ServerSide_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideImp/ClientSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideImp/ClientSideImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideIF.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideIF.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/ChannelDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/ChannelDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/ChannelDaoImp/ChannelDaoImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/ChannelDaoImp/ChannelDaoImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDaoImp/GroupDaoImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDaoImp/GroupDaoImp.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,9 +37,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
               <caret line="1" selection-start-line="1" selection-end-line="1" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -181,7 +181,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563174175235" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563175136378" />
     <property name="last_opened_file_path" value="E:/AP/cli/ClientSide" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -381,9 +381,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" selection-start-line="1" selection-end-line="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

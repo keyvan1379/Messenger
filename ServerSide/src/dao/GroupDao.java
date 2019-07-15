@@ -12,6 +12,7 @@ public interface GroupDao {
     void addGroup(Group group);
     void deleteGroup(String username);
     void updateGroup(Group group);
+    ArrayList<String> getAllGroup() throws Exception;
     Set<User> getGroupUsers(String username) throws Exception;
     ArrayList<GroupMessage> getGroupMessage(String username) throws Exception;
 }

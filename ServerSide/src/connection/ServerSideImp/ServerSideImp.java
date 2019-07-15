@@ -177,6 +177,30 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         return "server error";
     }
 
+    @Override
+    public String getAllGroups() throws RemoteException {
+        try {
+            List<String> allGroup = groupDao.getAllGroup();
+            Gson gson = new Gson();
+            return gson.toJson(allGroup);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Server error";
+    }
+
+    @Override
+    public String getAllChannel() throws RemoteException {
+        try {
+            List<String> allChannel = channelDao.getAllChannel();
+            Gson gson = new Gson();
+            return gson.toJson(allChannel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Server error";
+    }
+
     //AES added
     @Override
     public String login(String username, String password,ClientSideIF clientSideIF) {
