@@ -337,6 +337,38 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         return null;
     }
 
+    public ArrayList<String> get_All_Group(){
+        if(username==null){
+            System.out.println("get_All_Group");
+            return null;
+        }
+        try {
+            ArrayList<String> groups = new Gson().fromJson(serverSideIF.getAllGroups(),ArrayList.class);
+            return groups;
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("get_All_Group end of method");
+        return null;
+    }
+
+    public ArrayList<String> get_ALL_Channel(){
+        if(username==null){
+            System.out.println("get_All_Channel");
+            return null;
+        }
+        try {
+            ArrayList<String> groups = new Gson().fromJson(serverSideIF.getAllChannel(),ArrayList.class);
+            return groups;
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("get_All_Channel end of method");
+        return null;
+    }
+    
     public ProfileInfo get_User_Profile(String username){
         if(username==null){
             System.out.println("get_User_Profile");
