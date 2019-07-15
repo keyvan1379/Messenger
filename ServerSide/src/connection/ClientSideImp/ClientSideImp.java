@@ -44,6 +44,10 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
     }
 
+    public String getUser(){
+        return username;
+    }
+    
     private ClientSideImp(ServerSideIF serverSideIF,String AESKey) throws RemoteException {
         this.serverSideIF = serverSideIF;
         this.AESKey = AESKey;
@@ -368,7 +372,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         System.out.println("get_All_Channel end of method");
         return null;
     }
-    
+
     public ProfileInfo get_User_Profile(String username){
         if(username==null){
             System.out.println("get_User_Profile");

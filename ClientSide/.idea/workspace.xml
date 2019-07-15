@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideImp/ClientSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideImp/ClientSideImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideIF.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideIF.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/ChannelDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/ChannelDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/ChannelDaoImp/ChannelDaoImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/ChannelDaoImp/ChannelDaoImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDaoImp/GroupDaoImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDaoImp/GroupDaoImp.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,11 +49,24 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dao/MessageQueryImp/MessageQueryImp.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
               <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+              <folding>
+                <element signature="e#954#955#0" expanded="true" />
+                <element signature="e#985#986#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,6 +142,7 @@
         <option value="$PROJECT_DIR$/src/ui/controller/RegisterController.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/ui/controller/ChatController.java" />
+        <option value="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" />
       </list>
     </option>
   </component>
@@ -146,7 +156,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1389" />
@@ -170,6 +180,19 @@
               <item name="ClientSide" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ClientSide" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientSide" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="connection" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ClientSide" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientSide" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="connection" type="462c0819:PsiDirectoryNode" />
+              <item name="ClientSideImp" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -181,7 +204,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563175136378" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563180633469" />
     <property name="last_opened_file_path" value="E:/AP/cli/ClientSide" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -235,19 +258,19 @@
       <workItem from="1563020149260" duration="4819000" />
       <workItem from="1563039117933" duration="5404000" />
       <workItem from="1563086724489" duration="1753000" />
-      <workItem from="1563106658514" duration="5323000" />
+      <workItem from="1563106658514" duration="5348000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18472000" />
+    <option name="totallyTimeSpent" value="18497000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Persistence" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17516778" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17516778" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -398,6 +421,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+          <folding>
+            <element signature="e#954#955#0" expanded="true" />
+            <element signature="e#985#986#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

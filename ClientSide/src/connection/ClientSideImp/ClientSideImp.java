@@ -35,6 +35,9 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
 
     private String AESKey;
 
+    public String getUser(){
+        return username;
+    }
     private String username = null;
     {
         try {
