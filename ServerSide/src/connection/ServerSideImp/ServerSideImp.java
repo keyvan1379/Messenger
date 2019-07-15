@@ -21,16 +21,14 @@ import protections.MD5;
 import protections.RSA;
 import sun.security.krb5.internal.crypto.RsaMd5CksumType;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     public ServerSideImp() throws RemoteException {
@@ -259,15 +257,35 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 e.printStackTrace();
             }
             clients.put(user.getUserName(),clientSideIF);
-            clients.remove(username);
-            userDao.deleteUser(username);
-            userDao.addUser(user);
-            System.out.println(user.getUserName());
-            return "successful";
+            try {
+                User user1 = userDao.getUser(username);
+                Set<Channel> channels = user1.getChannels();
+                Set<Group> groups = user1.getGroups();
+                clients.remove(username);
+                userDao.deleteUser(username);
+                userDao.addUser(user);
+                for (Group g:
+                     groups) {
+                    g.getUsers().add(user);
+                    user.getGroups().add(g);
+                    groupDao.updateGroup(g);
+                }
+                for (Channel c:
+                     channels) {
+                    c.getUsers().add(user);
+                    user.getChannels().add(c);
+                    channelDao.updateChannel(c);
+                }
+                System.out.println(user.getUserName());
+                return "successful";
+            } catch (GetUserex getUserex) {
+                getUserex.printStackTrace();
+            }
         }
         else{
             return "unsuccessful";
         }
+        return "unsuccessful";
     }
 
     @Override
