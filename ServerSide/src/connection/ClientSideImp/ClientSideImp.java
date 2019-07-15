@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import connection.ClientSideIF;
 import connection.ServerSideIF;
 import dao.daoExc.GetUserex;
+import models.Channel;
+import models.Group;
 import models.ProfileInfo;
 import models.User;
 import protections.AES;
@@ -69,7 +71,11 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
 
     @Override
     public void getMessage(String FromUser,String message,long isfile) {
-        System.out.println(message);
+        try {
+            System.out.println(aes.decrypt(message));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -225,6 +231,30 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         return null;
     }
 
+    public HashMap<Integer,ArrayList> getGroupMsg(String groupUsername) throws Exception {
+        try {
+            String json = aes.decrypt(serverSideIF.getGroupMsgs(username,groupUsername));
+            HashMap<Integer, ArrayList> mess = new Gson().fromJson(json,
+                    new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
+            return mess;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("error while decrypt");
+        }
+    }
+
+    public HashMap<Integer,ArrayList> getChannelMsg(String channelUsername) throws Exception {
+        try {
+            String json = aes.decrypt(serverSideIF.getChannelMsgs(username,channelUsername));
+            HashMap<Integer, ArrayList> mess = new Gson().fromJson(json,
+                    new TypeToken<HashMap<Integer, ArrayList>>() {}.getType());
+            return mess;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("error while decrypt");
+        }
+    }
+
     public HashMap<Integer, ArrayList> get_all_msg(){
         if(username==null){
             System.out.println("get_all_msg");
@@ -373,6 +403,70 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             serverSideIF.downloadFileAgain(fromUsername,fileName,username,this,path);
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void createChannel(Channel channel){
+        try {
+            channel.setAdmin(username);
+            serverSideIF.createChannel(channel);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void joinChannel(String channelUsername){
+        try {
+            serverSideIF.joinChannel(channelUsername,username);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void createGroup(Group group){
+        try {
+            group.setAdmin(username);
+            serverSideIF.createGroup(group);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void joinGroup(String groupUsername){
+        try {
+            serverSideIF.joinGroup(groupUsername,username);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<String> getChatUsers() throws Exception {
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serverSideIF.getChatUsers(username),ArrayList.class);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new Exception("error");
+        }
+    }
+
+    public ArrayList<String> getChatGroup() throws Exception {
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serverSideIF.getChatGroups(username),ArrayList.class);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new Exception("error");
+        }
+    }
+
+    public ArrayList<String> getChatChannels() throws Exception {
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serverSideIF.getChatChannels(username),ArrayList.class);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new Exception("error");
         }
     }
 

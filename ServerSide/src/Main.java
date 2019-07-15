@@ -46,6 +46,14 @@ public class Main {
         //RSA rsa = new RSA("ss");
         UserDaoImp userDaoImp = new UserDaoImp();
         String s = "slam";
+        try {
+            for (String s1:
+                 userDaoImp.getChatUsersList("ddddddd1")) {
+                System.out.println(s1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         byte[] o = s.getBytes();
         /*User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
                 "ddddddd1","sdfsf",new Date(),new Date(),o);
@@ -56,7 +64,7 @@ public class Main {
         userDaoImp.addUser(user);
         userDaoImp.addUser(user1);
         userDaoImp.addUser(user2);*/
-        Group group = new Group("sdfs","sfsdf","sfsf","sdfsf",new Date());
+        /*Group group = new Group("sdfs","sfsdf","sfsf","sdfsf",new Date());
         GroupMessage groupMessage = new GroupMessage("ss","sss",new Date());
         ChannelDao channelDao = new ChannelDaoImp();
         Channel channel = new Channel("sjfk","fdsf","dfjj",new Date());
@@ -74,8 +82,8 @@ public class Main {
             u1.getChannels().add(c);
             u2.getChannels().add(c);
             channelDao.updateChannel(c);
-            /*userDaoImp.updateUser(u1);
-            userDaoImp.updateUser(u2);*/
+            *//*userDaoImp.updateUser(u1);
+            userDaoImp.updateUser(u2);*//*
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,7 +97,7 @@ public class Main {
             getUserex.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         /*EntityManager em=null;
         EntityTransaction et=null;
         try {
@@ -116,9 +124,9 @@ public class Main {
         msg.addMessage("slam khobi halet chetore","ddddddd1","ddddddd2",0);
         msg.addMessage("man khobam to khobi?","ddddddd2","ddddddd1",0);
         msg.addMessage("are che khabar?","ddddddd1","ddddddd2",0);*/
-        MessageQuery msg = new MessageQueryImp();
+        /*MessageQuery msg = new MessageQueryImp();
         msg.updateUser("ddddddd2","ddd2");
-        msg.updateUser("ddddddd1","ddd1");
+        msg.updateUser("ddddddd1","ddd1");*/
         //msg.addMessage("salamati","slam","sdfskjf",0);
         //msg.addMessage("salamati","sdfsksdfsjf","slamsf");
         /*HashMap<Integer, ArrayList> mess = new Gson().fromJson(msg.getChatBetweenTwoPerson("sdfskjf","slam"),

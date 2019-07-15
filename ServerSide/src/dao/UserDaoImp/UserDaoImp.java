@@ -23,15 +23,15 @@ import java.util.List;
 public class UserDaoImp implements UserDao {
     @Override
     public void addUser(User user) {
-        EntityManager em=null;
-        EntityTransaction et=null;
+        EntityManager em = null;
+        EntityTransaction et = null;
         try {
             em = JPAUtil.getEntitManager();
             et = em.getTransaction();
             et.begin();
             em.persist(user);
             et.commit();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             et.rollback();
             ex.printStackTrace();
             System.out.println("-----------------------------------------------------" +
@@ -39,23 +39,23 @@ public class UserDaoImp implements UserDao {
             System.out.println("-----------------------------------------------------" +
                     "-------------------------------------------------");
             System.out.println(ex.getCause());
-        }finally {
+        } finally {
             em.close();
         }
     }
 
     @Override
     public void deleteUser(String username) {
-        EntityManager em=null;
-        EntityTransaction et=null;
+        EntityManager em = null;
+        EntityTransaction et = null;
         try {
             em = JPAUtil.getEntitManager();
             et = em.getTransaction();
             et.begin();
-            User user = (User) em.find(User.class,username);
+            User user = (User) em.find(User.class, username);
             em.remove(user);
             et.commit();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             et.rollback();
             ex.printStackTrace();
             System.out.println("-----------------------------------------------------" +
@@ -63,24 +63,24 @@ public class UserDaoImp implements UserDao {
             System.out.println("-----------------------------------------------------" +
                     "------------------------------------------------");
             System.out.println(ex.getCause());
-        }finally {
+        } finally {
             em.close();
         }
     }
 
     @Override
     public void updateUser(User user) {
-        EntityManager em=null;
-        EntityTransaction et=null;
+        EntityManager em = null;
+        EntityTransaction et = null;
         try {
             em = JPAUtil.getEntitManager();
             et = em.getTransaction();
             et.begin();
-            User oldUser = (User) em.find(User.class,user.getUserName());
+            User oldUser = (User) em.find(User.class, user.getUserName());
             oldUser = user;
             em.merge(oldUser);
             et.commit();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             et.rollback();
             ex.printStackTrace();
             System.out.println("-----------------------------------------------------" +
@@ -88,7 +88,7 @@ public class UserDaoImp implements UserDao {
             System.out.println("-----------------------------------------------------" +
                     "------------------------------------------------");
             System.out.println(ex.getCause());
-        }finally {
+        } finally {
             em.close();
         }
     }
@@ -103,10 +103,10 @@ public class UserDaoImp implements UserDao {
         }
         try {
             Connection connection = DriverManager.getConnection
-                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE","ADMIN","admin");
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE", "ADMIN", "admin");
             PreparedStatement statement = connection.prepareStatement("SELECT USERNAME from USERS");
             ResultSet rs = statement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 allUser.add(rs.getString(1));
             }
             return allUser;
@@ -127,7 +127,7 @@ public class UserDaoImp implements UserDao {
             et.begin();
             user = (User) em.find(User.class, username);
             et.commit();
-        } catch (Exception ex){
+        } catch (Exception ex) {
             et.rollback();
             ex.printStackTrace();
             System.out.println("-----------------------------------------------------" +
@@ -135,9 +135,9 @@ public class UserDaoImp implements UserDao {
             System.out.println("-----------------------------------------------------" +
                     "------------------------------------------------");
             System.out.println(ex.getCause());
-        }finally {
+        } finally {
             em.close();
-            if(user==null){
+            if (user == null) {
                 throw new GetUserex("This User does not exist");
             }
             return user;
@@ -149,7 +149,7 @@ public class UserDaoImp implements UserDao {
         User user = null;
         try {
             user = getUser(username);
-            if(!user.getPassWord().equals(password)){
+            if (!user.getPassWord().equals(password)) {
                 throw new Passex("Wrong password");
             }
             user.setLastSeen(new Date());
@@ -172,17 +172,44 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public Date lastSeen(String username) throws GetUserex{
+    public Date lastSeen(String username) throws GetUserex {
         User user;
         try {
             user = getUser(username);
             return user.getLastSeen();
-        }catch (GetUserex ex){
+        } catch (GetUserex ex) {
             throw new GetUserex("this user does not exist");
         }
     }
 
-
+    @Override
+    public ArrayList<String> getChatUsersList(String username) throws Exception {
+        List<String> ChatUsers = new ArrayList<>();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection connection = DriverManager.getConnection
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE", "ADMIN", "admin");
+            PreparedStatement statement = connection.prepareStatement("SELECT CASE WHEN CONVERSATION.USER1 = ? THEN USER2" +
+                    " WHEN CONVERSATION.USER2 = ? THEN USER1 END FROM CONVERSATION" +
+                    " WHERE (CONVERSATION.USER1=? OR CONVERSATION.USER2=?)");
+            statement.setString(1,username);
+            statement.setString(2,username);
+            statement.setString(3,username);
+            statement.setString(4,username);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                ChatUsers.add(rs.getString(1));
+            }
+            return (ArrayList)ChatUsers;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception(e.getCause());
+        }
+    }
 }
 
 

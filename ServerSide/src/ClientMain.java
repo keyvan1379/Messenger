@@ -1,6 +1,8 @@
 import connection.ClientSideImp.ClientSideImp;
 import connection.ServerSideIF;
 import dao.daoExc.GetUserex;
+import models.Channel;
+import models.Group;
 import models.ProfileInfo;
 
 import java.io.File;
@@ -9,6 +11,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -38,6 +41,24 @@ public class ClientMain {
                         getUserex.printStackTrace();
                     }
                     break;
+                case "createChannel":
+                    t = scanner.nextLine();
+                    Channel channel = new Channel(t,null,"hiii",new Date());
+                    ClientSideImp.getInstance().createChannel(channel);
+                    break;
+                case "joinChannel":
+                    t = scanner.nextLine();
+                    ClientSideImp.getInstance().joinChannel(t);
+                    break ;
+                case "createGroup":
+                    t = scanner.nextLine();
+                    Group group = new Group(t,"hi",null,"zz",new Date());
+                    ClientSideImp.getInstance().createGroup(group);
+                    break;
+                case "joinGroup":
+                    t = scanner.nextLine();
+                    ClientSideImp.getInstance().joinGroup(t);
+                    break ;
                 case "getlastseen":
                     t = scanner.nextLine();
                     System.out.println(csi.get_lastseen(t));

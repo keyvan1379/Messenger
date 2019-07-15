@@ -73,7 +73,6 @@ public class RegisterController implements Initializable {
         this.profilePicture.setImage(image);
         System.out.println(this.profilePicture.getStyle());
         System.out.println("A");
-
     }
 
     public void registerAccount(MouseEvent mouseEvent) throws IOException {

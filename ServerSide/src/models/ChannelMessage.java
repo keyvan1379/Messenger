@@ -10,10 +10,11 @@ public class ChannelMessage implements Serializable {
     public ChannelMessage() {
     }
 
-    public ChannelMessage(String admin, String msg, Date date) {
+    public ChannelMessage(String admin, String msg,long isFile,Date date) {
         this.admin = admin;
         this.msg = msg;
         this.date = date;
+        this.isFile = isFile;
     }
 
     @Id
@@ -26,6 +27,9 @@ public class ChannelMessage implements Serializable {
 
     @Column(name = "MSG")
     private String msg;
+
+    @Column(name = "IS_FILE")
+    private long isFile;
 
     @Column(name = "MSG_DATE")
     private Date date;
@@ -60,5 +64,13 @@ public class ChannelMessage implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public long getIsFile() {
+        return isFile;
+    }
+
+    public void setIsFile(long isFile) {
+        this.isFile = isFile;
     }
 }

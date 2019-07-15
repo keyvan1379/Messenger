@@ -21,16 +21,14 @@ import protections.MD5;
 import protections.RSA;
 import sun.security.krb5.internal.crypto.RsaMd5CksumType;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     public ServerSideImp() throws RemoteException {
@@ -85,9 +83,10 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         try {
             //check if msg sended to channel
             if (ToUsername.startsWith("#")) {
+                ToUsername = ToUsername.substring(1);
                 Channel channel = channelDao.getChannel(ToUsername);
                 if(channel.getAdmin().equals(FromUsername)){
-                    ChannelMessage channelMessage = new ChannelMessage(FromUsername,msg,new Date());
+                    ChannelMessage channelMessage = new ChannelMessage(FromUsername,msg,0,new Date());
                     channel.getChannelMessages().add(channelMessage);
                     channelDao.updateChannel(channel);
                     //send channel msg to online users
@@ -102,16 +101,22 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             }
             //check if msg sended to group
             if(ToUsername.startsWith("$")){
+                ToUsername = ToUsername.substring(1);
                 Group group = groupDao.getGroup(ToUsername);
                 User user = userDao.getUser(FromUsername);
                 //check is username in group
-                if(group.getUsers().contains(user)){
-                    GroupMessage groupMessage = new GroupMessage(FromUsername,msg,new Date());
+                List<String> users = new ArrayList<>();
+                group.getUsers().stream().forEach(x -> users.add(x.getUserName()));
+                if(users.contains(user.getUserName())){
+                    GroupMessage groupMessage = new GroupMessage(FromUsername,msg,0,new Date());
                     group.getGroupMessages().add(groupMessage);
                     groupDao.updateGroup(group);
                     //send group msg to online users
                     for (User user1:
                             group.getUsers()) {
+                        if(user1.getUserName().equals(user.getUserName())){
+                            continue;
+                        }
                         if(clients.keySet().contains(user1.getUserName())){
                             clients.get(user1.getUserName()).getMessage(ToUsername,AES.importKey(user1.getUserName()).encrypt(msg),0);
                         }
@@ -252,15 +257,35 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 e.printStackTrace();
             }
             clients.put(user.getUserName(),clientSideIF);
-            clients.remove(username);
-            userDao.deleteUser(username);
-            userDao.addUser(user);
-            System.out.println(user.getUserName());
-            return "successful";
+            try {
+                User user1 = userDao.getUser(username);
+                Set<Channel> channels = user1.getChannels();
+                Set<Group> groups = user1.getGroups();
+                clients.remove(username);
+                userDao.deleteUser(username);
+                userDao.addUser(user);
+                for (Group g:
+                     groups) {
+                    g.getUsers().add(user);
+                    user.getGroups().add(g);
+                    groupDao.updateGroup(g);
+                }
+                for (Channel c:
+                     channels) {
+                    c.getUsers().add(user);
+                    user.getChannels().add(c);
+                    channelDao.updateChannel(c);
+                }
+                System.out.println(user.getUserName());
+                return "successful";
+            } catch (GetUserex getUserex) {
+                getUserex.printStackTrace();
+            }
         }
         else{
             return "unsuccessful";
         }
+        return "unsuccessful";
     }
 
     @Override
@@ -351,7 +376,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         }
         return null;
     }
-    
+
     //AES Added
     //Security needed(check if client in list)
     @Override
@@ -365,6 +390,51 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
 
     @Override
     public void uploadFile(String fromUser,String filename,String toUser) {
+        try {
+            if(toUser.startsWith("#")){
+                Channel channel = channelDao.getChannel(toUser.substring(1));
+                if(channel.getAdmin().equals(fromUser)){
+                    String fileN = getAlphaNumericString(16);
+                    File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+                    while(file.exists()){
+                        fileN = getAlphaNumericString(16);
+                        file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+                    }
+                    Socket socket = serverSocket.accept();
+                    ClientHandler clientHandler = new ClientHandler
+                            (socket,socket.getInputStream(),socket.getOutputStream(),
+                                    (fileN+filename),fromUser,toUser,null,null);
+                    clientHandler.setClientsList(clients);
+                    Thread thread = new Thread(clientHandler);
+                    thread.start();
+                }
+                return;
+            }
+            if(toUser.startsWith("$")){
+                Group group = groupDao.getGroup(toUser.substring(1));
+                List<String> users = new ArrayList<>();
+                group.getUsers().stream().forEach(x -> users.add(x.getUserName()));
+                if(users.contains(fromUser)){
+                    String fileN = getAlphaNumericString(16);
+                    File file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+                    while(file.exists()){
+                        fileN = getAlphaNumericString(16);
+                        file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\downloadFiles\\"+(fileN+filename));
+                    }
+                    Socket socket = serverSocket.accept();
+                    ClientHandler clientHandler = new ClientHandler
+                            (socket,socket.getInputStream(),socket.getOutputStream(),
+                                    (fileN+filename),fromUser,toUser,null,null);
+                    clientHandler.setClientsList(clients);
+                    Thread thread = new Thread(clientHandler);
+                    thread.start();
+                }
+                return;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return;
+        }
         try {
             if(!messageQuery.isChatExist(fromUser,toUser)) messageQuery.addChat(fromUser,toUser);
             //need to check if client online then send file
@@ -404,6 +474,143 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         Thread t = new Thread(() -> clientHandler.uploadFileToClient(new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\" +
                 "downloadFiles\\"+fileName)));
         t.start();
+    }
+
+    @Override
+    public String createChannel(Channel channel) {
+        try {
+            channelDao.addChannel(channel);
+            return "successful";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String joinChannel(String channelUsername, String username) {
+        try{
+            User user = userDao.getUser(username);
+            Channel channel = channelDao.getChannel(channelUsername);
+            user.getChannels().add(channel);
+            channel.getUsers().add(user);
+            channelDao.updateChannel(channel);
+            return "successful";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String getChannelMsgs(String username,String channelUsername) throws RemoteException {
+        AES aes = AES.importKey(username);
+        Gson gson = new Gson();
+        HashMap<Integer, ArrayList> channelMsg = new HashMap<>();
+        try {
+            Channel channel = channelDao.getChannel(channelUsername);
+            for (int i = 0; i < channel.getChannelMessages().size(); i++) {
+                channelMsg.put(i,new ArrayList());
+                channelMsg.get(i).add(channel.getChannelMessages().get(i).getMsg());
+                channelMsg.get(i).add(channel.getChannelMessages().get(i).getIsFile());
+                channelMsg.get(i).add(channel.getChannelMessages().get(i).getDate());
+            }
+            return aes.encrypt(gson.toJson(channelMsg));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String createGroup(Group group) throws RemoteException {
+        try {
+            groupDao.addGroup(group);
+            Group g1 = groupDao.getGroup(group.getUserName());
+            User user = userDao.getUser(group.getAdmin());
+            g1.getUsers().add(user);
+            user.getGroups().add(g1);
+            groupDao.updateGroup(g1);
+            return "successful";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String joinGroup(String groupUsername, String username) throws RemoteException {
+        try{
+            User user = userDao.getUser(username);
+            Group group = groupDao.getGroup(groupUsername);
+            user.getGroups().add(group);
+            group.getUsers().add(user);
+            groupDao.updateGroup(group);
+            return "successful";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String getGroupMsgs(String username, String groupUsername) throws RemoteException {
+        AES aes = AES.importKey(username);
+        Gson gson = new Gson();
+        HashMap<Integer, ArrayList> groupMsg = new HashMap<>();
+        try {
+            Group group = groupDao.getGroup(groupUsername);
+            for (int i = 0; i < group.getGroupMessages().size(); i++) {
+                groupMsg.put(i,new ArrayList());
+                groupMsg.get(i).add(group.getGroupMessages().get(i).getFromUser());
+                groupMsg.get(i).add(group.getGroupMessages().get(i).getMessage());
+                groupMsg.get(i).add(group.getGroupMessages().get(i).getIsFile());
+                groupMsg.get(i).add(group.getGroupMessages().get(i).getSendDate());
+            }
+            return aes.encrypt(gson.toJson(groupMsg));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String getChatUsers(String username) throws RemoteException {
+        Gson gson = new Gson();
+        try {
+            return gson.toJson(userDao.getChatUsersList(username));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "server error";
+        }
+    }
+
+    @Override
+    public String getChatGroups(String username) throws RemoteException {
+        Gson gson = new Gson();
+        try {
+            ArrayList<String> groups = new ArrayList<>();
+            User user = userDao.getUser(username);
+            user.getGroups().stream().forEach(x -> groups.add(x.getUserName()));
+            return gson.toJson(groups);
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+            return "server error";
+        }
+    }
+
+    @Override
+    public String getChatChannels(String username) throws RemoteException {
+        Gson gson = new Gson();
+        try {
+            ArrayList<String> channels = new ArrayList<>();
+            User user = userDao.getUser(username);
+            user.getChannels().stream().forEach(x -> channels.add(x.getUsername()));
+            return gson.toJson(channels);
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+            return "server error";
+        }
     }
 
     private String getAlphaNumericString(int n)
