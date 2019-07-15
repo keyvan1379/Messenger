@@ -31,7 +31,7 @@
                 </HBox>
 
                 <JFXTextField fx:id="joinSearchTextField" styleClass="jfx-text-field-gp" />
-                <JFXButton fx:id="joinSearchButton" buttonType="RAISED" styleClass="jfx-button-search" />
+                <JFXButton onMouseClicked="#searchGroups" fx:id="joinSearchButton" buttonType="RAISED" styleClass="jfx-button-search" />
                 <JFXButton fx:id="joinGroupChatButton" buttonType="RAISED" onMouseClicked="#joinGroupChat" styleClass="jfx-button-join" />
 
                 <ScrollPane fitToHeight="true" fitToWidth="true">
@@ -49,7 +49,7 @@
                     <Label fx:id="labelCreate" styleClass="label-labels" />
                 </HBox>
                 <JFXTextField fx:id="createSearchTextField" styleClass="jfx-text-field-gp" />
-                <JFXButton fx:id="createSearchButton" buttonType="RAISED" styleClass="jfx-button-search"/>
+                <JFXButton onMouseClicked="#searchUsers" fx:id="createSearchButton" buttonType="RAISED" styleClass="jfx-button-search"/>
                 <JFXButton fx:id="createGroupChatButton" buttonType="RAISED" onMouseClicked="#createGroupChat" styleClass="jfx-button-create" />
                 <JFXTextField fx:id="gpNameTextField" styleClass="jfx-text-field-gp" />
                 <ScrollPane fitToHeight="true" fitToWidth="true">

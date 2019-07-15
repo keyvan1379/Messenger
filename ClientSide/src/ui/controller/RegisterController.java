@@ -67,10 +67,16 @@ public class RegisterController implements Initializable {
 
     public void chooseImageFromFiles(MouseEvent mouseEvent) {
         FileChooser fileChooser = new FileChooser();
-        //Window window = ((Node) mouseEvent.getSource()).getScene().getWindow();
-        file = fileChooser.showOpenDialog(((Node) mouseEvent.getSource()).getScene().getWindow());
-        if(file == null){
-            return;
+        try {
+            file = fileChooser.showOpenDialog(((Node) mouseEvent.getSource()).getScene().getWindow());
+            if(file == null){
+                return;
+            }
+        } catch (Exception ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.showAndWait();
         }
         Image image = new Image(file.toURI().toString());
         System.out.println(this.profilePicture.getStyle());

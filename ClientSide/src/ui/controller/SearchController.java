@@ -36,6 +36,8 @@ public class SearchController implements Initializable {
         startChattingButton.setText("Add User!");
         for (String username :
                 ClientSideImp.getInstance().get_All_User()) {
+            if (username.equals(ClientSideImp.getInstance().getUser()))
+                continue;
             addUser(username);
         }
 

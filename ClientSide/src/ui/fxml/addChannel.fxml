@@ -30,7 +30,7 @@
                 </HBox>
 
                 <JFXTextField fx:id="searchTextField" styleClass="jfx-text-field-id" />
-                <JFXButton fx:id="searchButton" buttonType="RAISED" styleClass="jfx-button-search" />
+                <JFXButton onMouseClicked="#searchChannels" fx:id="searchButton" buttonType="RAISED" styleClass="jfx-button-search" />
                 <JFXButton fx:id="joinButton" buttonType="RAISED" onMouseClicked="#joinChannel" styleClass="jfx-button-join" />
 
                 <ScrollPane fitToHeight="true" fitToWidth="true">

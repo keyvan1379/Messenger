@@ -59,6 +59,8 @@ public class AddGroupChatController implements Initializable {
 
         for (String username :
                 ClientSideImp.getInstance().get_All_User()) {
+            if (username.equals(ClientSideImp.getInstance().getUser()))
+                continue;
             addUser(username);
         }
 
@@ -147,4 +149,23 @@ public class AddGroupChatController implements Initializable {
     }
 
 
+    public void searchGroups(MouseEvent mouseEvent) {
+        joinVBox.getChildren().clear();
+        String search = joinSearchTextField.getText();
+        for (String username :
+                ClientSideImp.getInstance().get_All_Group()) {
+            if (username.contains(search))
+                addUser(username);
+        }
+    }
+
+    public void searchUsers(MouseEvent mouseEvent) {
+        createVBox.getChildren().clear();
+        String search = createSearchTextField.getText();
+        for (String username :
+                ClientSideImp.getInstance().get_All_User()) {
+            if (username.contains(search))
+                addUser(username);
+        }
+    }
 }

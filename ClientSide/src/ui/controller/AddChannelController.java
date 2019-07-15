@@ -129,4 +129,13 @@ public class AddChannelController implements Initializable {
     }
 
 
+    public void searchChannels(MouseEvent mouseEvent) {
+        vBox.getChildren().clear();
+        String search = searchTextField.getText();
+        for (String username :
+                ClientSideImp.getInstance().get_ALL_Channel()) {
+            if (username.contains(search))
+                addChannel(username);
+        }
+    }
 }
