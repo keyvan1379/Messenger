@@ -3,6 +3,7 @@ package ui.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
+import connection.ClientSideImp.ClientSideImp;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.value.ChangeListener;
@@ -506,6 +507,9 @@ public class ChatController {
         Optional<ButtonType> option = alert.showAndWait();
         if (option.get().equals(ButtonType.YES))
         {
+
+            ClientSideImp.getInstance().setStatusTo_Offline();
+
             System.out.println("log out");
             Parent root = FXMLLoader.load(getClass().getResource("../fxml/login.fxml"));
             Stage stage = new Stage();
@@ -532,6 +536,7 @@ public class ChatController {
 
     public void closeWindow(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        ClientSideImp.getInstance().setStatusTo_Offline();
         stage.close();
     }
 

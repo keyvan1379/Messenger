@@ -2,6 +2,7 @@ package ui.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import connection.ClientSideImp.ClientSideImp;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -33,13 +34,16 @@ public class SearchController implements Initializable {
         searchTextField.setPromptText("Username");
         searchButton.setText("\uf002");
         startChattingButton.setText("Add User!");
-        addUser("one");
-        addUser("two");
+        for (String username :
+                ClientSideImp.getInstance().get_All_User()) {
+            addUser(username);
+        }
 
     }
 
     public void addUser(String name)
     {
+
         RadioButton user = new RadioButton(name);
         user.setStyle("-fx-cursor: hand;");
         user.setToggleGroup(usersFound);

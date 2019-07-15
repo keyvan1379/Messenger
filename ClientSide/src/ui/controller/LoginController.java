@@ -3,6 +3,7 @@ package ui.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import connection.ClientSideImp.ClientSideImp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
@@ -44,7 +45,13 @@ public class LoginController {
         String username = this.username.getText();
         String password = this.password.getText();
         Alert alert;
+        String result;
         try {
+            if ( ! (result = ClientSideImp.getInstance().login(username, password)).equals("wait for server"))
+            {
+                throw new Exception(result);
+            }
+
             alert = new Alert(Alert.AlertType.CONFIRMATION, "Logged In Successfully!", ButtonType.OK);
             alert.setTitle("Welcome");
             alert.setHeaderText(null);

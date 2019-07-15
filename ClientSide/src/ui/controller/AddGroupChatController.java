@@ -2,6 +2,7 @@ package ui.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import connection.ClientSideImp.ClientSideImp;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -51,8 +52,15 @@ public class AddGroupChatController implements Initializable {
         gpNameTextField.setPromptText("Group Name");
 
 
-        addUser("one");
-        addUser("two");
+//        for (String gp :
+//                ClientSideImp.getInstance().g) {
+//
+//        }
+
+        for (String username :
+                ClientSideImp.getInstance().get_All_User()) {
+            addUser(username);
+        }
 
     }
 
@@ -113,6 +121,7 @@ public class AddGroupChatController implements Initializable {
     }
 
     public void joinGroupChat(MouseEvent mouseEvent) {
+        ClientSideImp
     }
 
     public void closeWindow(MouseEvent mouseEvent) {
