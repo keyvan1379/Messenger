@@ -3,6 +3,7 @@ package ui.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import connection.ClientSideImp.ClientSideImp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,10 +22,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import models.User;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
@@ -72,7 +76,7 @@ public class RegisterController implements Initializable {
         System.out.println(this.profilePicture.getStyle());
         this.profilePicture.setImage(image);
         System.out.println(this.profilePicture.getStyle());
-        System.out.println("A");
+
     }
 
     public void registerAccount(MouseEvent mouseEvent) throws IOException {
@@ -81,11 +85,21 @@ public class RegisterController implements Initializable {
         String firstname = this.firstname.getText();
         String email = this.email.getText();
         String password = this.password.getText();
+
         //image on file global
         //register
         try {
             if(file==null){
                 throw new Exception("pls choose image");
+            }
+            byte[] img = new byte[(int)file.length()];
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(img);
+            User user = new User(firstname, lastname, email, username, password, new Date(), new Date(), img);
+            String result;
+            if (!(result = ClientSideImp.getInstance().sign_up(user)).equals("successful"))
+            {
+                throw new Exception(result);
             }
             //register
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Welcome!", ButtonType.OK);
@@ -103,7 +117,7 @@ public class RegisterController implements Initializable {
 
             Stage lastStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
             lastStage.close();
-        }catch (Exception ex){
+        } catch (Exception ex){
             Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);
             alert.setTitle("Error");
             alert.setHeaderText(null);
