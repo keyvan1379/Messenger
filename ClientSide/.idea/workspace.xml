@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" afterDir="false" />
-    </list>
+    <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,25 +37,8 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="889">
-              <caret line="222" column="4" selection-start-line="222" selection-start-column="4" selection-end-line="222" selection-end-column="4" />
-              <folding>
-                <element signature="method#addMessage#0;class#ChatController#0" />
-                <element signature="method#sendMessege#0;class#ChatController#0" />
-                <element signature="method#attachFile#0;class#ChatController#0" />
-                <element signature="method#showProfile#0;class#ChatController#0" />
-                <element signature="method#OpenAddUserWindow#0;class#ChatController#0" />
-                <element signature="method#OpenAddGPWindow#0;class#ChatController#0" />
-                <element signature="method#OpenAddChannelWindow#0;class#ChatController#0" />
-                <element signature="method#addChat#0;class#ChatController#0" />
-                <element signature="method#editProfile#0;class#ChatController#0" />
-                <element signature="method#deleteAccount#0;class#ChatController#0" />
-                <element signature="method#logOut#0;class#ChatController#0" />
-              </folding>
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/src/hibernateconfig/HibernateUtil.java">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -169,27 +149,6 @@
               <item name="ClientSide" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ClientSide" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ClientSide" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ClientSide" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ClientSide" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ClientSide" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ClientSide" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="ChatController.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -201,7 +160,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563170813165" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563170848516" />
     <property name="last_opened_file_path" value="C:/Program Files/SceneBuilder/SceneBuilder.exe" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -250,18 +209,17 @@
       <workItem from="1563020149260" duration="4819000" />
       <workItem from="1563039117933" duration="5404000" />
       <workItem from="1563086724489" duration="1753000" />
-      <workItem from="1563106658514" duration="4122000" />
+      <workItem from="1563106658514" duration="4479000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17271000" />
+    <option name="totallyTimeSpent" value="17628000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17516778" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17516778" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -373,6 +331,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-12">
+          <caret line="253" column="4" selection-start-line="253" selection-start-column="4" selection-end-line="253" selection-end-column="4" />
+          <folding>
+            <element signature="e#10414#10415#0" expanded="true" />
+            <element signature="e#10460#10461#0" expanded="true" />
+            <element signature="e#10996#11019#0" expanded="true" />
+            <element signature="e#11609#11628#0" expanded="true" />
+            <element signature="method#addChat#0;class#ChatController#0" />
+            <element signature="method#editProfile#0;class#ChatController#0" />
+            <element signature="method#deleteAccount#0;class#ChatController#0" />
+            <element signature="method#logOut#0;class#ChatController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -383,25 +358,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="889">
-          <caret line="222" column="4" selection-start-line="222" selection-start-column="4" selection-end-line="222" selection-end-column="4" />
-          <folding>
-            <element signature="method#addMessage#0;class#ChatController#0" />
-            <element signature="method#sendMessege#0;class#ChatController#0" />
-            <element signature="method#attachFile#0;class#ChatController#0" />
-            <element signature="method#showProfile#0;class#ChatController#0" />
-            <element signature="method#OpenAddUserWindow#0;class#ChatController#0" />
-            <element signature="method#OpenAddGPWindow#0;class#ChatController#0" />
-            <element signature="method#OpenAddChannelWindow#0;class#ChatController#0" />
-            <element signature="method#addChat#0;class#ChatController#0" />
-            <element signature="method#editProfile#0;class#ChatController#0" />
-            <element signature="method#deleteAccount#0;class#ChatController#0" />
-            <element signature="method#logOut#0;class#ChatController#0" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/hibernateconfig/HibernateUtil.java">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">
