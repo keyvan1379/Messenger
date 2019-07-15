@@ -79,7 +79,7 @@
                   <SplitPane dividerPositions="0.8" minWidth="434.0" orientation="VERTICAL" style="-fx-background-color: white;">
 
                         <SplitPane dividerPositions="0.15" minHeight="356.0" orientation="VERTICAL">
-                              <HBox minHeight="70.0" onMouseClicked="#showProfile" spacing="10" style="-fx-background-color: white; -fx-padding: 5; -fx-cursor: hand">
+                              <HBox fx:id="infoHbox" minHeight="70.0" spacing="10" style="-fx-background-color: white; -fx-padding: 5;">
 
                                           <ImageView fx:id="profilePicture" />
                                   

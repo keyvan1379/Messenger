@@ -84,7 +84,7 @@ public class AddChannelController implements Initializable {
     }
 
     public void createChannel(MouseEvent mouseEvent) {
-        String channelID = searchTextField.getText();
+        String channelID = createTextField.getText();
         if (channelID.equals(""))
         {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a name for your channel!", ButtonType.OK);

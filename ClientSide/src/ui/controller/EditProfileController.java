@@ -36,10 +36,15 @@ public class EditProfileController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.label.setText("Edit Profile");
         this.firstname.setPromptText("First Name");
+        this.firstname.setText("first name");
         this.lastname.setPromptText("Last Name");
+        this.lastname.setText("last name");
         this.email.setPromptText("Email");
+        this.email.setText("email");
         this.username.setPromptText("Username");
+        this.username.setText("username");
         this.password.setPromptText("Password");
+        this.password.setText("password");
         this.chooseProfilePicture.setText("Choose Your Profile Picture");
         this.profilePicture.setImage(null);//change here
         this.profilePicture.setPreserveRatio(true);

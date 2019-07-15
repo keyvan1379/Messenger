@@ -77,8 +77,10 @@ class Message
 
 public class ChatController {
 
+
     ArrayList<Message> messages = new ArrayList<>();
 
+    @FXML private HBox infoHbox;
     @FXML private JFXTextArea messageTextArea;
     @FXML private JFXButton sendButton;
     @FXML private JFXButton openEmojisButton;
@@ -181,6 +183,7 @@ public class ChatController {
 
     private void loadMessages (String chat, int type) // 0 = pv, 1 = gp, 2 = ch
     {
+        infoHbox.setCursor(Cursor.HAND);
 //        set username and profile picture and status
         if (type == 0)
         {
@@ -190,6 +193,14 @@ public class ChatController {
             profilePicture.setImage(image);
             profilePicture.setFitHeight(60);
             profilePicture.setPreserveRatio(true);
+
+            infoHbox.setOnMouseClicked(e-> {
+                try {
+                    showProfile(e, chat);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
         }
         else if (type == 1)
         {
@@ -199,6 +210,13 @@ public class ChatController {
             profilePicture.setImage(image);
             profilePicture.setFitHeight(60);
             profilePicture.setPreserveRatio(true);
+            infoHbox.setOnMouseClicked(e-> {
+                try {
+                    showUsers(e, chat);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
         }
         else if (type == 2)
         {
@@ -213,6 +231,14 @@ public class ChatController {
             sendButton.setDisable(true);
             attachButton.setDisable(true);
             openEmojisButton.setDisable(true);
+
+            infoHbox.setOnMouseClicked(e-> {
+                try {
+                    showUsers(e, chat);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
         }
 
 
@@ -300,7 +326,7 @@ public class ChatController {
 
         else if ( !(isChatOpen) )
         {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a user!", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a chat!", ButtonType.OK);
             alert.setHeaderText(null);
             alert.showAndWait();
         }
@@ -317,34 +343,42 @@ public class ChatController {
         //send file
     }
 
-    public void showProfile(MouseEvent mouseEvent) throws IOException {
-        if (isChatOpen)
-        {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/profile.fxml"));
-            Parent root = fxmlLoader.load();
-            ProfileController profileController = fxmlLoader.<ProfileController>getController();
-            System.out.println(profileController);
-            profileController.setUsername("username");
-            profileController.setName("name");
-            File file = new File("ClientSide/src/ui/images/user.png");
-            Image image = new Image(file.toURI().toString());
-            profileController.setProfilePicture(image);
+    public void showUsers(MouseEvent mouseEvent, String username) throws IOException
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/listOfUsers.fxml"));
+        Parent root = fxmlLoader.load();
+        listOfUsersController listOfUsersController = fxmlLoader.<listOfUsersController>getController();
 
 
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setScene(scene);
-            stage.showAndWait();
-        }
-        else
-        {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a user!", ButtonType.OK);
-            alert.setHeaderText(null);
-            alert.showAndWait();
-        }
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
+    public void showProfile(MouseEvent mouseEvent, String username) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/profile.fxml"));
+        Parent root = fxmlLoader.load();
+        ProfileController profileController = fxmlLoader.<ProfileController>getController();
+        System.out.println(profileController);
+        profileController.setUsername(username);
+        profileController.setName("name");
+        File file = new File("ClientSide/src/ui/images/user.png");
+        Image image = new Image(file.toURI().toString());
+        profileController.setProfilePicture(image);
+
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.showAndWait();
+
     }
 
     public void OpenAddUserWindow(MouseEvent mouseEvent) throws IOException {

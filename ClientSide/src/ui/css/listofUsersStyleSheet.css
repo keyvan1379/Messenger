@@ -1,0 +1,65 @@
+.pane-main
+{
+    -fx-pref-width: 500px;
+    -fx-pref-height: 300px;
+    -fx-background-color: white ;
+    -fx-background-insets: 10px;
+    -fx-effect: dropshadow(three-pass-box, #000, 4, 0, 1, 1);
+    -fx-padding: 5 5 5 5;
+
+}
+
+.pane-bg
+{
+    -fx-background-image: url("../images/bg.jpg") ;
+    -fx-background-repeat: repeat;
+}
+
+.pane-menu
+{
+    -fx-pref-width: 250px;
+    -fx-pref-height: 220px;
+    -fx-background-color: #fff;
+    -fx-translate-x: 120px;
+    -fx-translate-y: 35px;
+    -fx-border-color: #c6cac8;
+}
+
+.hbox-toolbar
+{
+    -fx-min-height: 20px;
+    -fx-pref-height: 20px;
+    -fx-padding: 5px;
+    -fx-background-color: #fff;
+    -fx-border-width: 1px;
+    -fx-border-color: #c6cac8;
+    -fx-border-radius: 5px;
+    -fx-spacing: 5px;
+}
+
+.hbox-label
+{
+    -fx-spacing: 2px;
+    -fx-translate-y: 0px;
+    -fx-text-fill: #989898;
+    -fx-border-color: #c6cac8;
+    -fx-border-width: 0 0 1 0;
+    -fx-alignment: center;
+}
+
+.label-search
+{
+    -fx-font-size: 12px;
+    -fx-text-fill: #989898;
+}
+
+.scroll-pane
+{
+    -fx-pref-width: 190px;
+    -fx-pref-height: 120px;
+    -fx-translate-x: 30px;
+    -fx-translate-y: 50px;
+}
+
+
+
