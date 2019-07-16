@@ -556,6 +556,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             Channel channel = channelDao.getChannel(channelUsername);
             for (int i = 0; i < channel.getChannelMessages().size(); i++) {
                 channelMsg.put(i,new ArrayList());
+                channelMsg.get(i).add(channel.getChannelMessages().get(i).getAdmin());
                 channelMsg.get(i).add(channel.getChannelMessages().get(i).getMsg());
                 channelMsg.get(i).add(channel.getChannelMessages().get(i).getIsFile());
                 channelMsg.get(i).add(channel.getChannelMessages().get(i).getDate());
@@ -565,6 +566,16 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             e.printStackTrace();
             return "unsuccessful";
         }
+    }
+
+    @Override
+    public Channel getChannel(String channelUsername) throws Exception {
+        try {
+            return channelDao.getChannel(channelUsername);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new Exception("channelUsername does not exist");
     }
 
     @Override
