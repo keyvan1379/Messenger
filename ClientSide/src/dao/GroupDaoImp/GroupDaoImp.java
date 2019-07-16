@@ -12,6 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GroupDaoImp implements GroupDao {
     @Override
@@ -146,6 +147,6 @@ public class GroupDaoImp implements GroupDao {
     @Override
     public List<GroupMessage> getGroupMessage(String username) throws Exception {
         Group group = getGroup(username);
-        return group.getGroupMessages();
+        return group.getGroupMessages().stream().sorted((a,b) -> ((Long)a.getId()).compareTo((Long)b.getId())).collect(Collectors.toList());
     }
 }
