@@ -118,7 +118,7 @@ public class ClientMain {
                         e.printStackTrace();
                     }
 
-                    User user = new User("ddd2","skdfj","sdlfj","ddd2","sdfsf",new Date(),new Date(),ss);
+                    User user = new User("ddd3","skdfj","sdlfj","ddd3","sdfsf",new Date(),new Date(),ss);
                     ClientSideImp.getInstance().edit_profile(user);
                 case "exit":
                     break outterline;

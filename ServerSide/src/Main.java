@@ -36,10 +36,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(final String[] args){
@@ -55,6 +52,21 @@ public class Main {
             e.printStackTrace();
         }
         byte[] o = s.getBytes();
+        /*ChannelDao channelDao = new ChannelDaoImp();
+        try {
+            Channel channel = channelDao.getChannel("tiiiii");
+            //System.out.println(channel.getUsers().contains(new UserDaoImp().getUser("ddddddd1")));
+            //channelDao.updateChannel(channel);
+            Set<User> ssss = new HashSet<>();
+            ssss.addAll(channel.getUsers());
+            channel.getUsers().stream().filter(x -> x.getUserName().equals("ddddddd3")).forEach(x -> ssss.remove(x));
+            for (User c:
+                 ssss) {
+                System.out.println(c.getUserName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
         /*User user = new User("ahmad1","mohmadi1","sdkjf@djfk.com",
                 "ddddddd1","sdfsf",new Date(),new Date(),o);
         User user1 = new User("ahmad2","mohmadi2","sdkjf@djdsfk.com",

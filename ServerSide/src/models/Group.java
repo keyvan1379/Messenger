@@ -24,7 +24,8 @@ public class Group implements Serializable {
     @Column(name = "CREATETIME")
     private Date createTime;
 
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "groups")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "GROUPS_USERS",joinColumns = @JoinColumn(name = "USER_NAME"),inverseJoinColumns = @JoinColumn(name = "GROUP_USERNAME"))
     private Set<User> users = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
