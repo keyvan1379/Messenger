@@ -8,12 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/controller/ChatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/models/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/models/Group.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQueryImp/MessageQueryImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQueryImp/MessageQueryImp.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +38,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
+            <state relative-caret-position="314">
               <caret line="36" column="41" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -52,8 +50,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="183" column="110" selection-start-line="183" selection-start-column="110" selection-end-line="183" selection-end-column="110" />
+            <state relative-caret-position="116">
+              <caret line="141" column="77" selection-start-line="141" selection-start-column="77" selection-end-line="141" selection-end-column="77" />
               <folding>
                 <element signature="method#editProfile#0;class#ChatController#0" />
                 <element signature="method#deleteAccount#0;class#ChatController#0" />
@@ -66,12 +64,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="104" column="31" selection-start-line="104" selection-start-column="31" selection-end-line="104" selection-end-column="31" />
+            <state relative-caret-position="365">
+              <caret line="116" selection-start-line="116" selection-end-line="116" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1635#2035#0" />
-                <element signature="e#2896#3273#0" />
                 <element signature="e#3279#3734#0" />
                 <element signature="e#3741#4329#0" />
                 <element signature="e#4335#5003#0" />
@@ -92,7 +89,6 @@
                 <element signature="e#11662#12129#0" />
                 <element signature="e#12135#12609#0" />
                 <element signature="e#12616#13104#0" />
-                <element signature="e#13110#14523#0" />
                 <element signature="e#14529#14899#0" />
                 <element signature="e#14905#15130#0" />
                 <element signature="e#15136#15341#0" />
@@ -114,6 +110,8 @@
     <findStrings>
       <find>font</find>
       <find>sendms</find>
+      <find>stat</find>
+      <find>file</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -195,9 +193,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+    <option name="x" value="-10" />
+    <option name="width" value="980" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -254,7 +252,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563289444020" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563301665662" />
     <property name="last_opened_file_path" value="E:/out/ClientSide" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -309,19 +307,19 @@
       <workItem from="1563020149260" duration="4819000" />
       <workItem from="1563039117933" duration="5404000" />
       <workItem from="1563086724489" duration="1753000" />
-      <workItem from="1563106658514" duration="16472000" />
+      <workItem from="1563106658514" duration="21160000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29621000" />
+    <option name="totallyTimeSpent" value="34309000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="0" width="781" height="830" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Persistence" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.36199722" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17516778" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -331,7 +329,7 @@
       <window_info anchor="bottom" id="Java Enterprise" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3323782" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -460,7 +458,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
+        <state relative-caret-position="314">
           <caret line="36" column="41" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -470,12 +468,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="104" column="31" selection-start-line="104" selection-start-column="31" selection-end-line="104" selection-end-column="31" />
+        <state relative-caret-position="365">
+          <caret line="116" selection-start-line="116" selection-end-line="116" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1635#2035#0" />
-            <element signature="e#2896#3273#0" />
             <element signature="e#3279#3734#0" />
             <element signature="e#3741#4329#0" />
             <element signature="e#4335#5003#0" />
@@ -496,7 +493,6 @@
             <element signature="e#11662#12129#0" />
             <element signature="e#12135#12609#0" />
             <element signature="e#12616#13104#0" />
-            <element signature="e#13110#14523#0" />
             <element signature="e#14529#14899#0" />
             <element signature="e#14905#15130#0" />
             <element signature="e#15136#15341#0" />
@@ -513,8 +509,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="183" column="110" selection-start-line="183" selection-start-column="110" selection-end-line="183" selection-end-column="110" />
+        <state relative-caret-position="116">
+          <caret line="141" column="77" selection-start-line="141" selection-start-column="77" selection-end-line="141" selection-end-column="77" />
           <folding>
             <element signature="method#editProfile#0;class#ChatController#0" />
             <element signature="method#deleteAccount#0;class#ChatController#0" />

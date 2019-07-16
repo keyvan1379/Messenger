@@ -137,7 +137,20 @@ public class ChatController {
         {
             System.out.println("server error");
         }
-
+        messageTextArea.focusedProperty().addListener(
+                (observable, oldValue, newValue) ->{
+                    ClientSideImp.getInstance().setStatusTo_Typing(openChat);
+                    /*try {
+            if(ClientSideImp.getInstance().get_Status(openChat).equals("typing..."))
+                ClientSideImp.getInstance().setStatusTo_Online();
+            else
+                ClientSideImp.getInstance().setStatusTo_Typing(openChat);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (GetUserex getUserex) {
+            getUserex.printStackTrace();
+        }*/
+                });
     }
 
 
@@ -337,7 +350,7 @@ public class ChatController {
             icon.setFill(Color.WHITE);
             icon.setSize("26");
             icon.setOnMouseClicked(e -> {
-                ClientSideImp.getInstance().download_File("C:\\Users\\Yasaman\\Desktop", ClientSideImp.getInstance().getUser(), m.getMessage());
+                ClientSideImp.getInstance().download_File("C:\\Users\\", ClientSideImp.getInstance().getUser(), m.getMessage());
             });
             icon.setCursor(Cursor.HAND);
             Text fileName = new Text(m.getMessage());

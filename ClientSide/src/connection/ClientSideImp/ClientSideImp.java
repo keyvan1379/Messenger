@@ -121,7 +121,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             e.printStackTrace();
         }
         System.out.println("error in getipaddress");
-        return "172.17.11.103";
+        return "localhost";
     }
 
     @Override
@@ -444,7 +444,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
         Thread thread1 = new Thread(() -> {
             try {
-                Socket socket = new Socket("172.17.9.25", 38474);//change localhost to server ip
+                Socket socket = new Socket("localhost", 38474);//change localhost to server ip
                 OutputStream outputStream = socket.getOutputStream();
                 FileInputStream inputStream = new FileInputStream(file);
                 int count;

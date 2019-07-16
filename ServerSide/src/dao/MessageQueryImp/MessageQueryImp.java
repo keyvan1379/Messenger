@@ -211,14 +211,18 @@ public class MessageQueryImp implements MessageQuery {
             while (rs.next()) {
                 messages.put(i, new ArrayList<>());
                 messages.get(i).add(rs.getString(2));
-                messages.get(i).add(rs.getString(3));
+                if(Integer.parseInt(rs.getString(4))!=0){
+                    messages.get(i).add(rs.getString(3).split("\\\\")
+                            [rs.getString(3).split("\\\\").length-1]);
+                }else
+                    messages.get(i).add(rs.getString(3));
                 messages.get(i).add(rs.getString(4));
                 messages.get(i++).add(rs.getString(5));
             }
             Gson gson = new Gson();
             String json = gson.toJson(messages);
             return json;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

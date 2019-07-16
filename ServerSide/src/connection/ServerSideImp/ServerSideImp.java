@@ -33,6 +33,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -387,7 +388,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             return "typing...";
         }
         try {
-            if (Integer.parseInt(userDao.isActive(username)) == -1) {
+            if (Integer.parseInt(userDao.isActive(username)) == -1 || Integer.parseInt(userDao.isActive(username)) != 0) {
                 return "online";
             }
             return "offline";
@@ -631,12 +632,18 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         HashMap<Integer, ArrayList> groupMsg = new HashMap<>();
         try {
             Group group = groupDao.getGroup(groupUsername);
-            for (int i = 0; i < group.getGroupMessages().size(); i++) {
+            List<GroupMessage> mess = group.getGroupMessages().stream().sorted((a,b) -> ((Long)a.getId()).compareTo((Long)b.getId())).collect(Collectors.toList());
+            for (int i = 0; i < mess.size(); i++) {
                 groupMsg.put(i,new ArrayList());
-                groupMsg.get(i).add(group.getGroupMessages().get(i).getFromUser());
-                groupMsg.get(i).add(group.getGroupMessages().get(i).getMessage());
-                groupMsg.get(i).add(group.getGroupMessages().get(i).getIsFile());
-                groupMsg.get(i).add(group.getGroupMessages().get(i).getSendDate());
+                groupMsg.get(i).add(mess.get(i).getFromUser());
+                if(mess.get(i).getIsFile() != 0){
+                    groupMsg.get(i).add(mess.get(i).getMessage().split("\\\\")
+                            [mess.get(i).getMessage().split("\\\\").length-1]);
+                }else {
+                    groupMsg.get(i).add(mess.get(i).getMessage());
+                }
+                groupMsg.get(i).add(mess.get(i).getIsFile());
+                groupMsg.get(i).add(mess.get(i).getSendDate());
             }
             return aes.encrypt(gson.toJson(groupMsg));
         } catch (Exception e) {
