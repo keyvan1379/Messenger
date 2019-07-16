@@ -117,9 +117,11 @@ public class RegisterController implements Initializable {
             String result;
             if (!(result = ClientSideImp.getInstance().sign_up(user)).equals("successful"))
             {
+
                 throw new Exception(result);
             }
-            //register
+
+            ClientSideImp.getInstance().login(username, password);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Welcome!", ButtonType.OK);
             alert.setTitle("Welcome");
             alert.setHeaderText(null);

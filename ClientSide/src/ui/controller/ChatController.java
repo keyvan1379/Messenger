@@ -113,7 +113,7 @@ public class ChatController {
 
     private double x;
     private double y;
-    private String isChatOpen;
+    private String openChat;
 
 
     public void initialize() {
@@ -145,7 +145,7 @@ public class ChatController {
         profilePicture.setFitHeight(60);
         profilePicture.setPreserveRatio(true);
 
-        this.isChatOpen = null;
+        this.openChat = null;
 
         messagesVBox.setStyle("-fx-font-size: 14px; -fx-background-color: white; -fx-padding: 10");
 
@@ -196,6 +196,8 @@ public class ChatController {
 
     private void loadMessages (String chat, int type) // 0 = pv, 1 = gp, 2 = ch
     {
+        if (openChat.equals(chat))
+            return;
         infoHbox.setCursor(Cursor.HAND);
 //        set username and profile picture and status
         if (type == 0)
@@ -361,19 +363,19 @@ public class ChatController {
 
 
     public void sendMessege(MouseEvent mouseEvent   ) {
-        if ( (!(messageTextArea.getText().equals(""))) && isChatOpen != null)
+        if ( (!(messageTextArea.getText().equals(""))) && openChat != null)
         {
 
             Message message = new Message(ClientSideImp.getInstance().getUser(),
                     messageTextArea.getText().trim(), 0,Message.dateToString(new Date()));
 
             addMessage(message);
-            ClientSideImp.getInstance().sendmsg(isChatOpen, messageTextArea.getText().trim());
+            ClientSideImp.getInstance().sendmsg(openChat, messageTextArea.getText().trim());
 
             messageTextArea.setText("");
         }
 
-        else if ( isChatOpen == null )
+        else if ( openChat == null )
         {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a chat!", ButtonType.OK);
             alert.setHeaderText(null);
@@ -505,7 +507,7 @@ public class ChatController {
         hBox.setOnMouseClicked(e -> {
             messagesVBox.getChildren().clear();
             loadMessages(username, type);
-            isChatOpen = username;
+            openChat = username;
         });
         hBox.setStyle("-fx-cursor: hand;");
         //usersVBox.getChildren().add(1, new Separator());

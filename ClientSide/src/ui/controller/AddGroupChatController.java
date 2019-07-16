@@ -12,10 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import models.Group;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 
@@ -93,29 +95,31 @@ public class AddGroupChatController implements Initializable {
 
 
     public void createGroupChat(MouseEvent mouseEvent) throws IOException {
-        Alert alert;
-
-        if (users.size() > 0)
-        {
-            //add
-            if (gpNameTextField.getText().equals(""))
+        try {
+            if (users.size() > 0)
             {
-                alert = new Alert(Alert.AlertType.ERROR, "Please enter a name for your group chat!", ButtonType.OK);
-                alert.setTitle("No Name Entered");
-                alert.setHeaderText(null);
-                alert.showAndWait();
+                //add
+                if (gpNameTextField.getText().equals(""))
+                {
+                    throw new Exception("Please enter a name!");
+                }
+                else
+                {
+                    String result;
+                    ClientSideImp.getInstance().createGroup(new Group(gpNameTextField.getText(),
+                                    gpNameTextField.getText(), ClientSideImp.getInstance().getUser(), "", new Date()), users);
+                    SearchController.chatController.addChat(gpNameTextField.getText(), 1);
+                    System.out.println(users);
+                    Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
+                    stage.close();
+                }
             }
             else
             {
-                SearchController.chatController.addChat(gpNameTextField.getText(), 1);
-                System.out.println(users);
-                Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
-                stage.close();
+                throw new Exception("Please add user!");
             }
-        }
-        else
-        {
-            alert = new Alert(Alert.AlertType.ERROR, "Please select a user!", ButtonType.OK);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
             alert.setTitle("No User Selected");
             alert.setHeaderText(null);
             alert.showAndWait();
