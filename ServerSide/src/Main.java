@@ -12,10 +12,7 @@ import dao.MessageQuery;
 import dao.MessageQueryImp.MessageQueryImp;
 import dao.UserDaoImp.UserDaoImp;
 import dao.daoExc.GetUserex;
-import models.Channel;
-import models.Group;
-import models.GroupMessage;
-import models.User;
+import models.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
 import org.hibernate.query.Query;
@@ -52,8 +49,16 @@ public class Main {
             e.printStackTrace();
         }
         byte[] o = s.getBytes();
-        /*ChannelDao channelDao = new ChannelDaoImp();
+        ChannelDao channelDao = new ChannelDaoImp();
         try {
+            for (Channel c:
+                 userDaoImp.getUser("ddd3").getChannels()) {
+                System.out.println(c.getUsername());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        /*try {
             Channel channel = channelDao.getChannel("tiiiii");
             //System.out.println(channel.getUsers().contains(new UserDaoImp().getUser("ddddddd1")));
             //channelDao.updateChannel(channel);

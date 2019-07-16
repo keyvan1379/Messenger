@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class GroupDaoImp implements GroupDao {
@@ -143,8 +144,8 @@ public class GroupDaoImp implements GroupDao {
     }
 
     @Override
-    public ArrayList<GroupMessage> getGroupMessage(String username) throws Exception {
+    public List<GroupMessage> getGroupMessage(String username) throws Exception {
         Group group = getGroup(username);
-        return (ArrayList)group.getGroupMessages();
+        return group.getGroupMessages();
     }
 }
