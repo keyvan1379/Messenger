@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class ChannelDaoImp implements ChannelDao {
@@ -170,8 +171,8 @@ public class ChannelDaoImp implements ChannelDao {
     }
 
     @Override
-    public ArrayList<ChannelMessage> getChannelMessage(String username) throws Exception {
+    public List<ChannelMessage> getChannelMessage(String username) throws Exception {
         Channel channel = getChannel(username);
-        return (ArrayList)channel.getChannelMessages();
+        return channel.getChannelMessages();
     }
 }
