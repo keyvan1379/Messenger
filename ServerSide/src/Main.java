@@ -58,6 +58,16 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
+        /*GroupDao groupDao = new GroupDaoImp();
+        try {
+            Group group = groupDao.getGroup("Y");
+            for (GroupMessage g:
+                 group.getGroupMessages()) {
+                System.out.println(g.getMessage() + " " +g.getId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
         /*try {
             Channel channel = channelDao.getChannel("tiiiii");
             //System.out.println(channel.getUsers().contains(new UserDaoImp().getUser("ddddddd1")));

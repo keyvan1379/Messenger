@@ -33,6 +33,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     public ServerSideImp() throws RemoteException {
@@ -78,6 +80,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     //security needed
     @Override
     public void sendMsg(String FromUsername,String ToUsername, String msg) throws Exception {
+        System.out.println(FromUsername + " " +ToUsername +" "+msg);
         if(clients.get(FromUsername)==null){
             System.out.println("send meesage from known username");
             return;
@@ -633,6 +636,17 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         } catch (Exception e) {
             e.printStackTrace();
             return "unsuccessful";
+        }
+    }
+
+    @Override
+    public String getGroupUsers(String groupUsername) throws Exception {
+        try {
+            Group group = groupDao.getGroup(groupUsername);
+            return new Gson().toJson(group.getUsers().stream().collect(Collectors.toList()));
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new Exception("server error");
         }
     }
 

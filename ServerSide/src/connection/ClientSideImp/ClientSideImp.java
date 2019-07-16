@@ -19,10 +19,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     private ServerSideIF serverSideIF;
@@ -489,6 +486,10 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             e.printStackTrace();
             throw new Exception("error");
         }
+    }
+
+    public List<String> getGroupUsers(String groupUsername) throws Exception {
+        return new Gson().fromJson(serverSideIF.getGroupUsers(groupUsername),List.class);
     }
 
     public ArrayList<String> getChatGroup() throws Exception {
