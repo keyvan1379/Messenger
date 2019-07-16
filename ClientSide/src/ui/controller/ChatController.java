@@ -28,10 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 import models.ProfileInfo;
 
 
@@ -337,7 +334,9 @@ public class ChatController {
             icon.setFill(Color.WHITE);
             icon.setSize("26");
             icon.setOnMouseClicked(e -> {
-                ClientSideImp.getInstance().download_File("C:\\Users\\Yasaman\\Desktop", ClientSideImp.getInstance().getUser(), m.getMessage());
+                DirectoryChooser folderChooser = new DirectoryChooser();
+                File folder = folderChooser.showDialog( attachButton.getScene().getWindow() );
+                ClientSideImp.getInstance().download_File(folder.getAbsolutePath(), ClientSideImp.getInstance().getUser(), m.getMessage());
             });
             icon.setCursor(Cursor.HAND);
             Text fileName = new Text(m.getMessage());
