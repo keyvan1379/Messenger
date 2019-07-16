@@ -459,6 +459,10 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
     }
 
+    public Channel getChannel(String channelUsernaem) throws Exception {
+        return serverSideIF.getChannel(channelUsernaem);
+    }
+
     public String createGroup(Group group,ArrayList<String> users){
         try {
             group.setAdmin(username);
