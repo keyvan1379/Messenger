@@ -4,11 +4,7 @@
     <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ServerSide/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideImp/ClientSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideImp/ClientSideImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideIF.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideIF.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDaoImp/GroupDaoImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/GroupDaoImp/GroupDaoImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/models/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/models/Group.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,8 +43,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ui/controller/AddGroupChatController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="125" selection-start-line="125" selection-end-line="125" />
+            <state relative-caret-position="830">
+              <caret line="160" column="28" selection-start-line="160" selection-start-column="28" selection-end-line="160" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -173,7 +169,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1389" />
@@ -208,7 +204,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563267364301" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563280450832" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/gson-2.8.2.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -262,12 +258,12 @@
       <workItem from="1563020149260" duration="4819000" />
       <workItem from="1563039117933" duration="5404000" />
       <workItem from="1563086724489" duration="1753000" />
-      <workItem from="1563106658514" duration="7326000" />
+      <workItem from="1563106658514" duration="7622000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20475000" />
+    <option name="totallyTimeSpent" value="20771000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -435,8 +431,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/controller/AddGroupChatController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="125" selection-start-line="125" selection-end-line="125" />
+        <state relative-caret-position="830">
+          <caret line="160" column="28" selection-start-line="160" selection-start-column="28" selection-end-line="160" selection-end-column="28" />
         </state>
       </provider>
     </entry>

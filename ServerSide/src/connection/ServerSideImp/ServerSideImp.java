@@ -80,7 +80,6 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     //security needed
     @Override
     public void sendMsg(String FromUsername,String ToUsername, String msg) throws Exception {
-        System.out.println(FromUsername + " " +ToUsername +" "+msg);
         if(clients.get(FromUsername)==null){
             System.out.println("send meesage from known username");
             return;
@@ -643,7 +642,9 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     public String getGroupUsers(String groupUsername) throws Exception {
         try {
             Group group = groupDao.getGroup(groupUsername);
-            return new Gson().toJson(group.getUsers().stream().collect(Collectors.toList()));
+            List<String> users = new ArrayList<>();
+            group.getUsers().stream().forEach(x -> users.add(x.getUserName()));
+            return new Gson().toJson(users);
         } catch (Exception e){
             e.printStackTrace();
             throw new Exception("server error");

@@ -61,9 +61,9 @@ public class Main {
         /*GroupDao groupDao = new GroupDaoImp();
         try {
             Group group = groupDao.getGroup("Y");
-            for (GroupMessage g:
-                 group.getGroupMessages()) {
-                System.out.println(g.getMessage() + " " +g.getId());
+            for (User g:
+                 groupDao.getGroupUsers("Y")) {
+                System.out.println(g.getUserName() + " " +g.getFistName());
             }
         } catch (Exception e) {
             e.printStackTrace();
