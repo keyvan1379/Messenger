@@ -12,10 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import models.Group;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 
@@ -93,37 +95,70 @@ public class AddGroupChatController implements Initializable {
 
 
     public void createGroupChat(MouseEvent mouseEvent) throws IOException {
-        Alert alert;
-
-        if (users.size() > 0)
-        {
-            //add
-            if (gpNameTextField.getText().equals(""))
+        try {
+            if (users.size() > 0)
             {
-                alert = new Alert(Alert.AlertType.ERROR, "Please enter a name for your group chat!", ButtonType.OK);
-                alert.setTitle("No Name Entered");
-                alert.setHeaderText(null);
-                alert.showAndWait();
+                //add
+                if (gpNameTextField.getText().equals(""))
+                {
+                    throw new Exception("Please enter a name!");
+                }
+                else
+                {
+                    for (String id :
+                            ClientSideImp.getInstance().get_All_Group()) {
+                        if (gpNameTextField.getText().equals(id))
+                        {
+                            System.out.println(gpNameTextField.getText());
+                            throw new Exception("Group already exists!");
+                        }
+                    }
+
+                    String result;
+                    if (!(result = ClientSideImp.getInstance().createGroup(
+                        new Group(gpNameTextField.getText(),
+                                gpNameTextField.getText(), ClientSideImp.getInstance().getUser(), "", new Date()), users)
+                    ).equals("successful"))
+                    {
+
+                        throw new Exception(result);
+                    }
+                    SearchController.chatController.addChat(gpNameTextField.getText(), 1);
+                    Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
+                    stage.close();
+                }
             }
             else
             {
-                SearchController.chatController.addChat(gpNameTextField.getText(), 1);
-                System.out.println(users);
-                Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
-                stage.close();
+                throw new Exception("Please add user!");
             }
-        }
-        else
-        {
-            alert = new Alert(Alert.AlertType.ERROR, "Please select a user!", ButtonType.OK);
-            alert.setTitle("No User Selected");
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
+            alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.showAndWait();
         }
     }
 
     public void joinGroupChat(MouseEvent mouseEvent) {
+        Alert alert;
+        for (Toggle toggle :
+                gpsFound.getToggles()) {
+            if (toggle.isSelected())
+            {
+                String gpID = ((RadioButton)toggle ).getText();
+                ClientSideImp.getInstance().joinGroup(gpID);
+                SearchController.chatController.addChat(gpID, 1);
+                Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
+                stage.close();
+                return;
+            }
 
+        }
+        alert = new Alert(Alert.AlertType.ERROR, "Please select a group!", ButtonType.OK);
+        alert.setTitle("No Group Selected");
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 
     public void closeWindow(MouseEvent mouseEvent) {
