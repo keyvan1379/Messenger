@@ -180,7 +180,11 @@ public class ChatController {
 
             this.username.setText(chat);
             try {
-                this.status.setText(ClientSideImp.getInstance().get_Status(chat));
+                if(ClientSideImp.getInstance().get_Status(chat).equals("offline")){
+                    this.status.setText(Message.dateToString(ClientSideImp.getInstance().get_lastseen(chat)));
+                }else {
+                    this.status.setText(ClientSideImp.getInstance().get_Status(chat));
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (GetUserex getUserex) {

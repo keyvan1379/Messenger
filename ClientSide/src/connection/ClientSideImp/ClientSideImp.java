@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import connection.ClientSideIF;
 import connection.ServerSideIF;
 import dao.daoExc.GetUserex;
+import javafx.application.Platform;
 import models.Channel;
 import models.Group;
 import models.ProfileInfo;
@@ -86,17 +87,29 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     public void getMessage(String FromUser,String message,long isfile) {
         try {
             message = aes.decrypt(message);
+            System.out.println(FromUser + " " + message);
+            System.out.println(chatController.openChat);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (FromUser.contains("$"))
-            FromUser = FromUser.replaceAll("$", "");
-        else if (FromUser.contains("#"))
-            FromUser = FromUser.replaceAll("#", "");
-        if (FromUser.equals(chatController.openChat))
+        String desUser = FromUser;
+        if (FromUser.contains("$")) {
+            desUser = FromUser.substring(0,FromUser.indexOf("$", FromUser.indexOf("$") + 1));
+            FromUser = FromUser.substring(FromUser.indexOf("$", FromUser.indexOf("$") + 1) + 1);
+        }
+        else if (FromUser.contains("#")) {
+            desUser = FromUser.substring(0,FromUser.indexOf("#", FromUser.indexOf("#") + 1));
+            FromUser = FromUser.substring(FromUser.indexOf("#", FromUser.indexOf("#") + 1) + 1);
+        }
+        System.out.println(desUser);
+        System.out.println(FromUser);
+        if (desUser.equals(chatController.openChat))
         {
-            Message m = new Message(FromUser, message, isfile,Message.dateToString(new Date()));
-            chatController.addMessage(m);
+            Message m = new Message(FromUser,message, isfile,Message.dateToString(new Date()));
+            System.out.println(FromUser+" "+message + " be4 platformrun");
+            Platform.runLater(() -> {
+                chatController.addMessage(m);
+            });
         }
     }
 
@@ -487,6 +500,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             return "unsuccessful";
         }
     }
+
     public Channel getChannel(String channelUsernaem) throws Exception {
         return serverSideIF.getChannel(channelUsernaem);
     }
@@ -528,6 +542,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             throw new Exception("error");
         }
     }
+
     public List<String> getGroupUsers(String groupUsername) throws Exception {
         return new Gson().fromJson(serverSideIF.getGroupUsers(groupUsername),List.class);
     }

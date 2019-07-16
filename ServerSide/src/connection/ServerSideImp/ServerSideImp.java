@@ -99,7 +99,8 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                     for (User user:
                          channel.getUsers()) {
                         if(clients.keySet().contains(user.getUserName())){
-                            clients.get(user.getUserName()).getMessage(ToUsername,AES.importKey(user.getUserName()).encrypt(msg),0);
+                            clients.get(user.getUserName()).getMessage("#" + ToUsername + "#" + FromUsername,
+                                    AES.importKey(user.getUserName()).encrypt(msg),0);
                         }
                     }
                 }
@@ -115,6 +116,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 group.getUsers().stream().forEach(x -> users.add(x.getUserName()));
                 if(users.contains(user.getUserName())){
                     GroupMessage groupMessage = new GroupMessage(FromUsername,msg,0,new Date());
+                    System.out.println(msg);
                     group.getGroupMessages().add(groupMessage);
                     groupDao.updateGroup(group);
                     //send group msg to online users
@@ -124,7 +126,8 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                             continue;
                         }
                         if(clients.keySet().contains(user1.getUserName())){
-                            clients.get(user1.getUserName()).getMessage(ToUsername,AES.importKey(user1.getUserName()).encrypt(msg),0);
+                            clients.get(user1.getUserName()).getMessage("$" + ToUsername + "$" + FromUsername,
+                                    AES.importKey(user1.getUserName()).encrypt(msg),0);
                         }
                     }
                 }
@@ -145,17 +148,21 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 try {
                     userDao.getUser(ToUsername);
                     messageQuery.addMessage(msg,FromUsername,ToUsername,0);
+                    System.out.println("hellp off");
                 }catch (GetUserex ex){
+                    ex.printStackTrace();
                     System.out.println(ex.getMessage());
                     return;
                 }
             }
             else {
                 try {
+                    System.out.println("hellp on");
                     userDao.getUser(ToUsername);
                     clients.get(ToUsername).getMessage(FromUsername,AES.importKey(ToUsername).encrypt(msg),0);
                     messageQuery.addMessage(msg,FromUsername,ToUsername,0);
                 }catch (GetUserex ex){
+                    ex.printStackTrace();
                     System.out.println(ex.getMessage());
                     return;
                 }

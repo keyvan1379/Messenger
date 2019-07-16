@@ -34,7 +34,7 @@ public class Main extends Application {
 
 
         try {
-            String url = "rmi://172.17.9.25/Test";
+            String url = "rmi://localhost/Test";
 
 //            Registry registry = LocateRegistry.getRegistry(null);
             ServerSideIF serverSideIF = (ServerSideIF) Naming.lookup(url);
