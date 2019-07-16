@@ -105,11 +105,25 @@ public class AddGroupChatController implements Initializable {
                 }
                 else
                 {
+                    for (String id :
+                            ClientSideImp.getInstance().get_All_Group()) {
+                        if (gpNameTextField.getText().equals(id))
+                        {
+                            System.out.println(gpNameTextField.getText());
+                            throw new Exception("Group already exists!");
+                        }
+                    }
+
                     String result;
-                    ClientSideImp.getInstance().createGroup(new Group(gpNameTextField.getText(),
-                                    gpNameTextField.getText(), ClientSideImp.getInstance().getUser(), "", new Date()), users);
+                    if (!(result = ClientSideImp.getInstance().createGroup(
+                        new Group(gpNameTextField.getText(),
+                                gpNameTextField.getText(), ClientSideImp.getInstance().getUser(), "", new Date()), users)
+                    ).equals("successful"))
+                    {
+
+                        throw new Exception(result);
+                    }
                     SearchController.chatController.addChat(gpNameTextField.getText(), 1);
-                    System.out.println(users);
                     Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
                     stage.close();
                 }
@@ -120,14 +134,31 @@ public class AddGroupChatController implements Initializable {
             }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
-            alert.setTitle("No User Selected");
+            alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.showAndWait();
         }
     }
 
     public void joinGroupChat(MouseEvent mouseEvent) {
+        Alert alert;
+        for (Toggle toggle :
+                gpsFound.getToggles()) {
+            if (toggle.isSelected())
+            {
+                String gpID = ((RadioButton)toggle ).getText();
+                ClientSideImp.getInstance().joinGroup(gpID);
+                SearchController.chatController.addChat(gpID, 1);
+                Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();
+                stage.close();
+                return;
+            }
 
+        }
+        alert = new Alert(Alert.AlertType.ERROR, "Please select a group!", ButtonType.OK);
+        alert.setTitle("No Group Selected");
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 
     public void closeWindow(MouseEvent mouseEvent) {

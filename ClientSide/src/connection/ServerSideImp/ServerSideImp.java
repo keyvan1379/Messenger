@@ -190,6 +190,16 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
+    public Channel getChannel(String channelUsername) throws Exception {
+        try {
+            return channelDao.getChannel(channelUsername);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new Exception("channelUsername does not exist");
+    }
+
+    @Override
     public String getAllChannel() throws RemoteException {
         try {
             List<String> allChannel = channelDao.getAllChannel();

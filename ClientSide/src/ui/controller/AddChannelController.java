@@ -93,6 +93,7 @@ public class AddChannelController implements Initializable {
                     throw new Exception("Channel already exists!");
             }
             ClientSideImp.getInstance().createChannel(new Channel(channelID, null, "", new Date()));
+            ClientSideImp.getInstance().joinChannel(channelID);
 
             SearchController.chatController.addChat(channelID, 2);
             Stage stage = (Stage) ((Node)(mouseEvent.getSource())).getScene().getWindow();

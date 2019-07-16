@@ -51,8 +51,8 @@ class Message
     String user;
     String message;
     String time;
-    int isFile;
-    Message(String user, String message, int isFile, String time)
+    long isFile;
+    Message(String user, String message, long isFile, String time)
     {
         this.user = user;
         this.message = message;
@@ -74,7 +74,7 @@ class Message
         return user;
     }
 
-    public int getIsFile() {
+    public long getIsFile() {
         return isFile;
     }
 
@@ -196,13 +196,10 @@ public class ChatController {
 
     private void loadMessages (String chat, int type) // 0 = pv, 1 = gp, 2 = ch
     {
-        if (openChat.equals(chat))
-            return;
         infoHbox.setCursor(Cursor.HAND);
 //        set username and profile picture and status
         if (type == 0)
         {
-
             try {
                 HashMap<Integer, ArrayList> msg = ClientSideImp.getInstance().getmsg_between_2person(chat);
                 if (msg != null)
@@ -253,8 +250,12 @@ public class ChatController {
                     ex.printStackTrace();
                 }
             });
+            messageTextArea.setDisable(false);
+            sendButton.setDisable(false);
+            attachButton.setDisable(false);
+            openEmojisButton.setDisable(false);
         }
-        else if (type == 1)
+        else if (type == 1) //gp
         {
             this.username.setText(chat);
             this.status.setText(""); //?
@@ -269,20 +270,63 @@ public class ChatController {
                     ex.printStackTrace();
                 }
             });
+
+            try {
+                HashMap<Integer, ArrayList> msg = ClientSideImp.getInstance().getGroupMsg(chat);
+                //from msg isfile date
+                if (msg != null)
+                {
+                    for (int i = 0; i < msg.size(); i++) {
+                        addMessage(new Message( (String)msg.get(i).get(0), (String)msg.get(i).get(1),Math.round( (Double)msg.get(i).get(2) ), (String) msg.get(i).get(3)  ));
+                    }
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            messageTextArea.setDisable(false);
+            sendButton.setDisable(false);
+            attachButton.setDisable(false);
+            openEmojisButton.setDisable(false);
+
         }
         else if (type == 2)
         {
+            boolean admin = false;
+            try {
+                HashMap<Integer, ArrayList> msg = ClientSideImp.getInstance().getChannelMsg(chat);
+                admin = ClientSideImp.getInstance().getUser().equals(ClientSideImp.getInstance().getChannel(chat).getAdmin());
+                //admin msg isfile date
+                if (msg != null)
+                {
+                    for (int i = 0; i < msg.size(); i++) {
+                        addMessage(new Message((String)msg.get(i).get(0), (String)msg.get(i).get(1), Math.round( (Double)msg.get(i).get(2) ), (String)msg.get(i).get(3)));
+                    }
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
             this.username.setText(chat);
             this.status.setText(""); //?
             Image image = new Image(new File("ClientSide/src/ui/images/channel.png").toURI().toString());
             profilePicture.setImage(image);
             profilePicture.setFitHeight(60);
             profilePicture.setPreserveRatio(true);
-            // if the channel writer is not the user
-            messageTextArea.setDisable(true);
-            sendButton.setDisable(true);
-            attachButton.setDisable(true);
-            openEmojisButton.setDisable(true);
+
+            if (!admin)
+            {
+                messageTextArea.setDisable(true);
+                sendButton.setDisable(true);
+                attachButton.setDisable(true);
+                openEmojisButton.setDisable(true);
+            }
+            else
+            {
+                messageTextArea.setDisable(false);
+                sendButton.setDisable(false);
+                attachButton.setDisable(false);
+                openEmojisButton.setDisable(false);
+            }
 
             infoHbox.setOnMouseClicked(e-> {
                 try {
@@ -353,19 +397,16 @@ public class ChatController {
             imageView.setImage(image);
             hBox.getChildren().add(imageView);
             hBox.getChildren().add(textFlow);
-
         }
-
 
         messagesVBox.getChildren().add(hBox);
         messagepane.vvalueProperty().bind(messagesVBox.heightProperty());
     }
 
 
-    public void sendMessege(MouseEvent mouseEvent   ) {
+    public void sendMessege(MouseEvent mouseEvent) {
         if ( (!(messageTextArea.getText().equals(""))) && openChat != null)
         {
-
             Message message = new Message(ClientSideImp.getInstance().getUser(),
                     messageTextArea.getText().trim(), 0,Message.dateToString(new Date()));
 
@@ -507,7 +548,12 @@ public class ChatController {
         hBox.setOnMouseClicked(e -> {
             messagesVBox.getChildren().clear();
             loadMessages(username, type);
-            openChat = username;
+            if (type == 0)
+                openChat = username;
+            else if (type == 1)
+                openChat = "$" + username;
+            else if (type == 2)
+                openChat = "#" + username;
         });
         hBox.setStyle("-fx-cursor: hand;");
         //usersVBox.getChildren().add(1, new Separator());
@@ -565,8 +611,6 @@ public class ChatController {
         {
 
             ClientSideImp.getInstance().setStatusTo_Offline();
-
-            System.out.println("log out");
             Parent root = FXMLLoader.load(getClass().getResource("../fxml/login.fxml"));
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
