@@ -3,6 +3,7 @@ package models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "GROUPS")
@@ -92,7 +93,7 @@ public class Group implements Serializable {
     }
 
     public List<GroupMessage> getGroupMessages() {
-        return groupMessages;
+        return groupMessages.stream().sorted((a,b) -> ((Long)a.getId()).compareTo((Long)b.getId())).collect(Collectors.toList());
     }
 
     public void setGroupMessages(List<GroupMessage> groupMessages) {

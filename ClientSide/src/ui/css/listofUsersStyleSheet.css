@@ -56,9 +56,9 @@
 .scroll-pane
 {
     -fx-pref-width: 190px;
-    -fx-pref-height: 120px;
+    -fx-pref-height: 150px;
     -fx-translate-x: 30px;
-    -fx-translate-y: 50px;
+    -fx-translate-y: 30px;
 }
 
 

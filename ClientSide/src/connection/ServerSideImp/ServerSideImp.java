@@ -29,6 +29,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.PublicKey;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     public ServerSideImp() throws RemoteException {
@@ -187,6 +188,17 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             e.printStackTrace();
         }
         return "Server error";
+    }
+
+    @Override
+    public String getGroupUsers(String groupUsername) throws Exception {
+        try {
+            Group group = groupDao.getGroup(groupUsername);
+            return new Gson().toJson(group.getUsers().stream().collect(Collectors.toList()));
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new Exception("server error");
+        }
     }
 
     @Override

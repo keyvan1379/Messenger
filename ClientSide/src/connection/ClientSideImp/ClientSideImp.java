@@ -11,6 +11,8 @@ import models.ProfileInfo;
 import models.User;
 import protections.AES;
 import protections.RSA;
+import ui.controller.ChatController;
+import ui.controller.Message;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -19,10 +21,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     private ServerSideIF serverSideIF;
@@ -34,6 +34,16 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     private AES aes;
 
     private String AESKey;
+
+    private static ChatController chatController;
+
+    public static ChatController getChatController() {
+        return chatController;
+    }
+
+    public static void setChatController(ChatController chatController) {
+        ClientSideImp.chatController = chatController;
+    }
 
     public String getUser(){
         return username;
@@ -75,9 +85,18 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     @Override
     public void getMessage(String FromUser,String message,long isfile) {
         try {
-            System.out.println(aes.decrypt(message));
+            message = aes.decrypt(message);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (FromUser.contains("$"))
+            FromUser = FromUser.replaceAll("$", "");
+        else if (FromUser.contains("#"))
+            FromUser = FromUser.replaceAll("#", "");
+        if (FromUser.equals(chatController.openChat))
+        {
+            Message m = new Message(FromUser, message, isfile,Message.dateToString(new Date()));
+            chatController.addMessage(m);
         }
     }
 
@@ -89,7 +108,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             e.printStackTrace();
         }
         System.out.println("error in getipaddress");
-        return "localhost";
+        return "172.17.11.103";
     }
 
     @Override
@@ -412,7 +431,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
         Thread thread1 = new Thread(() -> {
             try {
-                Socket socket = new Socket("localhost", 38474);//change localhost to server ip
+                Socket socket = new Socket("172.17.9.25", 38474);//change localhost to server ip
                 OutputStream outputStream = socket.getOutputStream();
                 FileInputStream inputStream = new FileInputStream(file);
                 int count;
@@ -509,7 +528,9 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             throw new Exception("error");
         }
     }
-
+    public List<String> getGroupUsers(String groupUsername) throws Exception {
+        return new Gson().fromJson(serverSideIF.getGroupUsers(groupUsername),List.class);
+    }
 
 
 

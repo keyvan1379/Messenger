@@ -46,43 +46,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 
-class Message
-{
-    String user;
-    String message;
-    String time;
-    long isFile;
-    Message(String user, String message, long isFile, String time)
-    {
-        this.user = user;
-        this.message = message;
-        this.isFile = isFile;
-        this.time = time;
-    }
-
-    public static String dateToString(Date date){
-        java.text.SimpleDateFormat sdf =
-                new java.text.SimpleDateFormat("HH:mm:ss");
-        return sdf.format(date);
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public long getIsFile() {
-        return isFile;
-    }
-
-    public String getTime() {
-        return time;
-    }
-}
-
 public class ChatController {
 
 
@@ -113,12 +76,13 @@ public class ChatController {
 
     private double x;
     private double y;
-    private String openChat;
+    public String openChat;
 
 
     public void initialize() {
 
         SearchController.chatController = this;
+        ClientSideImp.setChatController(this);
 
         emojiListPane.setVisible(false);
         setEmojiList();
@@ -277,7 +241,6 @@ public class ChatController {
                 if (msg != null)
                 {
                     for (int i = 0; i < msg.size(); i++) {
-                        System.out.println(msg.get(i).get(0) + " " + msg.get(i).get(1) + " " + msg.get(i).get(2) + " "+msg.get(i).get(3));
                         addMessage(new Message( (String)msg.get(i).get(0), (String)msg.get(i).get(1),Math.round( (Double)msg.get(i).get(2) ), (String) msg.get(i).get(3)  ));
                     }
                 }
@@ -341,7 +304,7 @@ public class ChatController {
 
     }
 
-    private void addMessage(Message m)
+    public void addMessage(Message m)
     {
         //from msg isfile sendtime
         TextFlow textFlow;
@@ -352,15 +315,15 @@ public class ChatController {
         imageView = new ImageView();
         imageView.setFitWidth(40);
         imageView.setPreserveRatio(true);
-        Text id = new Text(m.getUser());
+        Text id = new Text(m.getUser() + ":");
         id.setStyle("-fx-font-size: 10px");
 
-        if (m.getIsFile() == 0)
+        if (m.getIsFile() == 0) //not file
         {
             Text text = new Text(m.getMessage());
             Text time = new Text(m.getTime());
             time.setStyle("-fx-font-size: 10px");
-            textFlow = new TextFlow(id,new Text("______" + System.lineSeparator()), text, new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
+            textFlow = new TextFlow(id, new Text(System.lineSeparator()), text, new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
 
         }
         else // file
@@ -370,15 +333,14 @@ public class ChatController {
             icon.setFill(Color.WHITE);
             icon.setSize("26");
             icon.setOnMouseClicked(e -> {
-//                ClientSideImp.getInstance().download_File("C:\\Desktop", ClientSideImp.getInstance().getUser(), );
-                System.out.println("download file");
+                ClientSideImp.getInstance().download_File("C:\\Users\\Yasaman\\Desktop", ClientSideImp.getInstance().getUser(), m.getMessage());
             });
             icon.setCursor(Cursor.HAND);
             Text fileName = new Text(m.getMessage());
             Text fileSize = new Text(" ( "+ m.getIsFile() +" )");
             Text time = new Text(m.getTime());
             time.setStyle("-fx-font-size: 10px");
-            textFlow = new TextFlow(new Text("______" + System.lineSeparator()),
+            textFlow = new TextFlow(id, new Text(System.lineSeparator()),
                     icon, new Text("  "), fileName, fileSize,
                     new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
 
@@ -451,7 +413,14 @@ public class ChatController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/listOfUsers.fxml"));
         Parent root = fxmlLoader.load();
         listOfUsersController listOfUsersController = fxmlLoader.<listOfUsersController>getController();
-
+        try {
+            for (String u :
+                    ClientSideImp.getInstance().getGroupUsers(username)) {
+                listOfUsersController.addUser(u);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Stage stage = new Stage();
         Scene scene = new Scene(root);

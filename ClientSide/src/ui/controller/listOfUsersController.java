@@ -23,12 +23,10 @@ public class listOfUsersController implements Initializable {
     private double x;
     private double y;
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         labelSearch.setText("Users");
-        addUser("one");
-        addUser("two");
-
     }
 
     public void addUser(String name)
