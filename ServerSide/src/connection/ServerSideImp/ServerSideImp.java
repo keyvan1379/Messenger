@@ -149,7 +149,6 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 try {
                     userDao.getUser(ToUsername);
                     messageQuery.addMessage(msg,FromUsername,ToUsername,0);
-                    System.out.println("hellp off");
                 }catch (GetUserex ex){
                     ex.printStackTrace();
                     System.out.println(ex.getMessage());
@@ -158,7 +157,6 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             }
             else {
                 try {
-                    System.out.println("hellp on");
                     userDao.getUser(ToUsername);
                     clients.get(ToUsername).getMessage(FromUsername,AES.importKey(ToUsername).encrypt(msg),0);
                     messageQuery.addMessage(msg,FromUsername,ToUsername,0);
@@ -291,6 +289,10 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                file = new File("C:\\Users\\ASuS\\IdeaProjects\\ServerSide\\ServerSide\\src\\protections\\UsersKey\\"+user.getUserName()+".txt");
+                PrintWriter printWriter = new PrintWriter(file);
+                printWriter.write(AES.importKey(username).getKey());
+                printWriter.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -303,11 +305,10 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 Set<User> gusers = new HashSet<>();
                 for (Group g:
                      groups) {
-                    user.getGroups().add(g);
-                    g.getUsers().add(user);
                     g.getGroupMessages().stream().filter(x -> x.getFromUser().equals(username)).forEach(x -> x.setFromUser(user.getUserName()));
                     gusers.addAll(g.getUsers());
                     gusers.stream().filter(x -> x.getUserName().equals(username)).forEach(x -> g.getUsers().remove(x));
+                    g.getUsers().add(user);
                     gusers.clear();
                     groupDao.updateGroup(g);
                 }
@@ -315,23 +316,23 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 //channel edit
                 Set<Channel> channels = new HashSet<>();
                 channels.addAll(user1.getChannels());
-                channelDao.getAllChannels().stream().filter(x -> x.getAdmin().equals(user1.getUserName()))
-                .forEach(x -> {
-                    x.setAdmin(user.getUserName());
-                    x.getChannelMessages().stream().forEach(s -> s.setAdmin(user.getUserName()));
-                    channelDao.updateChannel(x);
-                });
                 Set<User> users = new HashSet<>();
                 for (Channel c:
                      channels) {
-                    user.getChannels().add(c);
                     users.addAll(c.getUsers());
                     //did not remove old user
                     users.stream().filter(x -> x.getUserName().equals(username)).forEach(x -> {c.getUsers().remove(x);});
-                    users.clear();
                     c.getUsers().add(user);
+                    users.clear();
+                    //user.getChannels().add(c);
                     channelDao.updateChannel(c);
                 }
+                channelDao.getAllChannels().stream().filter(x -> x.getAdmin().equals(user1.getUserName()))
+                        .forEach(x -> {
+                            x.setAdmin(user.getUserName());
+                            x.getChannelMessages().stream().forEach(s -> s.setAdmin(user.getUserName()));
+                            channelDao.updateChannel(x);
+                        });
                 userDao.deleteUser(username);
             }catch (Exception e){
                 e.printStackTrace();
@@ -407,7 +408,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 clients.remove(username);
             }
         }catch (NumberFormatException ex){
-            System.out.println(username + "going to offline");
+
         }
         User user = userDao.getUser(username);
         user.setIsActive(status);

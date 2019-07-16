@@ -328,11 +328,13 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             return null;
         }
         try {
+            String old_usernmae = username;
+            username = user.getUserName();
             user.setEmail(RSA.encrypt(user.getEmail(),serverSideIF.getKey()));
             user.setPassWord(RSA.encrypt(user.getPassWord(),serverSideIF.getKey()));
             user.setFistName(RSA.encrypt(user.getFistName(),serverSideIF.getKey()));
             user.setLastName(RSA.encrypt(user.getLastName(),serverSideIF.getKey()));
-            return serverSideIF.editProfile(username,this,user);
+            return serverSideIF.editProfile(old_usernmae,this,user);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
