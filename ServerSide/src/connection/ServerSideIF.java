@@ -42,6 +42,7 @@ public interface ServerSideIF extends Remote {
     String createGroup(Group group,String userNames) throws RemoteException;
     String joinGroup(String groupUsername,String username) throws RemoteException;
     String getGroupMsgs(String username,String groupUsername) throws RemoteException;
+    String getGroupUsers(String groupUsername) throws Exception;
     String getChatUsers(String username) throws RemoteException;
     String getChatGroups(String username) throws RemoteException;
     String getChatChannels(String username) throws RemoteException;
