@@ -4,8 +4,12 @@ import dao.daoExc.GetUserex;
 import models.Channel;
 import models.Group;
 import models.ProfileInfo;
+import models.User;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -53,7 +57,7 @@ public class ClientMain {
                 case "createGroup":
                     t = scanner.nextLine();
                     Group group = new Group(t,"hi",null,"zz",new Date());
-                    ClientSideImp.getInstance().createGroup(group);
+                    ClientSideImp.getInstance().createGroup(group,new ArrayList<>());
                     break;
                 case "joinGroup":
                     t = scanner.nextLine();
@@ -102,6 +106,20 @@ public class ClientMain {
                     u= scanner.nextLine();
                     csi.download_File(t,o,u);
                     break;
+                case "editprof":
+                    File file1 = new File("C:\\Users\\ASuS\\Downloads\\2016-03-25-14-15-28--1047324899.jpg");
+                    byte[] ss = new byte[(int)file1.length()];
+                    try {
+                        FileInputStream fileInputStream = new FileInputStream(file1);
+                        fileInputStream.read(ss);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    User user = new User("ddd3","skdfj","sdlfj","ddd3","sdfsf",new Date(),new Date(),ss);
+                    ClientSideImp.getInstance().edit_profile(user);
                 case "exit":
                     break outterline;
             }

@@ -13,6 +13,7 @@ public interface ChannelDao {
     void deleteChannel(String username);
     void updateChannel( Channel channel);
     ArrayList<String> getAllChannel() throws Exception;
+    ArrayList<Channel> getAllChannels() throws Exception;
     Set<User> getChannelUsers(String username) throws Exception;
     ArrayList<ChannelMessage> getChannelMessage(String username) throws Exception;
 }

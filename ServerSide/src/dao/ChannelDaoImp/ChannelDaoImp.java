@@ -138,6 +138,30 @@ public class ChannelDaoImp implements ChannelDao {
     }
 
     @Override
+    public ArrayList<Channel> getAllChannels() throws Exception {
+        ArrayList<Channel> allChannels = new ArrayList<>();
+        ChannelDao channelDao = new ChannelDaoImp();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection connection = DriverManager.getConnection
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE", "ADMIN", "admin");
+            PreparedStatement statement = connection.prepareStatement("SELECT USERNAME from CHANNELS");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                allChannels.add(channelDao.getChannel(rs.getString(1)));
+            }
+            return allChannels;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("wrong with query");
+        }
+    }
+
+    @Override
     public Set<User> getChannelUsers(String username) throws Exception {
         Channel channel = getChannel(username);
         return channel.getUsers();

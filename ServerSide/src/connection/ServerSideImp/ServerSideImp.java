@@ -28,6 +28,10 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.PublicKey;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
 
 public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
@@ -280,30 +284,47 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            clients.put(user.getUserName(),clientSideIF);
             try {
-                User user1 = userDao.getUser(username);
-                Set<Channel> channels = user1.getChannels();
-                Set<Group> groups = user1.getGroups();
-                clients.remove(username);
-                userDao.deleteUser(username);
+                //check new user == olduser
                 userDao.addUser(user);
+                User user1 = userDao.getUser(username);
+                Set<Group> groups = new HashSet<>();
+                groups.addAll(user1.getGroups());
+                Set<User> gusers = new HashSet<>();
                 for (Group g:
                      groups) {
-                    g.getUsers().add(user);
                     user.getGroups().add(g);
+                    g.getUsers().add(user);
+                    g.getGroupMessages().stream().filter(x -> x.getFromUser().equals(username)).forEach(x -> x.setFromUser(user.getUserName()));
+                    gusers.addAll(g.getUsers());
+                    gusers.stream().filter(x -> x.getUserName().equals(username)).forEach(x -> g.getUsers().remove(x));
+                    gusers.clear();
                     groupDao.updateGroup(g);
                 }
+
+                //channel edit
+                Set<Channel> channels = new HashSet<>();
+                channels.addAll(user1.getChannels());
+                channelDao.getAllChannels().stream().filter(x -> x.getAdmin().equals(user1.getUserName()))
+                .forEach(x -> {
+                    x.setAdmin(user.getUserName());
+                    x.getChannelMessages().stream().forEach(s -> s.setAdmin(user.getUserName()));
+                    channelDao.updateChannel(x);
+                });
+                Set<User> users = new HashSet<>();
                 for (Channel c:
                      channels) {
-                    c.getUsers().add(user);
                     user.getChannels().add(c);
+                    users.addAll(c.getUsers());
+                    //did not remove old user
+                    users.stream().filter(x -> x.getUserName().equals(username)).forEach(x -> {c.getUsers().remove(x);});
+                    users.clear();
+                    c.getUsers().add(user);
                     channelDao.updateChannel(c);
                 }
-                System.out.println(user.getUserName());
-                return "successful";
-            } catch (GetUserex getUserex) {
-                getUserex.printStackTrace();
+                userDao.deleteUser(username);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
         else{
@@ -547,13 +568,19 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
-    public String createGroup(Group group) throws RemoteException {
+    public String createGroup(Group group,String userNames) throws RemoteException {
         try {
             groupDao.addGroup(group);
             Group g1 = groupDao.getGroup(group.getUserName());
             User user = userDao.getUser(group.getAdmin());
             g1.getUsers().add(user);
             user.getGroups().add(g1);
+            ArrayList<String> users = new Gson().fromJson(userNames,ArrayList.class);
+            for (String s:
+                 users) {
+                g1.getUsers().add(userDao.getUser(s));
+                userDao.getUser(s).getGroups().add(g1);
+            }
             groupDao.updateGroup(g1);
             return "successful";
         }catch (Exception e){

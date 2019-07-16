@@ -21,13 +21,13 @@ public class Channel implements Serializable {
     @Column(name = "CREATE_TIME")
     private Date date;
 
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "channels")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "CHANNELS_USERS",joinColumns = @JoinColumn(name = "USER_NAME"),inverseJoinColumns = @JoinColumn(name = "CHANNELS_USERNAME"))
     private Set<User> users = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "USERNAME")
     private List<ChannelMessage> channelMessages = new ArrayList<>();
-
 
     public Channel(String username, String admin, String bio, Date date) {
         this.username = username;
