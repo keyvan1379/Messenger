@@ -16,15 +16,12 @@ public class User implements Serializable {
     @Column(name = "USERNAME")
     private String userName;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "GROUPS_USERS",joinColumns = @JoinColumn(name = "USER_NAME"),inverseJoinColumns = @JoinColumn(name = "GROUP_USERNAME"))
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "users")
     private Set<Group> groups = new HashSet<>();
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "CHANNELS_USERS",joinColumns = @JoinColumn(name = "USER_NAME"),inverseJoinColumns = @JoinColumn(name = "CHANNELS_USERNAME"))
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "users")
     private Set<Channel> channels = new HashSet<>();
-
 
     @Column(name = "FIRST_NAME")
     private String fistName;

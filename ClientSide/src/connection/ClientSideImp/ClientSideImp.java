@@ -459,15 +459,14 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
     }
 
-    public void createGroup(Group group){
+    public void createGroup(Group group,ArrayList<String> users){
         try {
             group.setAdmin(username);
-            serverSideIF.createGroup(group);
+            serverSideIF.createGroup(group,new Gson().toJson(users));
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-
     public void joinGroup(String groupUsername){
         try {
             serverSideIF.joinGroup(groupUsername,username);

@@ -287,19 +287,40 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 Set<Channel> channels = user1.getChannels();
                 Set<Group> groups = user1.getGroups();
                 clients.remove(username);
-                userDao.deleteUser(username);
+                //userDao.deleteUser(username);
                 userDao.addUser(user);
                 for (Group g:
-                     groups) {
+                        groups) {
+                    g.getGroupMessages().stream().filter(x -> x.getFromUser().equals(username))
+                            .forEach(x -> x.setFromUser(user.getUserName()));
+                    for(User user2:g.getUsers()){
+                        if(user2.getUserName().equals(username)){
+                            g.getUsers().remove(user2);
+                            break;
+                        }
+                    }
                     g.getUsers().add(user);
                     user.getGroups().add(g);
                     groupDao.updateGroup(g);
                 }
                 for (Channel c:
-                     channels) {
+                        channels) {
+                    /*c.getChannelMessages().stream().filter(x -> x.getAdmin().equals(username))
+                            .forEach(x -> x.setAdmin(user.getUserName()));
+                    for (ChannelMessage cc : c.getChannelMessages()){
+                        System.out.println(cc.getAdmin());
+                    }*/
+                    for(User user2:c.getUsers()){
+                        if(user2.getUserName().equals(username)){
+                            c.getUsers().remove(user2);
+                            break;
+                        }
+                    }
+                    //channelDao.updateChannel(c);
                     c.getUsers().add(user);
-                    user.getChannels().add(c);
+                    //user.getChannels().add(c);
                     channelDao.updateChannel(c);
+                    System.out.println("done");
                 }
                 System.out.println(user.getUserName());
                 return "successful";
@@ -548,13 +569,19 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
     }
 
     @Override
-    public String createGroup(Group group) throws RemoteException {
+    public String createGroup(Group group,String userNames) throws RemoteException {
         try {
             groupDao.addGroup(group);
             Group g1 = groupDao.getGroup(group.getUserName());
             User user = userDao.getUser(group.getAdmin());
             g1.getUsers().add(user);
             user.getGroups().add(g1);
+            ArrayList<String> users = new Gson().fromJson(userNames,ArrayList.class);
+            for (String s:
+                    users) {
+                g1.getUsers().add(userDao.getUser(s));
+                userDao.getUser(s).getGroups().add(g1);
+            }
             groupDao.updateGroup(g1);
             return "successful";
         }catch (Exception e){
@@ -562,7 +589,6 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             return "unsuccessful";
         }
     }
-
     @Override
     public String joinGroup(String groupUsername, String username) throws RemoteException {
         try{
