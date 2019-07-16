@@ -39,7 +39,7 @@ public class Main {
     public static void main(final String[] args){
         //RSA rsa = new RSA("ss");
         UserDaoImp userDaoImp = new UserDaoImp();
-        String s = "slam";
+        /*String s = "slam";
         try {
             for (String s1:
                  userDaoImp.getChatUsersList("ddddddd1")) {
@@ -57,7 +57,7 @@ public class Main {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         /*try {
             Channel channel = channelDao.getChannel("tiiiii");
             //System.out.println(channel.getUsers().contains(new UserDaoImp().getUser("ddddddd1")));
