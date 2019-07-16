@@ -5,6 +5,7 @@ import models.GroupMessage;
 import models.User;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public interface GroupDao {
@@ -14,5 +15,5 @@ public interface GroupDao {
     void updateGroup(Group group);
     ArrayList<String> getAllGroup() throws Exception;
     Set<User> getGroupUsers(String username) throws Exception;
-    ArrayList<GroupMessage> getGroupMessage(String username) throws Exception;
+    List<GroupMessage> getGroupMessage(String username) throws Exception;
 }
