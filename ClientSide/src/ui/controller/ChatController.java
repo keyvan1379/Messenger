@@ -277,6 +277,7 @@ public class ChatController {
                 if (msg != null)
                 {
                     for (int i = 0; i < msg.size(); i++) {
+                        System.out.println(msg.get(i).get(0) + " " + msg.get(i).get(1) + " " + msg.get(i).get(2) + " "+msg.get(i).get(3));
                         addMessage(new Message( (String)msg.get(i).get(0), (String)msg.get(i).get(1),Math.round( (Double)msg.get(i).get(2) ), (String) msg.get(i).get(3)  ));
                     }
                 }
@@ -351,23 +352,25 @@ public class ChatController {
         imageView = new ImageView();
         imageView.setFitWidth(40);
         imageView.setPreserveRatio(true);
+        Text id = new Text(m.getUser());
+        id.setStyle("-fx-font-size: 10px");
 
         if (m.getIsFile() == 0)
         {
             Text text = new Text(m.getMessage());
             Text time = new Text(m.getTime());
             time.setStyle("-fx-font-size: 10px");
-
-            textFlow = new TextFlow(text, new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
+            textFlow = new TextFlow(id,new Text("______" + System.lineSeparator()), text, new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
 
         }
-        else
+        else // file
         {
             //need to add time to file
             FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.DOWNLOAD);
             icon.setFill(Color.WHITE);
             icon.setSize("26");
             icon.setOnMouseClicked(e -> {
+//                ClientSideImp.getInstance().download_File("C:\\Desktop", ClientSideImp.getInstance().getUser(), );
                 System.out.println("download file");
             });
             icon.setCursor(Cursor.HAND);
@@ -375,7 +378,9 @@ public class ChatController {
             Text fileSize = new Text(" ( "+ m.getIsFile() +" )");
             Text time = new Text(m.getTime());
             time.setStyle("-fx-font-size: 10px");
-            textFlow = new TextFlow(icon, new Text("  "), fileName, fileSize, new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
+            textFlow = new TextFlow(new Text("______" + System.lineSeparator()),
+                    icon, new Text("  "), fileName, fileSize,
+                    new Text(System.lineSeparator() + "______" + System.lineSeparator()), time);
 
         }
 
@@ -426,12 +431,18 @@ public class ChatController {
     }
 
     public void openEmojis(MouseEvent mouseEvent) {
-        emojiListPane.setVisible(true);
+        if (emojiListPane.isVisible())
+            emojiListPane.setVisible(false);
+        else
+            emojiListPane.setVisible(true);
+
     }
 
     public void attachFile(MouseEvent mouseEvent) {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(((Node) mouseEvent.getSource()).getScene().getWindow());
+        ClientSideImp.getInstance().upload_File(file, file.getName(), openChat);
+        addMessage(new Message(ClientSideImp.getInstance().getUser(), file.getName(), file.length(), Message.dateToString(new Date())));
         //send file
     }
 
@@ -556,7 +567,6 @@ public class ChatController {
                 openChat = "#" + username;
         });
         hBox.setStyle("-fx-cursor: hand;");
-        //usersVBox.getChildren().add(1, new Separator());
     }
 
 
