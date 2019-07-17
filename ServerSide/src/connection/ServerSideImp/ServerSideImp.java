@@ -158,8 +158,8 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             else {
                 try {
                     userDao.getUser(ToUsername);
-                    clients.get(ToUsername).getMessage(FromUsername,AES.importKey(ToUsername).encrypt(msg),0);
                     messageQuery.addMessage(msg,FromUsername,ToUsername,0);
+                    clients.get(ToUsername).getMessage(FromUsername,AES.importKey(ToUsername).encrypt(msg),0);
                 }catch (GetUserex ex){
                     ex.printStackTrace();
                     System.out.println(ex.getMessage());

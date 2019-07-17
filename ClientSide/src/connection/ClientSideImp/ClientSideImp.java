@@ -87,8 +87,6 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     public void getMessage(String FromUser,String message,long isfile) {
         try {
             message = aes.decrypt(message);
-            System.out.println(FromUser + " " + message);
-            System.out.println(chatController.openChat);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,12 +99,9 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
             desUser = FromUser.substring(0,FromUser.indexOf("#", FromUser.indexOf("#") + 1));
             FromUser = FromUser.substring(FromUser.indexOf("#", FromUser.indexOf("#") + 1) + 1);
         }
-        System.out.println(desUser);
-        System.out.println(FromUser);
         if (desUser.equals(chatController.openChat))
         {
             Message m = new Message(FromUser,message, isfile,Message.dateToString(new Date()));
-            System.out.println(FromUser+" "+message + " be4 platformrun");
             Platform.runLater(() -> {
                 chatController.addMessage(m);
             });
@@ -156,20 +151,27 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
                 for (String s:
                      newChats) {
                     if(!oldChats.contains(s)){
-                        System.out.println("new chats"+s);
+                        if(s.startsWith("#")){
+                            chatController.addChat(s.substring(1),2);
+                        }
+                        else if(s.startsWith("$")){
+                            chatController.addChat(s.substring(1),1);
+                        }else
+                            chatController.addChat(s,0);
                     }
                 }
                 for (String s:
                      oldChats) {
                     if(!newChats.contains(s)){
-                        System.out.println("old chat" + s);
+                        chatController.usersVBox.getChildren().remove(chatController.chats.get(s));
+                        chatController.chats.remove(s);
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             try {
-                if (!(chatController.openChat.startsWith("#") & chatController.openChat.startsWith("$"))) {
+                if (!chatController.openChat.startsWith("#") & !chatController.openChat.startsWith("$")) {
                     if (get_Status(chatController.openChat).equals("offline")) {
                         chatController.status.setText(Message.dateToString(ClientSideImp.getInstance().get_lastseen(chatController.openChat)));
                     } else {
@@ -490,7 +492,7 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
         }
         Thread thread1 = new Thread(() -> {
             try {
-                Socket socket = new Socket("localhost", 38474);//change localhost to server ip
+                Socket socket = new Socket(ServerIp.serverip, 38474);//change localhost to server ip
                 OutputStream outputStream = socket.getOutputStream();
                 FileInputStream inputStream = new FileInputStream(file);
                 int count;
