@@ -334,9 +334,9 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                             channelDao.updateChannel(x);
                         });
                 userDao.deleteUser(username);
-                /*for(ClientSideIF clientSideIF1:clients.values()){
+                for(ClientSideIF clientSideIF1:clients.values()){
                     clientSideIF1.notifyClient();
-                }*/
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -386,9 +386,9 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 }
                 messageQuery.deleteMessage(username);
                 userDao.deleteUser(username);
-                /*for(ClientSideIF clientSideIF1:clients.values()){
+                for(ClientSideIF clientSideIF1:clients.values()){
                     clientSideIF1.notifyClient();
-                }*/
+                }
                 clients.remove(clientSideIF);
                 return "successful";
             } else {
@@ -438,7 +438,7 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             }
             return "offline";
         }catch (NumberFormatException e){
-            return "offline";
+            return "online";
         }
     }
 
@@ -656,9 +656,9 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 //userDao.getUser(s).getGroups().add(g1);
             }
             groupDao.updateGroup(g1);
-            /*for(ClientSideIF clientSideIF1:clients.values()){
+            for(ClientSideIF clientSideIF1:clients.values()){
                 clientSideIF1.notifyClient();
-            }*/
+            }
             return "successful";
         }catch (Exception e){
             e.printStackTrace();

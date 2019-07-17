@@ -49,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="194" column="16" selection-start-line="194" selection-start-column="16" selection-end-line="198" selection-end-column="17" />
+            <state relative-caret-position="229">
+              <caret line="170" column="10" selection-start-line="170" selection-start-column="10" selection-end-line="170" selection-end-column="10" />
               <folding>
                 <element signature="method#setEmojiList#0;class#ChatController#0" />
                 <element signature="method#addMessage#0;class#ChatController#0" />
@@ -77,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="165" column="11" lean-forward="true" selection-start-line="141" selection-start-column="7" selection-end-line="165" selection-end-column="11" />
+            <state relative-caret-position="120">
+              <caret line="145" column="12" selection-start-line="145" selection-start-column="12" selection-end-line="147" selection-end-column="78" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1635#2035#0" />
@@ -223,8 +223,8 @@
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/ui/controller/EditProfileController.java" />
         <option value="$PROJECT_DIR$/src/connection/ClientSideIF.java" />
-        <option value="$PROJECT_DIR$/src/ui/controller/ChatController.java" />
         <option value="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" />
+        <option value="$PROJECT_DIR$/src/ui/controller/ChatController.java" />
       </list>
     </option>
   </component>
@@ -298,7 +298,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563363909282" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563374289064" />
     <property name="last_opened_file_path" value="E:/out/ClientSide" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -353,12 +353,12 @@
       <workItem from="1563020149260" duration="4819000" />
       <workItem from="1563039117933" duration="5404000" />
       <workItem from="1563086724489" duration="1753000" />
-      <workItem from="1563106658514" duration="47972000" />
+      <workItem from="1563106658514" duration="53807000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61121000" />
+    <option name="totallyTimeSpent" value="66956000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -375,7 +375,7 @@
       <window_info anchor="bottom" id="Java Enterprise" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -547,36 +547,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="194" column="16" selection-start-line="194" selection-start-column="16" selection-end-line="198" selection-end-column="17" />
-          <folding>
-            <element signature="method#setEmojiList#0;class#ChatController#0" />
-            <element signature="method#addMessage#0;class#ChatController#0" />
-            <element signature="method#sendMessege#0;class#ChatController#0" />
-            <element signature="method#openEmojis#0;class#ChatController#0" />
-            <element signature="method#attachFile#0;class#ChatController#0" />
-            <element signature="method#showUsers#0;class#ChatController#0" />
-            <element signature="method#showProfile#0;class#ChatController#0" />
-            <element signature="method#OpenAddGPWindow#0;class#ChatController#0" />
-            <element signature="method#OpenAddChannelWindow#0;class#ChatController#0" />
-            <element signature="method#addChat#0;class#ChatController#0" />
-            <element signature="method#editProfile#0;class#ChatController#0" />
-            <element signature="method#deleteAccount#0;class#ChatController#0" />
-            <element signature="method#logOut#0;class#ChatController#0" />
-            <element signature="method#minimizeWindow#0;class#ChatController#0" />
-            <element signature="method#closeWindow#0;class#ChatController#0" />
-            <element signature="method#windowDragged#0;class#ChatController#0" />
-            <element signature="method#windowPressed#0;class#ChatController#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="165" column="11" lean-forward="true" selection-start-line="141" selection-start-column="7" selection-end-line="165" selection-end-column="11" />
+        <state relative-caret-position="120">
+          <caret line="145" column="12" selection-start-line="145" selection-start-column="12" selection-end-line="147" selection-end-column="78" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1635#2035#0" />
@@ -609,6 +583,32 @@
             <element signature="e#16324#16645#0" />
             <element signature="e#16651#16977#0" />
             <element signature="e#16982#17152#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="170" column="10" selection-start-line="170" selection-start-column="10" selection-end-line="170" selection-end-column="10" />
+          <folding>
+            <element signature="method#setEmojiList#0;class#ChatController#0" />
+            <element signature="method#addMessage#0;class#ChatController#0" />
+            <element signature="method#sendMessege#0;class#ChatController#0" />
+            <element signature="method#openEmojis#0;class#ChatController#0" />
+            <element signature="method#attachFile#0;class#ChatController#0" />
+            <element signature="method#showUsers#0;class#ChatController#0" />
+            <element signature="method#showProfile#0;class#ChatController#0" />
+            <element signature="method#OpenAddGPWindow#0;class#ChatController#0" />
+            <element signature="method#OpenAddChannelWindow#0;class#ChatController#0" />
+            <element signature="method#addChat#0;class#ChatController#0" />
+            <element signature="method#editProfile#0;class#ChatController#0" />
+            <element signature="method#deleteAccount#0;class#ChatController#0" />
+            <element signature="method#logOut#0;class#ChatController#0" />
+            <element signature="method#minimizeWindow#0;class#ChatController#0" />
+            <element signature="method#closeWindow#0;class#ChatController#0" />
+            <element signature="method#windowDragged#0;class#ChatController#0" />
+            <element signature="method#windowPressed#0;class#ChatController#0" />
           </folding>
         </state>
       </provider>

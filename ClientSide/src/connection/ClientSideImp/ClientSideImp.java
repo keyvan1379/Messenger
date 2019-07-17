@@ -140,18 +140,34 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
     @Override
     public void notifyClient() throws RemoteException {
         Platform.runLater(() ->{
-            //chatController.updateUi();
-            /*int i = 0;
-            String chat = chatController.openChat;
-            if(chatController.openChat.startsWith("#")) {
-                i = 2;
-                chat = chat.replaceAll("#","");
+            List<String> newChats = new ArrayList<>();
+            List<String> oldChats = new ArrayList<>();
+            oldChats.addAll(chatController.chats.keySet());
+            try {
+                for(String s:getChatUsers()){
+                    newChats.add(s);
+                }
+                for(String s:getChatGroup()){
+                    newChats.add("$"+s);
+                }
+                for(String s:getChatChannels()){
+                    newChats.add("#"+s);
+                }
+                for (String s:
+                     newChats) {
+                    if(!oldChats.contains(s)){
+                        System.out.println("new chats"+s);
+                    }
+                }
+                for (String s:
+                     oldChats) {
+                    if(!newChats.contains(s)){
+                        System.out.println("old chat" + s);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            else if(chatController.openChat.startsWith("$")) {
-                i = 1;
-                chat = chat.replaceAll("#","");
-            }
-            chatController.loadMessages(chat,i);*/
             try {
                 if (!(chatController.openChat.startsWith("#") & chatController.openChat.startsWith("$"))) {
                     if (get_Status(chatController.openChat).equals("offline")) {
@@ -689,7 +705,18 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
 
 
 
-
+//chatController.updateUi();
+            /*int i = 0;
+            String chat = chatController.openChat;
+            if(chatController.openChat.startsWith("#")) {
+                i = 2;
+                chat = chat.replaceAll("#","");
+            }
+            else if(chatController.openChat.startsWith("$")) {
+                i = 1;
+                chat = chat.replaceAll("#","");
+            }
+            chatController.loadMessages(chat,i);*/
 
 
 

@@ -72,7 +72,7 @@ public class ChatController {
     private double y;
     public String openChat;
 
-    HashMap<String,HBox> chats = new HashMap<>();
+    public HashMap<String,HBox> chats = new HashMap<>();
 
     public void initialize() {
 
@@ -168,6 +168,7 @@ public class ChatController {
 
     public void loadMessages (String chat, int type,boolean load) // 0 = pv, 1 = gp, 2 = ch
     {
+        //System.out.println(chats.keySet());
         infoHbox.setCursor(Cursor.HAND);
 //        set username and profile picture and status
         if (type == 0)
@@ -387,7 +388,6 @@ public class ChatController {
             hBox.getChildren().add(imageView);
             hBox.getChildren().add(textFlow);
         }
-
         messagesVBox.getChildren().add(hBox);
         messagepane.vvalueProperty().bind(messagesVBox.heightProperty());
     }
@@ -558,7 +558,14 @@ public class ChatController {
                 openChat = "#" + username;
         });
         hBox.setStyle("-fx-cursor: hand;");
-        chats.put(openChat,hBox);
+        //String s = new String(openChat);
+        if(type==0)
+            chats.put(username,hBox);
+        else if(type==1)
+            chats.put("$"+username,hBox);
+        else if(type==2)
+            chats.put("#"+username,hBox);
+        //System.out.println(hBox);
     }
 
 
