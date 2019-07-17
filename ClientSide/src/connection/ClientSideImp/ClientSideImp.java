@@ -137,6 +137,34 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
 
     }
 
+    @Override
+    public void notifyClient() throws RemoteException {
+        Platform.runLater(() ->{
+            //chatController.updateUi();
+            /*int i = 0;
+            String chat = chatController.openChat;
+            if(chatController.openChat.startsWith("#")) {
+                i = 2;
+                chat = chat.replaceAll("#","");
+            }
+            else if(chatController.openChat.startsWith("$")) {
+                i = 1;
+                chat = chat.replaceAll("#","");
+            }
+            chatController.loadMessages(chat,i);*/
+            try {
+                if (!(chatController.openChat.startsWith("#") & chatController.openChat.startsWith("$"))) {
+                    if (get_Status(chatController.openChat).equals("offline")) {
+                        chatController.status.setText(Message.dateToString(ClientSideImp.getInstance().get_lastseen(chatController.openChat)));
+                    } else {
+                        chatController.status.setText(ClientSideImp.getInstance().get_Status(chatController.openChat));
+                    }
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+    }
 
     public String sign_up(User user){
         try {

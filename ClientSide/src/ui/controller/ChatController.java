@@ -38,10 +38,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 public class ChatController {
 
@@ -58,7 +55,7 @@ public class ChatController {
     @FXML private Label labelChats;
     @FXML private Label labelSettings;
     @FXML private Text username;
-    @FXML private Text status;
+    @FXML public Text status;
     @FXML private ImageView profilePicture;
     @FXML private VBox usersVBox;
 
@@ -75,6 +72,7 @@ public class ChatController {
     private double y;
     public String openChat;
 
+    HashMap<String,HBox> chats = new HashMap<>();
 
     public void initialize() {
 
@@ -168,7 +166,7 @@ public class ChatController {
         }
     }
 
-    private void loadMessages (String chat, int type) // 0 = pv, 1 = gp, 2 = ch
+    public void loadMessages (String chat, int type,boolean load) // 0 = pv, 1 = gp, 2 = ch
     {
         infoHbox.setCursor(Cursor.HAND);
 //        set username and profile picture and status
@@ -178,9 +176,13 @@ public class ChatController {
                 HashMap<Integer, ArrayList> msg = ClientSideImp.getInstance().getmsg_between_2person(chat);
                 if (msg != null)
                 {
-                    for (int i = 0; i < msg.size(); i++) {
-                        addMessage(new Message((String)msg.get(i).get(0), (String)msg.get(i).get(1), Integer.parseInt((String)msg.get(i).get(2)), (String)msg.get(i).get(3)));
+                    if(load) {
+                        for (int i = 0; i < msg.size(); i++) {
+                            addMessage(new Message((String) msg.get(i).get(0), (String) msg.get(i).get(1), Integer.parseInt((String) msg.get(i).get(2)), (String) msg.get(i).get(3)));
+                        }
                     }
+                }else{
+                    ClientSideImp.getInstance().sendmsg(chat,"Created chat");
                 }
             } catch (Exception e){
                 e.printStackTrace();
@@ -254,8 +256,10 @@ public class ChatController {
                 //from msg isfile date
                 if (msg != null)
                 {
-                    for (int i = 0; i < msg.size(); i++) {
-                        addMessage(new Message( (String)msg.get(i).get(0), (String)msg.get(i).get(1),Math.round( (Double)msg.get(i).get(2) ), (String) msg.get(i).get(3)  ));
+                    if(load) {
+                        for (int i = 0; i < msg.size(); i++) {
+                            addMessage(new Message((String) msg.get(i).get(0), (String) msg.get(i).get(1), Math.round((Double) msg.get(i).get(2)), (String) msg.get(i).get(3)));
+                        }
                     }
                 }
             } catch (Exception e){
@@ -276,8 +280,10 @@ public class ChatController {
                 //admin msg isfile date
                 if (msg != null)
                 {
-                    for (int i = 0; i < msg.size(); i++) {
-                        addMessage(new Message((String)msg.get(i).get(0), (String)msg.get(i).get(1), Math.round( (Double)msg.get(i).get(2) ), (String)msg.get(i).get(3)));
+                    if(load) {
+                        for (int i = 0; i < msg.size(); i++) {
+                            addMessage(new Message((String) msg.get(i).get(0), (String) msg.get(i).get(1), Math.round((Double) msg.get(i).get(2)), (String) msg.get(i).get(3)));
+                        }
                     }
                 }
             } catch (Exception e){
@@ -543,7 +549,7 @@ public class ChatController {
         usersVBox.getChildren().add(0, hBox);
         hBox.setOnMouseClicked(e -> {
             messagesVBox.getChildren().clear();
-            loadMessages(username, type);
+            loadMessages(username, type,true);
             if (type == 0)
                 openChat = username;
             else if (type == 1)
@@ -552,6 +558,7 @@ public class ChatController {
                 openChat = "#" + username;
         });
         hBox.setStyle("-fx-cursor: hand;");
+        chats.put(openChat,hBox);
     }
 
 
@@ -650,5 +657,15 @@ public class ChatController {
     public void windowPressed(MouseEvent mouseEvent) {
         x = mouseEvent.getSceneX();
         y = mouseEvent.getSceneY();
+    }
+
+
+    public void updateUi(){
+        int i = 0;
+        if(openChat.startsWith("#"))
+            i=2;
+        else if (openChat.startsWith("#"))
+            i=1;
+        loadMessages(openChat.replaceAll("#","").replaceAll("$",""),i,false);
     }
 }

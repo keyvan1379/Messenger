@@ -103,6 +103,10 @@ public class ClientSideImp extends UnicastRemoteObject implements ClientSideIF {
 
     }
 
+    @Override
+    public void notifyClient() throws RemoteException {
+
+    }
 
     public String sign_up(User user){
         try {

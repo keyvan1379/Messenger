@@ -8,12 +8,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7a51c93b-07df-4df0-8d3b-065da432e549" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connection/ClientSideIF.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connection/ClientSideIF.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/controller/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideIF.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideIF.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideImp/ClientSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ClientSideImp/ClientSideImp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/connection/ServerSideImp/ServerSideImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQueryImp/MessageQueryImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/dao/MessageQueryImp/MessageQueryImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServerSide/src/protections/UsersKey/11.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ServerSide/src/protections/UsersKey/11.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +40,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
+            <state relative-caret-position="110">
               <caret line="36" column="41" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -52,39 +52,27 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="52">
-              <caret line="569" column="72" selection-start-line="569" selection-start-column="72" selection-end-line="569" selection-end-column="72" />
+            <state relative-caret-position="435">
+              <caret line="194" column="16" selection-start-line="194" selection-start-column="16" selection-end-line="198" selection-end-column="17" />
               <folding>
+                <element signature="method#setEmojiList#0;class#ChatController#0" />
+                <element signature="method#addMessage#0;class#ChatController#0" />
+                <element signature="method#sendMessege#0;class#ChatController#0" />
+                <element signature="method#openEmojis#0;class#ChatController#0" />
+                <element signature="method#attachFile#0;class#ChatController#0" />
+                <element signature="method#showUsers#0;class#ChatController#0" />
+                <element signature="method#showProfile#0;class#ChatController#0" />
+                <element signature="method#OpenAddGPWindow#0;class#ChatController#0" />
+                <element signature="method#OpenAddChannelWindow#0;class#ChatController#0" />
+                <element signature="method#addChat#0;class#ChatController#0" />
+                <element signature="method#editProfile#0;class#ChatController#0" />
                 <element signature="method#deleteAccount#0;class#ChatController#0" />
                 <element signature="method#logOut#0;class#ChatController#0" />
+                <element signature="method#minimizeWindow#0;class#ChatController#0" />
+                <element signature="method#closeWindow#0;class#ChatController#0" />
+                <element signature="method#windowDragged#0;class#ChatController#0" />
+                <element signature="method#windowPressed#0;class#ChatController#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ui/controller/AddChannelController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1020">
-              <caret line="24" column="34" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ui/controller/EditProfileController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="82" column="54" lean-forward="true" selection-start-line="82" selection-start-column="54" selection-end-line="89" selection-end-column="59" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ui/controller/RegisterController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="143" column="32" lean-forward="true" selection-start-line="140" selection-start-column="12" selection-end-line="143" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -92,8 +80,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="311" column="8" selection-start-line="311" selection-start-column="8" selection-end-line="311" selection-end-column="8" />
+            <state relative-caret-position="133">
+              <caret line="165" column="11" lean-forward="true" selection-start-line="141" selection-start-column="7" selection-end-line="165" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1635#2035#0" />
@@ -106,14 +94,16 @@
                 <element signature="e#5997#6375#0" />
                 <element signature="e#6381#6775#0" />
                 <element signature="e#6781#7247#0" />
-                <element signature="e#7253#7954#0" />
                 <element signature="e#7960#8465#0" />
+                <element signature="e#9707#10220#0" />
                 <element signature="e#8990#9585#0" />
+                <element signature="e#10827#11215#0" />
+                <element signature="e#11221#12040#0" />
                 <element signature="e#10719#11192#0" />
-                <element signature="e#11198#11656#0" />
                 <element signature="e#11662#12129#0" />
                 <element signature="e#12135#12609#0" />
                 <element signature="e#12616#13104#0" />
+                <element signature="e#14437#15848#0" />
                 <element signature="e#14529#14899#0" />
                 <element signature="e#14905#15130#0" />
                 <element signature="e#15136#15341#0" />
@@ -129,6 +119,24 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ui/controller/LoginController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="302">
+              <caret line="57" selection-start-line="57" selection-end-line="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/connection/ClientSideIF.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
@@ -140,6 +148,14 @@
       <find>cre</find>
       <find>edi</find>
       <find>del</find>
+      <find>show</find>
+      <find>loadMessages</find>
+      <find>addChat</find>
+      <find>message</find>
+      <find>slider</find>
+      <find>get_</find>
+      <find>getmsg_</find>
+      <find>status</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -206,8 +222,9 @@
         <option value="$PROJECT_DIR$/src/ui/controller/RegisterController.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/ui/controller/EditProfileController.java" />
-        <option value="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" />
+        <option value="$PROJECT_DIR$/src/connection/ClientSideIF.java" />
         <option value="$PROJECT_DIR$/src/ui/controller/ChatController.java" />
+        <option value="$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java" />
       </list>
     </option>
   </component>
@@ -263,6 +280,13 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="ui" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ClientSide" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientSide" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -274,7 +298,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563349834864" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1563363909282" />
     <property name="last_opened_file_path" value="E:/out/ClientSide" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -329,19 +353,19 @@
       <workItem from="1563020149260" duration="4819000" />
       <workItem from="1563039117933" duration="5404000" />
       <workItem from="1563086724489" duration="1753000" />
-      <workItem from="1563106658514" duration="37319000" />
+      <workItem from="1563106658514" duration="47972000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50468000" />
+    <option name="totallyTimeSpent" value="61121000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Persistence" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17516778" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16174497" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -351,7 +375,7 @@
       <window_info anchor="bottom" id="Java Enterprise" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -379,13 +403,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ui/controller/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1134">
-          <caret line="111" column="5" selection-start-line="111" selection-start-column="5" selection-end-line="111" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/css/registerStyleSheet.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="307">
@@ -424,14 +441,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/fxml/editProfile.fxml">
       <provider selected="true" editor-type-id="text-editor" />
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/fxml/chat.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="92" column="60" selection-start-line="92" selection-start-column="60" selection-end-line="92" selection-end-column="60" />
-        </state>
-      </provider>
       <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/images/bg.jpg">
@@ -478,13 +487,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/controller/AddChannelController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1020">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/controller/EditProfileController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -492,20 +494,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
+    <entry file="file://$PROJECT_DIR$/src/connection/ClientSideIF.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="569" column="72" selection-start-line="569" selection-start-column="72" selection-end-line="569" selection-end-column="72" />
-          <folding>
-            <element signature="method#deleteAccount#0;class#ChatController#0" />
-            <element signature="method#logOut#0;class#ChatController#0" />
-          </folding>
+        <state relative-caret-position="136">
+          <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/controller/listOfUsersController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/controller/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/fxml/chat.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="775">
+          <caret line="92" column="60" selection-start-line="92" selection-start-column="60" selection-end-line="92" selection-end-column="60" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/controller/AddChannelController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1020">
+          <caret line="24" column="34" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/controller/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
+        <state relative-caret-position="110">
           <caret line="36" column="41" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -513,10 +547,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/controller/ChatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="194" column="16" selection-start-line="194" selection-start-column="16" selection-end-line="198" selection-end-column="17" />
+          <folding>
+            <element signature="method#setEmojiList#0;class#ChatController#0" />
+            <element signature="method#addMessage#0;class#ChatController#0" />
+            <element signature="method#sendMessege#0;class#ChatController#0" />
+            <element signature="method#openEmojis#0;class#ChatController#0" />
+            <element signature="method#attachFile#0;class#ChatController#0" />
+            <element signature="method#showUsers#0;class#ChatController#0" />
+            <element signature="method#showProfile#0;class#ChatController#0" />
+            <element signature="method#OpenAddGPWindow#0;class#ChatController#0" />
+            <element signature="method#OpenAddChannelWindow#0;class#ChatController#0" />
+            <element signature="method#addChat#0;class#ChatController#0" />
+            <element signature="method#editProfile#0;class#ChatController#0" />
+            <element signature="method#deleteAccount#0;class#ChatController#0" />
+            <element signature="method#logOut#0;class#ChatController#0" />
+            <element signature="method#minimizeWindow#0;class#ChatController#0" />
+            <element signature="method#closeWindow#0;class#ChatController#0" />
+            <element signature="method#windowDragged#0;class#ChatController#0" />
+            <element signature="method#windowPressed#0;class#ChatController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/connection/ClientSideImp/ClientSideImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="311" column="8" selection-start-line="311" selection-start-column="8" selection-end-line="311" selection-end-column="8" />
+        <state relative-caret-position="133">
+          <caret line="165" column="11" lean-forward="true" selection-start-line="141" selection-start-column="7" selection-end-line="165" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1635#2035#0" />
@@ -529,14 +589,16 @@
             <element signature="e#5997#6375#0" />
             <element signature="e#6381#6775#0" />
             <element signature="e#6781#7247#0" />
-            <element signature="e#7253#7954#0" />
             <element signature="e#7960#8465#0" />
+            <element signature="e#9707#10220#0" />
             <element signature="e#8990#9585#0" />
+            <element signature="e#10827#11215#0" />
+            <element signature="e#11221#12040#0" />
             <element signature="e#10719#11192#0" />
-            <element signature="e#11198#11656#0" />
             <element signature="e#11662#12129#0" />
             <element signature="e#12135#12609#0" />
             <element signature="e#12616#13104#0" />
+            <element signature="e#14437#15848#0" />
             <element signature="e#14529#14899#0" />
             <element signature="e#14905#15130#0" />
             <element signature="e#15136#15341#0" />

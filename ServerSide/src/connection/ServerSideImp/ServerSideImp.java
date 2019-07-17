@@ -334,6 +334,9 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                             channelDao.updateChannel(x);
                         });
                 userDao.deleteUser(username);
+                /*for(ClientSideIF clientSideIF1:clients.values()){
+                    clientSideIF1.notifyClient();
+                }*/
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -383,7 +386,10 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 }
                 messageQuery.deleteMessage(username);
                 userDao.deleteUser(username);
-                //clients.remove(clientSideIF);
+                /*for(ClientSideIF clientSideIF1:clients.values()){
+                    clientSideIF1.notifyClient();
+                }*/
+                clients.remove(clientSideIF);
                 return "successful";
             } else {
                 return "unsuccessful";
@@ -451,6 +457,9 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         User user = userDao.getUser(username);
         user.setIsActive(status);
         userDao.updateUser(user);
+        for(ClientSideIF clientSideIF1:clients.values()){
+            clientSideIF1.notifyClient();
+        }
     }
 
     @Override
@@ -602,12 +611,18 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         HashMap<Integer, ArrayList> channelMsg = new HashMap<>();
         try {
             Channel channel = channelDao.getChannel(channelUsername);
+            List<ChannelMessage> mess = channel.getChannelMessages().stream().sorted((a,b) -> ((Long)a.getId()).compareTo((Long)b.getId())).collect(Collectors.toList());
             for (int i = 0; i < channel.getChannelMessages().size(); i++) {
                 channelMsg.put(i,new ArrayList());
-                channelMsg.get(i).add(channel.getChannelMessages().get(i).getAdmin());
-                channelMsg.get(i).add(channel.getChannelMessages().get(i).getMsg());
-                channelMsg.get(i).add(channel.getChannelMessages().get(i).getIsFile());
-                channelMsg.get(i).add(channel.getChannelMessages().get(i).getDate());
+                channelMsg.get(i).add(mess.get(i).getAdmin());
+                if(mess.get(i).getIsFile() != 0){
+                    channelMsg.get(i).add(mess.get(i).getMsg().split("\\\\")
+                            [mess.get(i).getMsg().split("\\\\").length-1]);
+                }else {
+                    channelMsg.get(i).add(mess.get(i).getMsg());
+                }
+                channelMsg.get(i).add(mess.get(i).getIsFile());
+                channelMsg.get(i).add(mess.get(i).getDate());
             }
             return aes.encrypt(gson.toJson(channelMsg));
         } catch (Exception e) {
@@ -641,6 +656,9 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
                 //userDao.getUser(s).getGroups().add(g1);
             }
             groupDao.updateGroup(g1);
+            /*for(ClientSideIF clientSideIF1:clients.values()){
+                clientSideIF1.notifyClient();
+            }*/
             return "successful";
         }catch (Exception e){
             e.printStackTrace();
