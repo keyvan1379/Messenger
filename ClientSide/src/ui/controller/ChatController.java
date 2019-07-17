@@ -577,6 +577,7 @@ public class ChatController {
         if (option.get().equals(ButtonType.YES))
         {
             //delete account
+            ClientSideImp.getInstance().delete_account();
             Parent root = FXMLLoader.load(getClass().getResource("../fxml/login.fxml"));
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
@@ -584,7 +585,6 @@ public class ChatController {
             scene.setFill(Color.TRANSPARENT);
             stage.setScene(scene);
             stage.show();
-
             Stage lastStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
             lastStage.close();
 

@@ -39,6 +39,8 @@ public class Main {
     public static void main(final String[] args){
         //RSA rsa = new RSA("ss");
         UserDaoImp userDaoImp = new UserDaoImp();
+        MessageQuery messageQuery = new MessageQueryImp();
+        //messageQuery.deleteMessage("1");
         /*String s = "slam";
         try {
             for (String s1:

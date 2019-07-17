@@ -290,6 +290,34 @@ public class MessageQueryImp implements MessageQuery {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void deleteMessage(String username) {
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Connection connection = DriverManager.getConnection
+                    ("jdbc:oracle:thin:@127.0.0.1:1521:XE", "ADMIN", "admin");
+            PreparedStatement statement2 = connection.prepareStatement("DELETE FROM MESSAGE WHERE C_ID IN (SELECT C_ID FROM " +
+                    "CONVERSATION WHERE (CONVERSATION.USER1 = ? OR CONVERSATION.USER2 = ?))");
+            statement2.setString(1,username);
+            statement2.setString(2,username);
+            statement2.execute();
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM CONVERSATION WHERE USER1 = ?");
+            statement.setString(1,username);
+            statement.execute();
+            PreparedStatement statement1 = connection.prepareStatement("DELETE FROM CONVERSATION WHERE USER2 = ?");
+            statement1.setString(1,username);
+            statement1.execute();
+            PreparedStatement statement4 = connection.prepareStatement("COMMIT");
+            statement4.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

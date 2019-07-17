@@ -346,12 +346,50 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
 
     @Override
     public String deleteProfile(String username, ClientSideIF clientSideIF) {
-        if(clients.get(username)!=null & clients.get(username)==clientSideIF){
-            userDao.deleteUser(username);
-            clients.remove(clientSideIF);
-            return "successful";
-        }
-        else{
+        try {
+            if (clients.get(username) != null) {
+                Set<Group> groups = new HashSet<>();
+                User user1 = userDao.getUser(username);
+                groups.addAll(user1.getGroups());
+                Set<User> gusers = new HashSet<>();
+                List<GroupMessage> ggg = new ArrayList<>();
+                for (Group g:
+                        groups) {
+                    //ggg.addAll(g.getGroupMessages());
+                    //ggg.removeIf()filter(x -> x.getFromUser().equals(username)).forEach(x -> g.getGroupMessages().remove(x));
+                    g.getGroupMessages().removeIf(x -> x.getFromUser().equals(username));
+                    //ggg.clear();
+                    //gusers.addAll(g.getUsers());
+                    //gusers.stream().filter(x -> x.getUserName().equals(username)).forEach(x -> g.getUsers().remove(x));
+                    g.getUsers().removeIf(x -> x.getUserName().equals(username));
+                    //gusers.clear();
+                    groupDao.updateGroup(g);
+                }
+                Set<Channel> channels = new HashSet<>();
+                channels.addAll(user1.getChannels());
+                for (Channel g:
+                        channels) {
+                    /*if(g.getAdmin().equals(username)){
+                        g.getChannelMessages().clear();
+                        for(User u:g.getUsers()){
+                            u.getChannels().removeIf(x -> x.getUsername().equals(g.getUsername()));
+                            userDao.updateUser(u);
+                        }
+                        //channelDao.deleteChannel(g.getUsername());
+                        continue;
+                    }*/
+                    g.getUsers().removeIf(x -> x.getUserName().equals(username));
+                    channelDao.updateChannel(g);
+                }
+                messageQuery.deleteMessage(username);
+                userDao.deleteUser(username);
+                //clients.remove(clientSideIF);
+                return "successful";
+            } else {
+                return "unsuccessful";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
             return "unsuccessful";
         }
     }
@@ -548,7 +586,6 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         try{
             User user = userDao.getUser(username);
             Channel channel = channelDao.getChannel(channelUsername);
-            user.getChannels().add(channel);
             channel.getUsers().add(user);
             channelDao.updateChannel(channel);
             return "successful";
@@ -596,12 +633,12 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
             Group g1 = groupDao.getGroup(group.getUserName());
             User user = userDao.getUser(group.getAdmin());
             g1.getUsers().add(user);
-            user.getGroups().add(g1);
+            //user.getGroups().add(g1);
             ArrayList<String> users = new Gson().fromJson(userNames,ArrayList.class);
             for (String s:
                  users) {
                 g1.getUsers().add(userDao.getUser(s));
-                userDao.getUser(s).getGroups().add(g1);
+                //userDao.getUser(s).getGroups().add(g1);
             }
             groupDao.updateGroup(g1);
             return "successful";
@@ -616,7 +653,6 @@ public class ServerSideImp extends UnicastRemoteObject implements ServerSideIF {
         try{
             User user = userDao.getUser(username);
             Group group = groupDao.getGroup(groupUsername);
-            user.getGroups().add(group);
             group.getUsers().add(user);
             groupDao.updateGroup(group);
             return "successful";
