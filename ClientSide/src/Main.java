@@ -1,6 +1,7 @@
 
 
 import connection.ClientSideImp.ClientSideImp;
+import connection.ClientSideImp.ServerIp;
 import connection.ServerSideIF;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Main extends Application {
 
@@ -31,10 +33,13 @@ public class Main extends Application {
         primaryStage.show();
     }
     public static void main(String[] args) {
-
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(System.getProperty("user.dir"));
+        System.out.println("Enter server ip");
+        ServerIp.serverip = scanner.nextLine();
+        connection.ClientSideImp.ServerIp.serverip = ServerIp.serverip;
         try {
-            String url = "rmi://localhost/Test";
+            String url = "rmi://"+ServerIp.serverip+"/Test";
 
 //            Registry registry = LocateRegistry.getRegistry(null);
             ServerSideIF serverSideIF = (ServerSideIF) Naming.lookup(url);

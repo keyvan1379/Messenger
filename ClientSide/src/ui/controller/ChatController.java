@@ -57,7 +57,7 @@ public class ChatController {
     @FXML private Text username;
     @FXML public Text status;
     @FXML private ImageView profilePicture;
-    @FXML private VBox usersVBox;
+    @FXML public VBox usersVBox;
 
     @FXML private JFXButton editProfileButton;
     @FXML private JFXButton logOutButton;
@@ -72,7 +72,7 @@ public class ChatController {
     private double y;
     public String openChat;
 
-    HashMap<String,HBox> chats = new HashMap<>();
+    public HashMap<String,HBox> chats = new HashMap<>();
 
     public void initialize() {
 
@@ -168,6 +168,7 @@ public class ChatController {
 
     public void loadMessages (String chat, int type,boolean load) // 0 = pv, 1 = gp, 2 = ch
     {
+        //System.out.println(chats.keySet());
         infoHbox.setCursor(Cursor.HAND);
 //        set username and profile picture and status
         if (type == 0)
@@ -205,7 +206,8 @@ public class ChatController {
 
             ProfileInfo profileInfo = ClientSideImp.getInstance().get_User_Profile(chat);
 
-            File file = new File("ClientSide/src/ui/profilePictures/" + profileInfo.getUsername() + ".jpg");
+            File file = new File(System.getProperty("user.dir")+"\\src\\ui\\profilePictures\\" + profileInfo.getUsername() + ".jpg");
+
             byte[] img = profileInfo.getProfile();
             FileOutputStream fileOutputStream = null;
             try {
@@ -239,7 +241,7 @@ public class ChatController {
         {
             this.username.setText(chat);
             this.status.setText(""); //?
-            Image image = new Image(new File("ClientSide/src/ui/images/gp.png").toURI().toString());
+            Image image = new Image(new File(System.getProperty("user.dir")+"\\src\\ui\\images\\gp.png").toURI().toString());
             profilePicture.setImage(image);
             profilePicture.setFitHeight(60);
             profilePicture.setPreserveRatio(true);
@@ -292,7 +294,7 @@ public class ChatController {
 
             this.username.setText(chat);
             this.status.setText(""); //?
-            Image image = new Image(new File("ClientSide/src/ui/images/channel.png").toURI().toString());
+            Image image = new Image(new File(System.getProperty("user.dir")+"\\src\\ui\\images\\channel.png").toURI().toString());
             profilePicture.setImage(image);
             profilePicture.setFitHeight(60);
             profilePicture.setPreserveRatio(true);
@@ -387,7 +389,6 @@ public class ChatController {
             hBox.getChildren().add(imageView);
             hBox.getChildren().add(textFlow);
         }
-
         messagesVBox.getChildren().add(hBox);
         messagepane.vvalueProperty().bind(messagesVBox.heightProperty());
     }
@@ -432,7 +433,7 @@ public class ChatController {
 
     public void showUsers(MouseEvent mouseEvent, String username) throws IOException
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/listOfUsers.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/fxml/listOfUsers.fxml"));
         Parent root = fxmlLoader.load();
         listOfUsersController listOfUsersController = fxmlLoader.<listOfUsersController>getController();
         try {
@@ -454,7 +455,7 @@ public class ChatController {
     }
 
     public void showProfile(MouseEvent mouseEvent, String username) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/profile.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/fxml/profile.fxml"));
         ProfileInfo profileInfo = ClientSideImp.getInstance().get_User_Profile(username);
         Parent root = fxmlLoader.load();
         ProfileController profileController = fxmlLoader.<ProfileController>getController();
@@ -462,7 +463,7 @@ public class ChatController {
         profileController.setName(profileInfo.getFirstname());
         profileController.setLastname(profileInfo.getLastname());
 
-        File file = new File("ClientSide/src/ui/profilePictures/" + profileInfo.getUsername() + ".jpg");
+        File file = new File(System.getProperty("user.dir")+"\\src\\ui\\profilePictures\\" + profileInfo.getUsername() + ".jpg");
         byte[] img = profileInfo.getProfile();
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         fileOutputStream.write(img);
@@ -483,7 +484,7 @@ public class ChatController {
 
     public void OpenAddUserWindow(MouseEvent mouseEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/search.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/fxml/search.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -496,7 +497,7 @@ public class ChatController {
 
     public void OpenAddGPWindow(MouseEvent mouseEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/addGroupChat.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/fxml/addGroupChat.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -509,7 +510,7 @@ public class ChatController {
 
     public void OpenAddChannelWindow(MouseEvent mouseEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/addChannel.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/fxml/addChannel.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -528,15 +529,15 @@ public class ChatController {
         ImageView profilePicture;//
         if (type == 0)
         {
-            profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/user.png").toURI().toString()));
+            profilePicture = new ImageView(new Image(new File(System.getProperty("user.dir")+"\\src\\ui\\images\\user.png").toURI().toString()));
         }
         else if (type == 1)
         {
-            profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/gp.png").toURI().toString()));
+            profilePicture = new ImageView(new Image(new File(System.getProperty("user.dir")+"\\src\\ui\\images\\gp.png").toURI().toString()));
         }
         else //channel
         {
-            profilePicture = new ImageView(new Image(new File("ClientSide/src/ui/images/channel.png").toURI().toString()));
+            profilePicture = new ImageView(new Image(new File(System.getProperty("user.dir") + "\\src\\ui\\images\\channel.png").toURI().toString()));
         }
 
         profilePicture.setFitHeight(15);
@@ -558,13 +559,20 @@ public class ChatController {
                 openChat = "#" + username;
         });
         hBox.setStyle("-fx-cursor: hand;");
-        chats.put(openChat,hBox);
+        //String s = new String(openChat);
+        if(type==0)
+            chats.put(username,hBox);
+        else if(type==1)
+            chats.put("$"+username,hBox);
+        else if(type==2)
+            chats.put("#"+username,hBox);
+        //System.out.println(hBox);
     }
 
 
 
     public void editProfile(MouseEvent mouseEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../fxml/editProfile.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/ui/fxml/editProfile.fxml"));
         Stage stage = new Stage();
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -585,7 +593,7 @@ public class ChatController {
         {
             //delete account
             ClientSideImp.getInstance().delete_account();
-            Parent root = FXMLLoader.load(getClass().getResource("../fxml/login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/ui/fxml/login.fxml"));
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
             Scene scene = new Scene(root);
@@ -613,7 +621,7 @@ public class ChatController {
         {
 
             ClientSideImp.getInstance().setStatusTo_Offline();
-            Parent root = FXMLLoader.load(getClass().getResource("../fxml/login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/ui/fxml/login.fxml"));
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
             Scene scene = new Scene(root);

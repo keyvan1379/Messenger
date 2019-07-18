@@ -126,7 +126,7 @@ public class RegisterController implements Initializable {
             alert.setTitle("Welcome");
             alert.setHeaderText(null);
             alert.showAndWait();
-            Parent root = FXMLLoader.load(getClass().getResource("../fxml/chat.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/ui/fxml/chat.fxml"));
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.setTitle("Register");
